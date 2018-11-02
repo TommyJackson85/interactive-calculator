@@ -1,0 +1,30 @@
+{
+  "name": "interactive-calculator",
+  "version": "1.0.0",
+  "description": "Start the tutorial [here](http://ccoenraets.github.io/es6-tutorial).",
+  "main": "index.js",
+  "scripts": {
+    "babel": "babel --presets es2015 js/main.js -o build/main.bundle.js",
+    "start": "http-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TommyJackson85/interactive-calculator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TommyJackson85/interactive-calculator/issues"
+  },
+  "homepage": "https://github.com/TommyJackson85/interactive-calculator#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "http-server": "^0.11.1"
+  },
+  "dependencies": {
+    "npm": "^6.4.1"
+  }
+}

@@ -1,0 +1,3 @@
+source: ./
+exclude:
+  - README.md
