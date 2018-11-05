@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Calculator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.3.0/jasmine.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.3.0/jasmine-html.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.3.0/boot.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.3.0/jasmine.css" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,22 +13,24 @@
     <link href="css/styles.css" rel="stylesheet" type="text/css">
     <!--<link href="css/bootstrap-theme.css.map" rel="stylesheet" media="screen">-->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <script src="scripts/calc.js"></script>
+    <script src="spec/calcSpec.js"></script>
   </head>
-  <body>
+  <body class="home">
     <!--navbar-->
     <!--plane HTML-->
-    <div id="heading">
+    <div id="heading" class="heading">
         <h1 id=headingText>Interactive-Calculator</h1>
     </div>
     <!--Bootstrap HTML-->
-    <div id="base" class="col-xs-10 col-sm-6 col-md-6 col-lg-6">
+    <div id="base" class="col-xs-10 col-sm-6 col-md-6 col-lg-6 base">
       <div class="row">
-        <div id="display" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div id="display" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 display">
             <!--these paragraphs are manipulated by the DOM-->
-          <p id="displayedCalc">Begin Calculation</p>
-          <p id="displayedInput">0</p>
+          <p id="displayedCalc" class="displayedCalc">Begin Calculation</p>
+          <p id="displayedInput" class="displayedInput">0</p>
         </div>
-        <div id="buttons">
+        <div id="buttons" class="buttons">
             <button id="num1" class="num btn btn-warning col-xs-3" value="1" href="#">1</button>          
             <button id="num2" class="num btn btn-warning col-xs-3" value="2" href="#">2</button>
             <button id="num3" class="num btn btn-warning col-xs-3" value="3" href="#">3</button>
@@ -36,14 +43,14 @@
             <button id="num8" class="num col-xs-3 btn btn-warning" value="8" href="#">8</button>
             <button id="num9" class="num col-xs-3 btn btn-warning" value="9" href="#">9</button>
             <button id="multiply" class="opp col-xs-3 btn btn-warning" value="x" href="#">X</button>
-            <button id="divide100" class="col-xs-3 btn btn-warning" href="#">%</button>
+            <button id="divide100" class="col-xs-3 btn btn-warning divide100" href="#">%</button>
             <button id="num0" class="num col-xs-3 btn btn-warning" value="0" href="#">0</button>
-            <button id="numDec" class="num col-xs-3 btn btn-warning" value="." href="#">dec</button>
+            <button id="numDec" class="num col-xs-3 btn btn-warning numDec" value="." href="#">dec</button>
             <button id="divide" class="opp col-xs-3 btn btn-warning" value="/" href="#">/</button>
-            <button id="clear" class="col-xs-3 btn btn-warning" href="#">C</button>       
-            <button id="negative" class="num col-xs-3 btn btn-warning" href="#">neg</button>
-            <button id="remove" class="col-xs-3 btn btn-warning" href="#"><-</button>
-            <button id="answer" class="col-xs-3 btn btn-warning" value="=" href="#">=</button>
+            <button id="clear" class="col-xs-3 btn btn-warning clear" href="#">C</button>       
+            <button id="negative" class="num col-xs-3 btn btn-warning negative" href="#">neg</button>
+            <button id="remove" class="col-xs-3 btn btn-warning remove" href="#"><-</button>
+            <button id="answer" class="col-xs-3 btn btn-warning answer" value="=" href="#">=</button>
         </div>
       </div>
       <div class="row">
@@ -52,12 +59,12 @@
         </div>
       </div>
     </div>
-    <div id="copywrite" class="col-xs-12">
+    <div id="copywrite" class="col-xs-12 copywrite">
         <br />
         <strong>Tommy Jackson &copy</strong><br />
     </div>
-    <!--<script src="js/main.js"></script>-->
-    <script src="build/main.bundle.js"></script>
+    <script src="js/main.js"></script>
+    <!--<script src="build/main.bundle.js"></script>-->
     <script src="js/jQuery.js"></script>
     <script src="js/bootstrap.js"></script> 
   </body>

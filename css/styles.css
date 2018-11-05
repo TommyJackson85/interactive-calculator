@@ -1,0 +1,68 @@
+.home {
+    background-color: lightblue;
+}
+.heading{
+	color: #8e44ad !important;
+	font-family: monospace;
+	margin: 0px 2px 2px 5px;
+}
+.base{
+	background: #c0392b;
+	width: 320px !important;
+	height: 100%;
+	padding-bottom: 7px;
+    border-radius: 25px 10px 15px 15px;
+    margin: 0 auto;
+}
+.display{
+    background: #2c3e50;
+    width: 310px;
+    margin: 6px 5px 5px 5px;
+    border-radius: 20px 5px 5px 5px;
+}
+.buttons{
+	padding: 0px 5px 5px 5px;
+}
+.num{
+	background: #d35400 !important;
+}
+.opp, .divide100 {
+	background: #2980b9 !important;
+}
+.clear, .remove {
+	background: #8e44ad !important;
+}
+.numDec, .negative {
+	background: #e67e22 !important;
+}
+.answer {
+	background: #27ae60 !important;
+}
+.displayedCalc, .displayedInput {
+    color: #ecf0f1;
+}
+
+.clear{
+	border-radius: 0px 0px 0px 15px;
+}
+.answer{
+	border-radius: 0px 0px 15px 0px;
+}
+
+.brandName{
+	color: #2980b9; 
+	font-family: monospace;
+	font-size: 19px;
+	margin: 10px 0px 0px 8px;
+}
+
+.logo, .logoDiv{
+	width:40px;
+	margin: 5px 2px 0px 2px;
+}
+
+/*@media only screen and (min-width: 460px) {
+    .home {
+        padding: 5% 0px 0px 5%;
+    }
+}*/
