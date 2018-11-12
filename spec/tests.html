@@ -1,15 +1,66 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title> Jasmine Testing </title>
+    <title>Jasmine Testing</title>
+    <!-- Load Jasmine Frame work -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.3.0/jasmine.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.3.0/jasmine-html.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.3.0/boot.js"></script>
-    <script src="../scripts/main.js"></script>
-    <script src="mainSpec.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.3.0/jasmine.css" />
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
+  <body class="home">
+    <!--navbar-->
+    <!--plane HTML-->
+    <div id="heading" class="heading">
+        <h1 id=headingText>Calculator DOM for Jasmine testing</h1>
+        <i>'main.js' file interacts with DOM. In order to test the main.js file from mainSpec.js and avoid bugs from loading, it was required to add the HTML code from index.html to this file.</i>
+    </div>
+    <!--Bootstrap HTML-->
+    <div id="base" class="col-xs-10 col-sm-6 col-md-6 col-lg-6 base">
+      <div class="row">
+        <div id="display" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 display">
+            <!--these paragraphs are manipulated by the DOM-->
+          <p id="displayedCalc" class="displayedCalc">Begin Calculation</p>
+          <p id="displayedInput" class="displayedInput">0</p>
+        </div>
+        <div id="buttons" class="buttons">
+            <button id="num1" class="num btn btn-warning col-xs-3" value="1" href="#">1</button>          
+            <button id="num2" class="num btn btn-warning col-xs-3" value="2" href="#">2</button>
+            <button id="num3" class="num btn btn-warning col-xs-3" value="3" href="#">3</button>
+            <button id="add" class="opp btn btn-warning col-xs-3" value="+" href="#">+</button>
+            <button id="num4" class="num btn btn-warning col-xs-3" value="4" href="#">4</button>
+            <button id="num5" class="num btn btn-warning col-xs-3" value="5" href="#">5</button>
+            <button id="num6" class="num btn btn-warning col-xs-3" value="6" href="#">6</button>
+            <button id="subtract" class="opp col-xs-3 btn btn-warning" value="-" href="#">-</button>
+            <button id="num7" class="num col-xs-3 btn btn-warning" value="7" href="#">7</button>
+            <button id="num8" class="num col-xs-3 btn btn-warning" value="8" href="#">8</button>
+            <button id="num9" class="num col-xs-3 btn btn-warning" value="9" href="#">9</button>
+            <button id="multiply" class="opp col-xs-3 btn btn-warning" value="x" href="#">X</button>
+            <button id="divide100" class="col-xs-3 btn btn-warning divide100" href="#">%</button>
+            <button id="num0" class="num col-xs-3 btn btn-warning" value="0" href="#">0</button>
+            <button id="numDec" class="num col-xs-3 btn btn-warning numDec" value="." href="#">dec</button>
+            <button id="divide" class="opp col-xs-3 btn btn-warning" value="/" href="#">/</button>
+            <button id="clear" class="col-xs-3 btn btn-warning clear" href="#">C</button>       
+            <button id="negative" class="num col-xs-3 btn btn-warning negative" href="#">neg</button>
+            <button id="remove" class="col-xs-3 btn btn-warning remove" href="#"><-</button>
+            <button id="answer" class="col-xs-3 btn btn-warning answer" value="=" href="#">=</button>
+        </div>
+      </div>
+      <div class="row">
+        <div id="brandName" class="col-xs-8">
+          <strong>Mega-Calculator &copy</strong>
+        </div>
+      </div>
+    </div>
+    <div id="copywrite" style="margin-bottom: 30px;" class="col-xs-12 copywrite">
+        <br />
+        <strong>Tommy Jackson &copy</strong><br />
+    </div>
+      <!-- Load scripts -->
+      <script src="mainSpec.js"></script>
+      <script src="../scripts/main.js"></script>
+    <!--<script src="build/main.bundle.js"></script>-->
+<!--    <script src="../scripts/jQuery.js"></script>
+    <script src="../scripts/bootstrap.js"></script> -->
+  </body>
 </html>
