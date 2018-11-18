@@ -16,7 +16,6 @@ describe("Results of pressing number buttons", function(){
     });
     it("newNumber length should not exceed 35 and calculator should message user when it has exceeded it's limit", function(){
         newNumber = ["5", "5", "3", "4", "1", "5", "5", "4", "1", "5", "5", "3", "4", "1", "5", "5", "3", "4", "1", "5", "5", "3", "4", "1", "5", "5", "3", "4", ".", "5", "5", "3", "4"]; 
-        console.log(newNumber);
         disableDec = true;/*array contains decimal*/
         key = 4;
         number = document.getElementById("num" + key);
@@ -28,6 +27,8 @@ describe("Results of pressing number buttons", function(){
             && "exceeds limit>>155341553415534.553444");
         expect(number.onclick()).not.toBe(
             "exceeds limit>>155341553415534.5534444");
+        expect(number.onclick()).not.toBe(
+            "5534155341553415534.55344444");
     });
     it("displayedInput.innerHTML length should increase from 0 to 1 after pushing '5' button once", function(){
         /*must empty newNumber Array and restart disableDec due to Jasmine's random testing*/
@@ -45,7 +46,6 @@ describe("Results of pressing number buttons", function(){
         newNumber = ["5"]; 
         console.log(newNumber);
         disableDec = false;
-        console.log(displayedInput.innerHTML);
         number = document.getElementById("num" + 5);
         expect(number.onclick()).toBe("55");
         number = document.getElementById("num" + 8);
@@ -57,8 +57,7 @@ describe("Results of pressing number buttons", function(){
         expect(displayedInput.innerHTML.length).not.toBe(5);
     });
     it("displayedInput.innerHTML length increases from 1 to 2 after pushing 'Dec' button once", function(){
-        newNumber = ["5"]; 
-        console.log(newNumber);
+        newNumber = ["5"];
         disableDec = false;
         number = document.getElementById("num" + "Dec");
         expect(number.onclick()).toBe("5.");
@@ -68,7 +67,6 @@ describe("Results of pressing number buttons", function(){
     });
     it("Dec button should not work after pressing it a second time while building a number", function(){ 
         newNumber = []; 
-        console.log(newNumber);
         disableDec = false; /*turns true once "Dec" is pressed once*/
         expect(disableDec).toBe(false);
         number = document.getElementById("num" + 5);
@@ -82,7 +80,30 @@ describe("Results of pressing number buttons", function(){
         expect(number.onclick()).toBe("5.6");/*No decimal is added*/
         expect(newNumber[newNumber.length - 1]).toBe("6");
         expect(newNumber[newNumber.length - 1]).not.toBe(".");
+    }),
+    it("onclick pushes newOperator content to calculation array, after second click it doesn't push empty strings or push another operator or number", function(){
+        calculation = ["3", "x", "6"];
+        newOperator = ["-"]
+        newNumber = [];
+        /*let realCalculation = calculation.join(" ").replace(/x/g , "*");*/
+       
+        number = document.getElementById("num" + 5);
+        expect(number.onclick()).toBe("5");
+        number = document.getElementById("num" + 7);
+        expect(number.onclick()).toBe("57");
+        expect(calculation[calculation.length - 1]).toBe("-");
+        expect(calculation[calculation.length - 1]).not.toBe("");
+        expect(calculation[calculation.length - 1]).not.toBe("6");
+
+        expect(calculation[calculation.length - 2]).toBe("6");
+        expect(calculation[calculation.length - 2]).not.toBe("");
+        expect(calculation[calculation.length - 2]).not.toBe("-");
+        expect(calculation.includes("")).toBe(false);
+        expect(calculation.length).toBe(4);/*wrong, needs to be corrected*/
+        expect(calculation).toEqual(["3", "x", "6", "-"]);/*wrong, needs to be corrected*/
+        expect(newOperator).toEqual([]);
     })
+})
     /*it("Number or decimal added t", function(){
         newNumber = ["5", "6"];
         console.log(newNumber);
@@ -121,4 +142,3 @@ describe("Results of pressing number buttons", function(){
         expect(numberBuilder("*")).toBe("not number string or decimal string");
         expect(numberBuilder("-")).toBe("not number string or decimal string");
     })*/
- })

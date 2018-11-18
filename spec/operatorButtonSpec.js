@@ -2,7 +2,6 @@ describe("The Answer button responses", function(){
     it("returns the evaluation of the calculation Array and pushes it into newNumber Array", function(){
         calculation = ["3", "x"];
         newNumber = ["6"];
-        let funArray = [];
         /*let realCalculation = calculation.join(" ").replace(/x/g , "*");*/
         let key = "answer";
         let operator = document.getElementById(key);
@@ -10,8 +9,9 @@ describe("The Answer button responses", function(){
        /*empied after pushToCalculation()*/
         expect(newNumber[newNumber.length - 1]).toBe("18");
         expect(newNumber[newNumber.length - 1]).not.toBe("6");
-        expect(newNumber.length).not.toBe(0);
         expect(newNumber[newNumber.length - 1]).not.toBe(undefined);
+
+        expect(newNumber.length).not.toBe(2);
     }),
     it("pushes previous newNumber('6') into calculation array BEFORE evaluating the calculation", function(){
         calculation = ["3", "x"];
@@ -51,6 +51,8 @@ describe("Other operator ('x', '-', '+', '/') buttons'responses", function(){
         let operator = document.getElementById(key);
         expect(operator.onclick()).toBe("x");
         expect(calculation).toEqual(["18"]);
+        expect(calculation).not.toEqual(["3", "x", "6", "=", "18"]);
+        expect(calculation).not.toEqual([]);
     }),
     it("onclick replace's newOperator content with pressed operator button value. The newOperator array never increases more than 1 in length", function(){
         calculation = ["3", "x", "6", "-"];
@@ -66,7 +68,7 @@ describe("Other operator ('x', '-', '+', '/') buttons'responses", function(){
         expect(newOperator).not.toEqual(["-", "x", "+"]);
         expect(newOperator).not.toEqual([]);
     }),
-    it("onclick pushes newNumber content to calculation array.", function(){
+    it("onclick pushes newNumber content to calculation array, after second click it doesn't push empty strings or push another operator or number", function(){
         calculation = ["3", "x", "6", "-"];
         newNumber = ["2"];
         newOperator = ["-"];
@@ -77,19 +79,13 @@ describe("Other operator ('x', '-', '+', '/') buttons'responses", function(){
         operator = document.getElementById("add");
         expect(operator.onclick()).toBe("+");
         expect(calculation[calculation.length - 1]).toBe("2");
+        expect(calculation[calculation.length - 2]).not.toBe("2");
+        expect(calculation[calculation.length - 2]).toBe("-");
         expect(calculation[calculation.length - 1]).not.toBe("");
         expect(calculation[calculation.length - 1]).not.toBe("-");
-        expect(calculation.length).toBe(6);/*wrong, needs to be corrected*/
-        expect(calculation).toEqual(["3", "x", "6", "-", "2", "2"]);/*wrong, needs to be corrected*/
-        expect(newNumber).toEqual(["2"]);
-    })
-}),
-describe("pushToCalculation outcomes", function(){
-    it("results", function(){
-        calculation = ["3", "x", "6", "+"];
-        newNumber = ["18"];
-        /*let realCalculation = calculation.join(" ").replace(/x/g , "*");*/
-        expect(pushToCalculation(newNumber)).toEqual([]);
-        expect(calculation).toEqual(["3", "x", "6", "+", "18"]);
+        expect(calculation.includes("")).toBe(false);
+        expect(calculation.length).toBe(5);/*wrong, needs to be corrected*/
+        expect(calculation).toEqual(["3", "x", "6", "-", "2"]);/*wrong, needs to be corrected*/
+        expect(newNumber).toEqual([]);
     })
 })
