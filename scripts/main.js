@@ -25,7 +25,7 @@ const clearAll = function() {
 const pushToCalculation = function(array){
 	let string =  array.join("");/*preparing for newNumber Array*/
 	if(array.length > 0) { 
-		string = (["."].includes(array[0])) ? array.join("") + "0" : array.join(""); 
+		string = ([".", "-."].includes(array[0])) ? array.join("") + "0" : array.join(""); 
 		calculation.push(string);
 		empty(array);
 	}
@@ -33,7 +33,6 @@ const pushToCalculation = function(array){
 }
 
 const displayCalculation = function(){
-	console.log(calculation);
 	if(calculation.join(" ").length > 34){
 		return displayedCalc.innerHTML = "..." + calculation.join(" ").slice(calculation.join(" ").length - 34);
 		//keeps it to the length of 34 or less.
@@ -45,7 +44,6 @@ const displayCalculation = function(){
 for (var key of numbers){
 	let number = document.getElementById("num" + key);
 	number.onclick = function numberBuilder(){
-		
 		if(calculation.length == 0 || newOperator.length == 1
 		|| ['=', '+', '-', 'x', '/'].includes(calculation[calculation.length-1])){
 
@@ -92,5 +90,13 @@ for (var key of operatorIds) {
 				return displayedInput.innerHTML = this.value;
 			}
 		}
+	}
+}
+
+const negative = document.getElementById("negative");
+negative.onclick = function(){
+	if(newNumber[0].length >= 1){
+		newNumber[0] = (newNumber[0].charAt(0) === "-") ? newNumber[0].slice(1) : "-"+newNumber[0];
+		return displayedInput.innerHTML = newNumber.join("");
 	}
 }
