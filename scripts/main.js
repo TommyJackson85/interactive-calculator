@@ -32,6 +32,16 @@ const pushToCalculation = function(array){
 	return array;
 }
 
+const displayCalculation = function(){
+	console.log(calculation);
+	if(calculation.join(" ").length > 34){
+		return displayedCalc.innerHTML = "..." + calculation.join(" ").slice(calculation.join(" ").length - 34);
+		//keeps it to the length of 34 or less.
+	} else {
+		return displayedCalc.innerHTML = (calculation.length == 0) ? "cleared" : calculation.join(" ");
+	}
+}
+
 for (var key of numbers){
 	let number = document.getElementById("num" + key);
 	number.onclick = function numberBuilder(){
@@ -49,7 +59,8 @@ for (var key of numbers){
 			if(this.value !== "." && newNumber.length < 35){ 
 				newNumber.push(this.value); 
 			}	
-			/*console.log(newNumber.join("").length);*/
+
+			displayCalculation();
 			return displayedInput.innerHTML = (newNumber.length == 35) ? "exceeds limit>>" + newNumber.join("").slice(13) 
 			: newNumber.join("");
 		}
@@ -68,6 +79,7 @@ for (var key of operatorIds) {
 				newNumber.push(eval(realCalculation) + "");//calulates, then turns back to string for manipulation
 				calculation.push("=");//only for display
 				
+				displayCalculation();
 				return displayedInput.innerHTML = eval(realCalculation); //displays answer
 			}
 			if (this.value !== "="){ //other operators				
@@ -76,6 +88,7 @@ for (var key of operatorIds) {
 				newOperator = [];
 				newOperator.push(this.value);
 
+				displayCalculation();
 				return displayedInput.innerHTML = this.value;
 			}
 		}

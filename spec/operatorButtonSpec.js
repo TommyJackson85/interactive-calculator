@@ -13,6 +13,36 @@ describe("The Answer button responses", function(){
 
         expect(newNumber.length).not.toBe(2);
     }),
+    it("displayCalculation() is called after pressing '=' ", function(){
+        calculation = ["3", "x"];
+        newNumber = ["6"];
+        /*let realCalculation = calculation.join(" ").replace(/x/g , "*");*/
+        let key = "answer";
+        let operator = document.getElementById(key);
+        expect(operator.onclick()).toBe(18);
+       /*empied after pushToCalculation()*/
+        expect(calculation[calculation.length - 1]).toBe("=");
+        expect(calculation).toEqual(["3", "x", "6", "="]);
+         expect(displayedCalc.innerHTML).toEqual("3 x 6 =");
+        expect(newNumber[newNumber.length - 1]).not.toBe(undefined);
+
+        expect(newNumber.length).not.toBe(2);
+    }),
+    it("displayCalculation() is called after pressing '-' ", function(){
+        calculation = ["3", "x"];
+        newNumber = ["6"];
+        /*let realCalculation = calculation.join(" ").replace(/x/g , "*");*/
+        let key = "subtract";
+        let operator = document.getElementById(key);
+        expect(operator.onclick()).toBe("-");
+       /*empied after pushToCalculation()*/
+        expect(calculation[calculation.length - 1]).toBe("6");
+        expect(calculation).toEqual(["3", "x", "6"]);
+         expect(displayedCalc.innerHTML).toEqual("3 x 6");
+        expect(newNumber[newNumber.length - 1]).toBe(undefined);
+
+        expect(newNumber.length).toBe(0);
+    }),
     it("pushes previous newNumber('6') into calculation array BEFORE evaluating the calculation", function(){
         calculation = ["3", "x"];
         newNumber = ["6"];

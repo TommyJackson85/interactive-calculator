@@ -83,7 +83,7 @@ describe("Results of pressing number buttons", function(){
     }),
     it("onclick pushes newOperator content to calculation array, after second click it doesn't push empty strings or push another operator or number", function(){
         calculation = ["3", "x", "6"];
-        newOperator = ["-"]
+        newOperator = ["-"];
         newNumber = [];
         /*let realCalculation = calculation.join(" ").replace(/x/g , "*");*/
        
@@ -102,8 +102,24 @@ describe("Results of pressing number buttons", function(){
         expect(calculation.length).toBe(4);/*wrong, needs to be corrected*/
         expect(calculation).toEqual(["3", "x", "6", "-"]);/*wrong, needs to be corrected*/
         expect(newOperator).toEqual([]);
+    }),
+    it("onclick pushes newOperator content to calculation array, and then calls displayCalculation()", function(){
+        calculation = ["3", "x", "6"];
+        newOperator = ["-"];
+        newNumber = [];
+        /*let realCalculation = calculation.join(" ").replace(/x/g , "*");*/
+       
+        number = document.getElementById("num" + 5);
+        expect(number.onclick()).toBe("5");
+        number = document.getElementById("num" + 7);
+        expect(number.onclick()).toBe("57");
+        expect(calculation).toEqual(["3", "x", "6", "-"]);
+        expect(newOperator).toEqual([]);
+        expect(displayedCalc.innerHTML).toBe("3 x 6 -");
     })
 })
+
+
     /*it("Number or decimal added t", function(){
         newNumber = ["5", "6"];
         console.log(newNumber);

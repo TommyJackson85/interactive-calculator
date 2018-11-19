@@ -47,4 +47,18 @@ describe("clearAll() outcomes", function(){
         expect(calculation).toEqual([]);
         expect(disableDec).toBe(false);
     })
+}),
+describe("displayCalculation() outcomes", function() {
+    it("displayCalcuclation should display calculation array elements joined as a string, while calculation array shouldn't change afterwards", function(){
+        calculation = ["3", "+", "4."];
+        expect(displayCalculation()).toBe("3 + 4.");
+        expect(displayCalculation()).not.toBe(["3", "+", "4."]);
+    }),
+    it("IF the string length is greater than 34, it should shorten the string to 34 (from the last element backwards), but then add three decimals('...') at the start", function(){
+        calculation = ["5", "+", "5", "+", "666", "+", "3", "+", "3", "+", "3", "+", "3", "+", "3", "+", "3"];
+        expect(displayCalculation()).toBe("... + 5 + 666 + 3 + 3 + 3 + 3 + 3 + 3");
+        expect(displayCalculation()).not.toBe("5 + 5 + 666 + 3 + 3 + 3 + 3 + 3 + 3");
+        expect(displayCalculation()).not.toBe("... 5 + 5 + 666 + 3 + 3 + 3 + 3 + 3 + 3");
+    })
 })
+
