@@ -18,37 +18,13 @@ describe("empty() outcomes", function(){
         expect(empty(calculation)).toEqual([]);
     })
 }),
-describe("clearInputs() outcomes", function(){
-    it("results", function(){
-        calculation = ["3", "+", "4"]
-        newNumber = ["2"];
-        newOperator = ["+"];
-
-        expect(clearInputs()).toBe(undefined); 
-        /* doesn't return a value, just changes two global values*/
-        
-        expect(newNumber).toEqual([]);
-        expect(newOperator).toEqual([]);
-        expect(calculation).toEqual(["3", "+", "4"]);
-    })
-}),
-describe("clearAll() outcomes", function(){
-    it("results", function(){
-        calculation = ["3", "+", "4."]
-        newNumber = ["2"];
-        newOperator = ["+"];
-        disableDec = true;
-
-        expect(clearAll()).toBe(undefined)
-        /* doesn't return a value, just changes four global values*/
-
-        expect(newNumber).toEqual([]);
-        expect(newOperator).toEqual([]);
-        expect(calculation).toEqual([]);
-        expect(disableDec).toBe(false);
-    })
-}),
 describe("displayCalculation() outcomes", function() {
+    it("IF the string length is 0, displayedCalc.innerHTML should display 'cleared'. ", function(){
+        calculation = [];
+        expect(displayCalculation()).toBe("cleared");
+        expect(displayCalculation()).not.toBe("");
+        expect(displayCalculation()).not.toBe("... ");
+    }),
     it("displayCalcuclation should display calculation array elements joined as a string, while calculation array shouldn't change afterwards", function(){
         calculation = ["3", "+", "4."];
         expect(displayCalculation()).toBe("3 + 4.");
@@ -59,6 +35,60 @@ describe("displayCalculation() outcomes", function() {
         expect(displayCalculation()).toBe("... + 5 + 666 + 3 + 3 + 3 + 3 + 3 + 3");
         expect(displayCalculation()).not.toBe("5 + 5 + 666 + 3 + 3 + 3 + 3 + 3 + 3");
         expect(displayCalculation()).not.toBe("... 5 + 5 + 666 + 3 + 3 + 3 + 3 + 3 + 3");
+    })
+}),
+describe("clearInputs() outcomes", function(){
+    it("should clear input arrays only", function(){
+        calculation = ["3", "+", "4"]
+        newNumber = ["2"];
+        newOperator = ["+"];
+
+        expect(clearInputs()).toBe(undefined); 
+        /* doesn't return a value, just changes two global values*/
+        expect(newNumber).toEqual([]);
+        expect(newNumber).not.toEqual(["2"]);
+        expect(newOperator).toEqual([]);
+        expect(newOperator).not.toEqual(["2"]);
+        expect(calculation).toEqual(["3", "+", "4"]);
+        expect(calculation).not.toEqual([]);
+    })
+}),
+describe("clearAll() outcomes", function(){
+    it("should clear calculation and input arrays and return disableDec as false.", function(){
+        calculation = ["3", "+", "4."]
+        newNumber = [];
+        newOperator = ["*"];
+        disableDec = true;
+
+        expect(clearAll()).toBe(false);
+        /* doesn't return a value, just changes four global values*/
+
+        expect(newNumber).toEqual([]);
+        expect(newOperator).toEqual([]);
+        expect(newOperator).not.toEqual(["*"]);
+        expect(calculation).toEqual([]);
+        expect(calculation).not.toEqual(["3", "+", "4."]);
+        expect(disableDec).toBe(false);
+        expect(disableDec).not.toBe(true);
+    })
+}),
+describe("clearAllAndDisplay() outcomes", function() {
+    it("clearAllAndDisplay() should activate clearAll(), display 'cleared' in displayedCalc HTML and display '0' in displayedInput HTML.", function(){
+        calculation = ["3", "+", "4"];
+        newNumber = [];
+        newOperator = ["*"];
+        expect(clearAllAndDisplay()).toBe("cleared");
+        expect(clearAllAndDisplay()).not.toBe("3 + 4.");
+        expect(clearAllAndDisplay()).not.toBe("0");
+        expect(calculation).toEqual([]);
+        expect(calculation).not.toEqual(["3", "+", "4"]);
+        expect(newOperator).toEqual([]);
+        expect(newOperator).not.toEqual(["*"]);
+        expect(newNumber).toEqual([]);
+        expect(displayedCalc.innerHTML).toBe("cleared");
+        expect(displayedCalc.innerHTML).not.toBe("3 + 4.");
+        expect(displayedInput.innerHTML).toBe("0");
+        expect(displayedInput.innerHTML).not.toBe("*");
     })
 })
 
