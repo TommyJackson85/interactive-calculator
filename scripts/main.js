@@ -37,6 +37,7 @@ const pushToCalculation = function(array){
 	}
 	return array;
 }
+
 const displayCalculation = function(){
 	if(calculation.join(" ").length > 34){
 		return displayedCalc.innerHTML = "..." + calculation.join(" ").slice(calculation.join(" ").length - 34);
@@ -45,6 +46,7 @@ const displayCalculation = function(){
 		return displayedCalc.innerHTML = (calculation.length == 0) ? "cleared" : calculation.join(" ");
 	}
 }
+
 for (var key of numbers){
 	let number = document.getElementById("num" + key);
 	number.onclick = function numberBuilder(){
@@ -68,6 +70,7 @@ for (var key of numbers){
 		}
 	}	
 }
+
 const operatorIds = ["add", "subtract", "multiply", "divide", "answer"];
 for (var key of operatorIds) {
 	let operator = document.getElementById(key);
