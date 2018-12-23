@@ -6,22 +6,36 @@
 	font-family: monospace;
 	margin: 0px 2px 2px 5px;
 }
-.base{
+.main-calculator{
 	background: #c0392b;
 	width: 320px !important;
-	height: 100%;
-	padding-bottom: 7px;
+	height: auto;
+	padding: 2.5px 0 0 0;
     border-radius: 25px 10px 15px 15px;
-    margin: 0 auto;
+    margin: 0 auto !important;
 }
 .display{
-    background: #2c3e50;
-    width: 310px;
-    margin: 6px 5px 5px 5px;
+	background: #2c3e50;
+	position: relative;
+	width: 310px;
+	height: 100px;
+    margin: 5px auto 5px;
     border-radius: 20px 5px 5px 5px;
 }
 .buttons{
-	padding: 0px 5px 5px 5px;
+	width: 310px;
+	background: yellow;
+	padding: 0 0 0 0;
+	position: relative;
+	margin: 5px auto;
+}
+.num, .opp, .divide100, .clear, .negative, .remove {
+	width: 73px;
+	position: relative;
+	display:block;
+	float:left;
+	margin: 1px 2px;
+	text-align:center;
 }
 .num{
 	background: #d35400 !important;
@@ -39,7 +53,9 @@
 	background: #27ae60 !important;
 }
 .displayedCalc, .displayedInput {
-    color: #ecf0f1;
+	color: #ecf0f1;
+	position: relative;
+	margin-left: 10px;
 }
 
 .clear{
@@ -49,16 +65,58 @@
 	border-radius: 0px 0px 15px 0px;
 }
 
-.brandName{
+.calculator-branding{
+	width: 320px;
+}
+.calculator-header{
 	color: #2980b9; 
 	font-family: monospace;
-	font-size: 19px;
+	font-size: 21px;
+	width: 60px;
 	margin: 10px 0px 0px 8px;
 }
 
-.logo, .logoDiv{
-	width:40px;
-	margin: 5px 2px 0px 2px;
+.logo {
+	position: relative;
+	width:60px;
+	margin: 7px 2px 7px 11px;
+}
+
+.calculation-save-form, .alert, .saved-calculation {
+	overflow: hidden;  
+}
+.calculation-save-form {
+	height: 60px;
+	margin-bottom: 20px;
+}
+.alert {
+	height: 40px;
+	margin: 5px 0px 5px 0px; 
+}
+
+.saved-calculation {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  margin-bottom: -1px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.warning-border {
+	border: 1px solid red !important;
+}
+
+.success-border {
+	border: 1px solid green !important;
+}
+
+#save-status {
+	color: green;
+}
+
+#list-item-status {
+	color: green;
 }
 
 /*@media only screen and (min-width: 460px) {

@@ -14,52 +14,80 @@
   <body class="home">
     <!--navbar-->
     <!--plane HTML-->
-    <div id="heading" class="heading">
-        <h1 id=headingText>Interactive-Calculator</h1>
-    </div>
-    <!--Bootstrap HTML-->
-    <div id="base" class="col-xs-10 col-sm-6 col-md-6 col-lg-6 base">
-      <div class="row">
-        <div id="display" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 display">
-            <!--these paragraphs are manipulated by the DOM-->
-          <p id="displayedCalc" class="displayedCalc">Begin Calculation</p>
-          <p id="displayedInput" class="displayedInput">0</p>
-        </div>
-        <div id="buttons" class="buttons">
-            <button id="num1" class="num btn btn-warning col-xs-3" value="1" href="#">1</button>          
-            <button id="num2" class="num btn btn-warning col-xs-3" value="2" href="#">2</button>
-            <button id="num3" class="num btn btn-warning col-xs-3" value="3" href="#">3</button>
-            <button id="add" class="opp btn btn-warning col-xs-3" value="+" href="#">+</button>
-            <button id="num4" class="num btn btn-warning col-xs-3" value="4" href="#">4</button>
-            <button id="num5" class="num btn btn-warning col-xs-3" value="5" href="#">5</button>
-            <button id="num6" class="num btn btn-warning col-xs-3" value="6" href="#">6</button>
-            <button id="subtract" class="opp col-xs-3 btn btn-warning" value="-" href="#">-</button>
-            <button id="num7" class="num col-xs-3 btn btn-warning" value="7" href="#">7</button>
-            <button id="num8" class="num col-xs-3 btn btn-warning" value="8" href="#">8</button>
-            <button id="num9" class="num col-xs-3 btn btn-warning" value="9" href="#">9</button>
-            <button id="multiply" class="opp col-xs-3 btn btn-warning" value="x" href="#">X</button>
-            <button id="divide100" class="col-xs-3 btn btn-warning divide100" href="#">%</button>
-            <button id="num0" class="num col-xs-3 btn btn-warning" value="0" href="#">0</button>
-            <button id="numDec" class="num col-xs-3 btn btn-warning numDec" value="." href="#">dec</button>
-            <button id="divide" class="opp col-xs-3 btn btn-warning" value="/" href="#">/</button>
-            <button id="clear" class="col-xs-3 btn btn-warning clear" href="#">C</button>       
-            <button id="negative" class="num col-xs-3 btn btn-warning negative" href="#">neg</button>
-            <button id="remove" class="col-xs-3 btn btn-warning remove" href="#"><-</button>
-            <button id="answer" class="col-xs-3 btn btn-warning answer" value="=" href="#">=</button>
-        </div>
-      </div>
-      <div class="row">
-        <div id="brandName" class="col-xs-8">
-          <strong>Mega-Calculator &copy</strong>
-        </div>
+    <div class="container">
+      <div class="col-xs-12 heading" >
+        <h1 id=headingText>The LJN Interactive Mega-Calculator</h1>
       </div>
     </div>
-    <div id="copywrite" class="col-xs-12 copywrite">
-        <br />
-        <strong>Tommy Jackson &copy</strong><br />
+    <div class="container">
+      <div class="row">
+        <!--Bootstrap HTML-->
+        <div class="calculator-section section-1 col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <div id="main-calculator" class="main-calculator">
+            <!--<div class="row">-->
+            <div id="display" class="display">
+              <!--these paragraphs are manipulated by the DOM-->
+              <p id="displayedCalc" class="displayedCalc">Begin Calculation</p>
+              <p id="displayedInput" class="displayedInput">0</p>
+            </div>
+            <div id="buttons" class="buttons">
+              <button id="num1" class="num" value="1" href="#">1</button>          
+              <button id="num2" class="num" value="2" href="#">2</button>
+              <button id="num3" class="num" value="3" href="#">3</button>
+              <button id="add" class="opp" value="+" href="#">+</button>
+              <button id="num4" class="num" value="4" href="#">4</button>                
+              <button id="num5" class="num" value="5" href="#">5</button>
+              <button id="num6" class="num" value="6" href="#">6</button>
+              <button id="subtract" class="opp" value="-" href="#">-</button>                
+              <button id="num7" class="num" value="7" href="#">7</button>
+              <button id="num8" class="num" value="8" href="#">8</button>
+              <button id="num9" class="num" value="9" href="#">9</button>
+              <button id="multiply" class="opp" value="x" href="#">X</button>
+              <button id="divide100" class="divide100" href="#">%</button>                
+              <button id="num0" class="num" value="0" href="#">0</button>            
+              <button id="numDec" class="num numDec" value="." href="#">dec</button>
+              <button id="divide" class="opp" value="/" href="#">/</button>
+              <button id="clear" class="clear" href="#">C</button>                       
+              <button id="negative" class="num negative" href="#">neg</button>
+              <button id="remove" class="remove" href="#"><-</button>
+              <button id="answer" class="opp answer" value="=" href="#">=</button>
+            </div>
+            <div id="calculator-branding">
+              <img class="logo" src="images/LJNlogo.png" alt="lgn-logo" />
+              <strong class="calculator-header">Mega-Calculator &copy</strong>
+            </div>
+          </div>
+        </div>
+        <div id="calculation-backup" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 calculation-backup section-2">
+          <div class="row">
+            <div id="calculation-save-form" class="calculation-data-file">
+              <div class="form-group">
+                <h4>Temporarily Save Calculation</h4>
+                <label for="exampleFormControlTextarea1">Add notes here</label>
+                <strong id="save-status"></strong>
+                <strong id="list-item-status"></strong>
+                <textarea class="form-control" id="calculationDescriptionInput" rows="3"></textarea>
+                <button id="saveCalc" class="saveCalc btn btn-warning col-xs-6" value="1" href="#">Save Calculation</button>
+              </div>
+            </div>
+            <div id="alert col-xs-12">
+            </div> 
+            
+            <ul id="displayedCalculationList" class="list-group col-xs-12">
+              <li class="list-group-item">
+                No calculations are saved.
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div id="copywrite" class="col-xs-12 copywrite">
+          <br />
+          <strong>Tommy Jackson &copy</strong><br />
+        </div>
+      </div>
     </div>
     <script src="scripts/main.js"></script>
-    <!--<script src="build/main.bundle.js"></script>-->
+      <!--<script src="build/main.bundle.js"></script>-->
     <script src="scripts/jQuery.js"></script>
     <script src="scripts/bootstrap.js"></script> 
   </body>
