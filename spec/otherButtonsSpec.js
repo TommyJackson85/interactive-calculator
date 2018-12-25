@@ -1,3 +1,51 @@
+describe("results of switchCalculationDisplay();", function(){
+    
+    it(`switchCalculationDisplay switches the display of the full calculation, from #displayed-calc to #displayed-entire-calc dom elements, or visa versa;
+    It does this through the boolean variable displayFullCalc, switching it between true and false and then calls displayCalculation() which decides where the calculation is shown.
+    If displayFullCalc is turned to true, the built calculation is moved to #displayed-full-calc, and if it is turned to false, it is moved to #displayed-calc;
+    switchCalculationDisplay() also changes the style of displayed-full-calc
+    switchCalculationDisplay() alse changes #displayed-full-calc's parent div '#enlarged-display' display styling, from 'none' (when displayFullCalc is false) to 'block' (when displayFullCalc is true) and visa versa;
+    This is in order to hide or show the full calculation when it is needed;
+    switchCalculationDisplay() finally returns the switchCalculationDisplay.innerHTML to "Hide Full Calculation" (when displayFullCalc is true) OR "Show Full Calculation" (when displayFullCalc is false);
+    `, function(){
+        calculation = ["5", "+", "6"];
+        const displayedCalc = document.getElementById('displayed-calc');
+        const displayedFullCalc = document.getElementById('displayed-entire-calc');
+        const switchCalculationDisplay = document.getElementById('switch-calculation-display');
+
+        displayFullCalc = false;
+        enlargedDisplay.style.display = "none";
+        
+        expect(switchCalculationDisplay.onclick()).toBe(switchCalculationDisplay.innerHTML = "Hide Full Calculation");
+        
+        expect(displayFullCalc).toBe(true);
+        expect(displayFullCalc).not.toBe(false);
+        expect(enlargedDisplay.style.display).toBe("block");
+        expect(enlargedDisplay.style.display).not.toBe("none");
+
+        expect(displayedFullCalc.innerHTML).not.toBe("");
+        expect(displayedCalc.innerHTML).not.toBe("5 + 6");
+        expect(displayedFullCalc.innerHTML).toBe("5 + 6");
+        expect(displayedCalc.innerHTML).toBe("calculation displayed above");
+
+        expect(switchCalculationDisplay.onclick()).toBe(switchCalculationDisplay.innerHTML = "Show Full Calculation");
+        
+        expect(displayFullCalc).toBe(false);
+        expect(displayFullCalc).not.toBe(true);
+        expect(enlargedDisplay.style.display).toBe("none");
+        expect(enlargedDisplay.style.display).not.toBe("block");
+
+        expect(displayedFullCalc.innerHTML).not.toBe("5 + 6");
+        expect(displayedCalc.innerHTML).not.toBe("calculation displayed above");
+        expect(displayedFullCalc.innerHTML).toBe("");
+        expect(displayedCalc.innerHTML).toBe("5 + 6");
+
+        expect(switchCalculationDisplay.onclick()).toBe("Hide Full Calculation");
+        expect(switchCalculationDisplay.onclick()).toBe("Show Full Calculation");
+        
+    })
+})
+
 describe("Results of negative button", function(){
     it("if newNumber[0] is already a negative , it turns it negative", function(){ //will be removed, as it is just temporary
         newNumber = ["-5", "6"];
@@ -32,7 +80,7 @@ describe("Results of clear button", function(){
     })
 }),
 describe("Results of remove button", function(){
-    it("if last index of calculation is an operator, calculation Array is spliced with last index removed, both input arrays are emptied AND displayedInput HTML is returned as 'removed'.", function(){
+    it("if last index of calculation is an operator, calculation Array is spliced with last index removed, both input arrays are emptied AND #displayed-input HTML is returned as 'removed'.", function(){
         calculation = ["3", "+", "4", "+"];
         newNumber = ["5"];
         newOperator = [];
@@ -42,7 +90,7 @@ describe("Results of remove button", function(){
         expect(calculation).not.toEqual(["3", "+", "4", "5"]);
         expect(calculation).not.toEqual(["3", "+"]);
     }),
-    it("if last index of calculation is a number AND if boths input Arrays are NOT empty, then calculation Array is Not spliced BUT both input arrays are emptied ; displayedInput HTML is returned as 'removed'.", function(){
+    it("if last index of calculation is a number AND if boths input Arrays are NOT empty, then calculation Array is Not spliced BUT both input arrays are emptied; #displayed-input HTML is returned as 'removed'.", function(){
         calculation = ["3", "+", "4"];
         newNumber = [];
         newOperator = ["+"];
@@ -53,7 +101,7 @@ describe("Results of remove button", function(){
         expect(calculation).not.toEqual(["3", "+"]);
         expect(calculation).not.toEqual(["3"]);
     }),
-    it("if boths input Arrays are empty, calculation Array is spliced with the last two indexs removed; displayedInput HTML is returned as 'removed'.", function(){
+    it("if boths input Arrays are empty, calculation Array is spliced with the last two indexs removed; #displayed-input HTML is returned as 'removed'.", function(){
         calculation = ["3", "+", "4"];
         newNumber = [];
         newOperator = [];
@@ -64,7 +112,7 @@ describe("Results of remove button", function(){
         expect(calculation).not.toEqual(["3", "+"]);
         expect(calculation).not.toEqual(["3", "+", "4"]);
     }),
-    it("the remove be consistantly be used ; after multiple clicks, in this case 5, and once the calculation array is fully emptied, displayedCalc HTML displays 'cleared'.", function(){
+    it("the remove be consistantly be used ; after multiple clicks, in this case 5, and once the calculation array is fully emptied, #displayed-calc HTML displays 'cleared'.", function(){
         calculation = ["3", "+", "4", "-", "6", "+", "8", "+"];
         newNumber = ["8"];
         newOperator = [];
@@ -87,7 +135,7 @@ describe("results of divide100 button", function(){
         expect(newNumber).toEqual(["5","6","7","8"]);
         expect(newNumber).not.toEqual([]);
     }),
-    it("the number isn't rounded to the nearest decimal ; It can leave a decimal in the number, in which sets disableDec to true", function(){
+    it("the number isn't rounded to the nearest decimal; It can leave a decimal in the number, in which sets disableDec to true", function(){
         newNumber = ["5","6","7","8","8","8"];
         disableDec = false;
         expect(divide100.onclick()).toBe("5678.88");

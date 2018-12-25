@@ -1,13 +1,16 @@
 /*main calculator and display Elements*/
 const mainCalculator = document.getElementById("main-calculator");
 const display =  document.getElementById("display");
-const displayedCalc = document.getElementById("displayedCalc");
-const displayedInput = document.getElementById("displayedInput");
+const displayedCalc = document.getElementById("displayed-calc");
+const displayedInput = document.getElementById("displayed-input");
+
+/*full calculation display*/
+const displayedEntireCalc = document.getElementById("displayed-entire-calc");
 
 /*Elements for: calculations list, description input and save calculation button*/
-const displayedCalculationList = document.getElementById("displayedCalculationList");
-const calculationDescriptionInput = document.getElementById("calculationDescriptionInput");
-const saveCalculation = document.getElementById("saveCalc");
+const displayedCalculationList = document.getElementById("displayed-calculation-list");
+const calculationDescriptionInput = document.getElementById("calculation-description-input");
+const saveCalculation = document.getElementById("save-calc");
 
 /*page status alerts from calculations list section*/
 const saveStatus = document.getElementById("save-status");
@@ -41,8 +44,8 @@ const clearAll = function() {
 
 const clearAllAndDisplay = function(){
 	clearAll();
-	displayedInput.innerHTML = "0";//tells user everything is cleared
-	return displayedCalc.innerHTML = "cleared";
+	displayCalculation();
+	return displayedInput.innerHTML = "0";/*starts the input*/
 }
 
 const pushToCalculation = function(array){
@@ -55,12 +58,21 @@ const pushToCalculation = function(array){
 	return array;
 }
 
+let displayFullCalc = false;
 const displayCalculation = function(){
-	if(calculation.join(" ").length > 34){
-		return displayedCalc.innerHTML = "..." + calculation.join(" ").slice(calculation.join(" ").length - 34);
-		//keeps it to the length of 34 or less.
+	if(displayFullCalc === true){
+		displayedCalc.innerHTML = "calculation displayed above";
+		displayedCalc.style.color = "rgb(146, 238, 146)"; /*light green*/
+		return displayedEntireCalc.innerHTML = (calculation.length == 0) ? "cleared" : calculation.join(" ");
 	} else {
-		return displayedCalc.innerHTML = (calculation.length == 0) ? "cleared" : calculation.join(" ");
+		displayedEntireCalc.innerHTML = "";
+		displayedCalc.style.color = "#ecf0f1";
+		if(calculation.join(" ").length > 34){
+			return displayedCalc.innerHTML = "..." + calculation.join(" ").slice(calculation.join(" ").length - 34);
+			//keeps it to the length of 34 or less.
+		} else {
+			return displayedCalc.innerHTML = (calculation.length == 0) ? "cleared" : calculation.join(" ");
+		}
 	}
 }
 
@@ -86,13 +98,26 @@ const clearPageAlerts = function(){
 	saveStatus.innerHTML = "";
 }
 
+const enlargedDisplay = document.getElementById("enlarged-display");
+enlargedDisplay.style.display  = "none"; 
+const switchCalculationDisplay = document.getElementById("switch-calculation-display");
+switchCalculationDisplay.onclick = function(){ 
+	if (displayFullCalc == true) { 	
+		displayFullCalc = false;
+		enlargedDisplay.style.display = "none";
+ 	} else {
+		displayFullCalc = true;
+		enlargedDisplay.style.display = "block";
+	 }
+	displayCalculation();
+	return switchCalculationDisplay.innerHTML = (displayFullCalc == true) ? "Hide Full Calculation" : "Show Full Calculation";
+}
 
 /*list of number buttons of calculator and each onclick function*/
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "Dec"];
 for (var key of numbers){
 	let number = document.getElementById("num" + key);
 	number.onclick = function numberBuilder(){
-		
 		clearPageAlerts();
 
 		if(calculation.length == 0 || newOperator.length == 1
@@ -110,6 +135,7 @@ for (var key of numbers){
 			}	
 
 			displayCalculation();
+			console.log(displayFullCalc);
 			return displayedInput.innerHTML = (newNumber.length == 35) ? "exceeds limit>>" + newNumber.join("").slice(13) 
 			: newNumber.join("");
 		}
@@ -152,7 +178,6 @@ for (var key of operatorIds) {
 /*other calculator buttons*/
 const negative = document.getElementById("negative");
 negative.onclick = function(){
-
 	clearPageAlerts();
 
 	if(newNumber[0].length >= 1){
@@ -223,12 +248,12 @@ const displaySavedCalculations = function(){
 		let inputType = (savedCalculation[savedCalculation.length - 1] == "=") ?  "answer / next input" : "next input";
 		/*HTML built for diplay*/
 		calculationBriefs.push(
-			`<li id="savedCalculation${key}"class="list-group-item saved-calculation">
+			`<li id="saved-calculation${key}"class="list-group-item saved-calculation">
 			    <h6><strong> Description </strong> : <i>${savedDescription}</i> </h6>
 				<h6><strong> Built calculation </strong> : ${savedCalculation.join(" ")} </h6>
 				<h6><strong> ${inputType} </strong> : ${displayedInput} </h6>
-				<button id="deleteCalc${key}" class="col-xs-3 btn btn-warning deleteCalc" value="${key}" href="#">delete</button>
-				<button id="loadCalc${key}" class="col-xs-3 btn btn-warning loadCalc" value="${key}" href="#">load</button>
+				<button id="delete-calc${key}" class="col-xs-3 btn btn-warning delete-calc" value="${key}" href="#">delete</button>
+				<button id="load-calc${key}" class="col-xs-3 btn btn-warning load-calc" value="${key}" href="#">load</button>
 			</li>`
 		);
 		displayedCalculationList.innerHTML =  calculationBriefs.slice().reverse().join(" ");
@@ -236,7 +261,7 @@ const displaySavedCalculations = function(){
 
 	/* Gives the buttons of the displayed calculations their required functionality and return value*/
 	for (var key in calculationsList) { 
-		let deleteCalc = document.getElementById("deleteCalc" + key);
+		let deleteCalc = document.getElementById("delete-calc" + key);
 		deleteCalc.onclick = function() {
 			calculationsList.splice(this.value, 1);
 			displaySavedCalculations();
@@ -244,18 +269,14 @@ const displaySavedCalculations = function(){
 			return listItemStatus.innerHTML = "Calculation data deleted!";
 		}
 
-		let loadCalc = document.getElementById("loadCalc" + key);
+		let loadCalc = document.getElementById("load-calc" + key);
 		loadCalc.onclick = function() {
-			
 			clearPageAlerts();
-
 			calculation = calculationsList[this.value].savedCalculation.slice();
 			newOperator = calculationsList[this.value].savedOperator.slice();
 			newNumber = calculationsList[this.value].savedNumber.slice();
 			disableDec = calculationsList[this.value].savedDecimalStatus;
-			
 			displayAll();
-
 			document.body.scrollTop = 0; // For Safari
 			mainCalculator.classList.add("success-border");
 			display.classList.add("success-border");
