@@ -1,10 +1,25 @@
 .home {
-    background-color: lightblue;
+	background-color: lightblue;
+	height:100vh;
 }
+header {
+	height: 50px;
+	margin-bottom: -50px;
+}
+footer {
+	height: 50px;
+	margin-top: -50px;
+	position: relative;
+}
+main {
+	height: 100vh;
+}
+
+
 .heading{
 	color: #8e44ad !important;
 	font-family: monospace;
-	margin: 0px 2px 2px 5px;
+	text-align:center;
 }
 .enlarged-display {
 	background: #2c3e50;
@@ -21,6 +36,8 @@
 	height: auto;
 	padding: 2.5px 0 0 0;
     border-radius: 25px 10px 15px 15px;
+}
+.switch-calculation-display, .main-calculator{
     margin: 0 auto !important;
 }
 .display{
@@ -33,10 +50,16 @@
 }
 .buttons{
 	width: 310px;
-	background: yellow;
 	padding: 0 0 0 0;
 	position: relative;
 	margin: 5px auto;
+}
+.switch-calculation-display {
+	width: 200px;
+	position: relative;
+	display:block;
+	margin: 1px auto ;
+	text-align:center;
 }
 .num, .opp, .divide100, .clear, .negative, .remove {
 	width: 73px;

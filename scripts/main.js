@@ -114,66 +114,74 @@ switchCalculationDisplay.onclick = function(){
 }
 
 /*list of number buttons of calculator and each onclick function*/
+
+const numberBuilder = function(e){
+	clearPageAlerts();
+	if(calculation.length == 0 || newOperator.length == 1
+	|| ['=', '+', '-', 'x', '/'].includes(calculation[calculation.length-1])){
+
+		if(calculation[calculation.length-1] == "=") { clearAll(); }
+		if(newOperator.length == 1 && newNumber.length >= 0) { pushToCalculation(newOperator); }
+
+		if (e === "." && disableDec == false && newNumber.length < 35){ 
+			disableDec = true;
+			newNumber.push(e);
+		} 
+		if(e !== "." && newNumber.length < 35){ 
+			newNumber.push(e); 
+		}	
+		displayCalculation();
+		console.log(displayFullCalc);
+		return displayedInput.innerHTML = (newNumber.length == 35) ? "exceeds limit>>" + newNumber.join("").slice(13) 
+		: newNumber.join("");
+	}
+}	
+
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "Dec"];
 for (var key of numbers){
 	let number = document.getElementById("num" + key);
-	number.onclick = function numberBuilder(){
-		clearPageAlerts();
-
-		if(calculation.length == 0 || newOperator.length == 1
-		|| ['=', '+', '-', 'x', '/'].includes(calculation[calculation.length-1])){
-
-			if(calculation[calculation.length-1] == "=") { clearAll(); }
-			if(newOperator.length == 1 && newNumber.length >= 0) { pushToCalculation(newOperator); }
-	
-			if (this.value === "." && disableDec == false && newNumber.length < 35){ 
-				disableDec = true;
-				newNumber.push(this.value);
-			} 
-			if(this.value !== "." && newNumber.length < 35){ 
-				newNumber.push(this.value); 
-			}	
-
-			displayCalculation();
-			console.log(displayFullCalc);
-			return displayedInput.innerHTML = (newNumber.length == 35) ? "exceeds limit>>" + newNumber.join("").slice(13) 
-			: newNumber.join("");
-		}
-	}	
+	number.onclick = function(){
+		numberBuilder(this.value);
+	}
 }
 
 /*list of operator buttons of calculator and each onclick function*/
+const utiliseOperator = function(e){
+	if(newNumber.length >= 1 || newOperator.length == 1 || calculation.length > 0){
+		disableDec = false;
+		if (e === "=" && calculation[calculation.length-1] != "="){
+			pushToCalculation(newNumber);//changes string to real calculation
+			let realCalculation = calculation.join(" ").replace(/x/g , "*");
+			empty(newOperator);
+			newNumber.push(eval(realCalculation) + "");//calulates, then turns back to string for manipulation
+			calculation.push(e);//only for display
+			
+			displayCalculation();
+			return displayedInput.innerHTML = eval(realCalculation); //displays answer
+		}
+		if (e !== "="){ //other operators				
+			if (calculation[calculation.length-1] == "=") { calculation = []; }	
+			pushToCalculation(newNumber);//either new number or previous answer
+			newOperator = [];
+			newOperator.push(e);
+
+			displayCalculation();
+			return displayedInput.innerHTML = e;
+		}
+	}
+}
+
 const operatorIds = ["add", "subtract", "multiply", "divide", "answer"];
 for (var key of operatorIds) {
 
 	clearPageAlerts();
 
 	let operator = document.getElementById(key);
-	operator.onclick = function utiliseOperator(){
-		if(newNumber.length >= 1 || newOperator.length == 1 || calculation.length > 0){
-			disableDec = false;
-			if (this.value === "=" && calculation[calculation.length-1] != "="){
-				pushToCalculation(newNumber);//changes string to real calculation
-				let realCalculation = calculation.join(" ").replace(/x/g , "*");
-				empty(newOperator);
-				newNumber.push(eval(realCalculation) + "");//calulates, then turns back to string for manipulation
-				calculation.push("=");//only for display
-				
-				displayCalculation();
-				return displayedInput.innerHTML = eval(realCalculation); //displays answer
-			}
-			if (this.value !== "="){ //other operators				
-				if (calculation[calculation.length-1] == "=") { calculation = []; }	
-				pushToCalculation(newNumber);//either new number or previous answer
-				newOperator = [];
-				newOperator.push(this.value);
-
-				displayCalculation();
-				return displayedInput.innerHTML = this.value;
-			}
-		}
+	operator.onclick = function(){
+		utiliseOperator(this.value);
 	}
 }
+
 
 /*other calculator buttons*/
 const negative = document.getElementById("negative");
@@ -319,3 +327,58 @@ saveCalculation.onclick = function(){
 
 	return saveStatus.innerHTML = "Calculation data saved below!";
 }
+
+/*keyboard returns*/
+document.onkeypress = function(e) {
+	var key = e.key || e.shiftKey; 
+	if (e.defaultPrevented || document.activeElement.nodeName == 'TEXTAREA') {
+		return; // Do nothing if the event was already processed OR if the description input (node 'TEXTAREA') is Active;
+	}
+	switch (key) {
+		// IE/Edge specific value
+		case "d": case "D":
+		switchCalculationDisplay.onclick();
+		 break;
+		case "s": case "S":
+		 saveCalculation.onclick();
+		 break;
+		 case "p": case "P":
+		 case "%":
+		 divide100.onclick();
+		 break;
+		 case "n": case "N":
+		 negative.onclick();
+		 break;
+		 case "r": case "R":
+		 remove.onclick();
+		  // Do something for "left arrow" key press.
+		 break;
+		 case "c": case "C":
+		 clear.onclick();
+		  // Do something for "left arrow" key press.
+		 break;
+		 case ".":
+		 numberBuilder(key);
+		 break;
+		 // IE/Edge specific value  
+		 case "1": case "2": case "3": case "4": case "5": 
+		 case "6": case "7": case "8": case "9": case "0": 
+		 numberBuilder(eval(key));
+		   // IE/Edge specific value
+		 break;
+		 case "Enter": case "Return": case "=":
+		 utiliseOperator("=");
+		  // Do something for "enter" or "return" key press.
+		 break;
+		 case "x": case "*":
+		 utiliseOperator("x");
+		 break;
+		 case "-": case "/": case "+":
+		 utiliseOperator(key);
+		 break;
+		 default:
+		return; // Quit when this doesn't handle the key event.
+	  }
+	  // Cancel the default action to avoid it being handled twice
+	  e.preventDefault();
+};
