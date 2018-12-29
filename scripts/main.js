@@ -331,6 +331,7 @@ saveCalculation.onclick = function(){
 /*keyboard returns*/
 document.onkeypress = function(e) {
 	var key = e.key || e.shiftKey; 
+	console.log(key);
 	if (e.defaultPrevented || document.activeElement.nodeName == 'TEXTAREA') {
 		return; // Do nothing if the event was already processed OR if the description input (node 'TEXTAREA') is Active;
 	}
