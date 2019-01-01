@@ -3,7 +3,7 @@ describe("results of saveCalculation button", function(){
     it(`saveCalculation.onclick() pushes object containing COPIES of the four main global variables (Copies of: calculation, newNumber, newOperator, disbaleDec), 
     and a stringed version of non empty input (Object.displayedInput either shows newNumber or newOperator); 
     The pushed Object data are strictly copies and are NOT references to global variables; 
-    saveCalculation.onclick() also returns #save-status.innerHTML as: 'Calculation data saved below!' and it's text color is set to green.`, function(){
+    saveCalculation.onclick() also returns #save-status.innerHTML as: 'Calculation data saved below!'`, function(){
 
         calculationsList = [];
         calculation = ["567", "+"];
@@ -12,7 +12,6 @@ describe("results of saveCalculation button", function(){
         disableDec = false;
 
         expect(saveCalculation.onclick()).toBe("Calculation data saved below!" || saveStatus);
-        expect(saveStatus.style.color).toBe("green");
         expect(saveCalculation.className.split(' ').includes("warning-border")).toBe(false);
         expect(calculationDescriptionInput.className.split(' ').includes("warning-border")).toBe(false);
         expect(calculationsList).toEqual([
@@ -29,7 +28,7 @@ describe("results of saveCalculation button", function(){
     }),
     it(`saveCalculation.onclick(), cant push Object into calculationList more than 10 times; 
     After saveCalculation.onclick() is called an 11th time in a row, the 'warning-border' class is added to #save-calc button and #calculation-description-input input, creating a red border around both sections;
-    Then, #save-status.innerHTML is returned as: 'Can not save! Calculations List has exceeded it's data limit!' and it's text color is set to red.`, function(){
+    Then, #warning-status.innerHTML is returned instead of #saveStatus.innerHTML as: 'Can not save! Calculations List has exceeded it's data limit!'.`, function(){
         calculationsList = [];
         calculation = ["567", "+"];
         newNumber = ["5","6","7","8","8","8"];
@@ -38,6 +37,7 @@ describe("results of saveCalculation button", function(){
         const saveStatus = document.getElementById("save-status");
         const calculationDescriptionInput = document.getElementById("calculation-description-input");
 
+        expect(saveCalculation.onclick()).toBe(saveStatus.innerHTML = "Calculation data saved below!");
         expect(saveCalculation.onclick()).toBe("Calculation data saved below!");
         expect(saveCalculation.onclick()).toBe("Calculation data saved below!");
         expect(saveCalculation.onclick()).toBe("Calculation data saved below!");
@@ -47,13 +47,8 @@ describe("results of saveCalculation button", function(){
         expect(saveCalculation.onclick()).toBe("Calculation data saved below!");
         expect(saveCalculation.onclick()).toBe("Calculation data saved below!");
         expect(saveCalculation.onclick()).toBe("Calculation data saved below!");
-        expect(saveCalculation.onclick()).toBe("Calculation data saved below!");
+        expect(saveCalculation.onclick()).toBe(warningStatus.innerHTML = "Can not save! Calculations List has exceeded it's data limit!");
         expect(saveCalculation.onclick()).toBe("Can not save! Calculations List has exceeded it's data limit!");
-        expect(saveCalculation.onclick()).toBe("Can not save! Calculations List has exceeded it's data limit!");
-        
-
-        expect(saveStatus.style.color).toBe("red");
-        expect(saveStatus.style.color).not.toBe("green");
 
         expect(saveCalculation.className.split(' ').includes("warning-border")).toBe(true);
         expect(calculationDescriptionInput.className.split(' ').includes("warning-border")).toBe(true);
@@ -76,8 +71,8 @@ describe("results of saveCalculation button", function(){
         disableDec = false;
 
         expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
-        expect(number.onclick()).toBe("5678887");
-        expect(operator.onclick()).toBe("-");
+        expect(number.onclick()).toBe(undefined);
+        expect(operator.onclick()).toBe(undefined);
         expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
         expect(calculationsList).toEqual([
             Object({ 
@@ -242,15 +237,14 @@ describe("results of saveCalculation button", function(){
         const remove = document.getElementById("remove");
 
         expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
-        expect(number.onclick()).toBe('5');
+        expect(number.onclick()).toBe(undefined);
         expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
         expect(remove.onclick()).toBe('removed');
         expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
         
         expect(newNumber).toEqual([]);
         expect(newOperator).toEqual([]);
-        expect(calculation).toEqual(["567", "+", "567888", "x"]);
-
+         expect(calculation).toEqual(["567", "+", "567888"]);
         expect(calculationsList[0].displayedInput).toBe("x"); 
         expect(calculationsList[0].displayedInput).not.toBe("Input Empty");
         expect(calculationsList[0].displayedInput).not.toBe("5");

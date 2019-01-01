@@ -15,6 +15,7 @@ const saveCalculation = document.getElementById("save-calc");
 /*page status alerts from calculations list section*/
 const saveStatus = document.getElementById("save-status");
 const listItemStatus = document.getElementById("list-item-status");
+const warningStatus = document.getElementById("warning-status");
 
 /*global arrays and boolean variables for main calculator*/
 let calculation = [];
@@ -51,7 +52,9 @@ const clearAllAndDisplay = function(){
 const pushToCalculation = function(array){
 	let string =  array.join("");/*preparing for newNumber Array*/
 	if(array.length > 0) { 
-		string = ([".", "-."].includes(array[0])) ? array.join("") + "0" : array.join(""); 
+		if (string == "." || string == "-.") {
+			string = array.join("") + "0"; 
+		} 
 		calculation.push(string);
 		empty(array);
 	}
@@ -90,12 +93,15 @@ const displayAll = function() {
 }
 
 const clearPageAlerts = function(){
+
+	saveStatus.innerHTML = "";
+	listItemStatus.innerHTML = "";
+	warningStatus.innerHTML = "";
+
 	mainCalculator.classList.remove("success-border");
 	display.classList.remove("success-border");
-	listItemStatus.innerHTML = "";
 	calculationDescriptionInput.classList.remove("warning-border");
 	saveCalculation.classList.remove("warning-border");
-	saveStatus.innerHTML = "";
 }
 
 const enlargedDisplay = document.getElementById("enlarged-display");
@@ -117,6 +123,8 @@ switchCalculationDisplay.onclick = function(){
 
 const numberBuilder = function(e){
 	clearPageAlerts();
+	e.toString();
+	console.log(typeof e);
 	if(calculation.length == 0 || newOperator.length == 1
 	|| ['=', '+', '-', 'x', '/'].includes(calculation[calculation.length-1])){
 
@@ -131,7 +139,7 @@ const numberBuilder = function(e){
 			newNumber.push(e); 
 		}	
 		displayCalculation();
-		console.log(displayFullCalc);
+		console.log(newNumber);
 		return displayedInput.innerHTML = (newNumber.length == 35) ? "exceeds limit>>" + newNumber.join("").slice(13) 
 		: newNumber.join("");
 	}
@@ -173,9 +181,7 @@ const utiliseOperator = function(e){
 
 const operatorIds = ["add", "subtract", "multiply", "divide", "answer"];
 for (var key of operatorIds) {
-
 	clearPageAlerts();
-
 	let operator = document.getElementById(key);
 	operator.onclick = function(){
 		utiliseOperator(this.value);
@@ -190,7 +196,6 @@ negative.onclick = function(){
 
 	if(newNumber[0].length >= 1){
 		newNumber[0] = (newNumber[0].charAt(0) === "-") ? newNumber[0].slice(1) : "-"+newNumber[0];
-		console.log(newNumber);
 		return displayedInput.innerHTML = newNumber.join("");
 	}
 }
@@ -246,7 +251,6 @@ const displaySavedCalculations = function(){
 	}
 
 	let calculationBriefs = [];
-
 	/*adds all saved calculations to displayedCalcultionList*/
 	for (var key in calculationsList) {
 		/*local variables to keep it clean*/
@@ -255,15 +259,27 @@ const displaySavedCalculations = function(){
 		let displayedInput = calculationsList[key].displayedInput;
 		let inputType = (savedCalculation[savedCalculation.length - 1] == "=") ?  "answer / next input" : "next input";
 		/*HTML built for diplay*/
-		calculationBriefs.push(
-			`<li id="saved-calculation${key}"class="list-group-item saved-calculation">
-			    <h6><strong> Description </strong> : <i>${savedDescription}</i> </h6>
+		if(saveStatus.innerHTML == "Calculation data saved below!" && key == calculationsList.length - 1){
+			calculationBriefs.push(
+				`<li id="saved-calculation${key}"class="list-group-item new-saved-calculation">
+				<h6><strong> Description </strong> : <i>${savedDescription}</i> </h6>
 				<h6><strong> Built calculation </strong> : ${savedCalculation.join(" ")} </h6>
 				<h6><strong> ${inputType} </strong> : ${displayedInput} </h6>
 				<button id="delete-calc${key}" class="col-xs-3 btn btn-warning delete-calc" value="${key}" href="#">delete</button>
 				<button id="load-calc${key}" class="col-xs-3 btn btn-warning load-calc" value="${key}" href="#">load</button>
-			</li>`
-		);
+				</li>`
+			);
+		} else {
+			calculationBriefs.push(
+				`<li id="saved-calculation${key}"class="list-group-item saved-calculation">
+					<h6><strong> Description </strong> : <i>${savedDescription}</i> </h6>
+					<h6><strong> Built calculation </strong> : ${savedCalculation.join(" ")} </h6>
+					<h6><strong> ${inputType} </strong> : ${displayedInput} </h6>
+					<button id="delete-calc${key}" class="col-xs-3 btn btn-warning delete-calc" value="${key}" href="#">delete</button>
+					<button id="load-calc${key}" class="col-xs-3 btn btn-warning load-calc" value="${key}" href="#">load</button>
+				</li>`
+			);
+		}
 		displayedCalculationList.innerHTML =  calculationBriefs.slice().reverse().join(" ");
 	}
 
@@ -271,20 +287,26 @@ const displaySavedCalculations = function(){
 	for (var key in calculationsList) { 
 		let deleteCalc = document.getElementById("delete-calc" + key);
 		deleteCalc.onclick = function() {
-			calculationsList.splice(this.value, 1);
-			displaySavedCalculations();
 			clearPageAlerts();
-			return listItemStatus.innerHTML = "Calculation data deleted!";
+			this.parentElement.classList.add("removing-list-item");
+			setTimeout(function(){
+				calculationsList.splice(this.value, 1);
+				displaySavedCalculations();
+			},500);
+			return warningStatus.innerHTML = "Calculation data deleted!";
 		}
 
 		let loadCalc = document.getElementById("load-calc" + key);
 		loadCalc.onclick = function() {
+			console.log(window.scrollY);
 			clearPageAlerts();
+			loadCalc.classList.add("loaded-calc");
 			calculation = calculationsList[this.value].savedCalculation.slice();
 			newOperator = calculationsList[this.value].savedOperator.slice();
 			newNumber = calculationsList[this.value].savedNumber.slice();
 			disableDec = calculationsList[this.value].savedDecimalStatus;
 			displayAll();
+			scrollToTop();
 			document.body.scrollTop = 0; // For Safari
 			mainCalculator.classList.add("success-border");
 			display.classList.add("success-border");
@@ -292,16 +314,24 @@ const displaySavedCalculations = function(){
 		}
 	}
 };
-
+const scrollToTop = function(){
+	/*https://stackoverflow.com/questions/21474678/scrolltop-animation-without-jquery*/
+	let scrollStep = -window.scrollY / (250 / 15),/*Orginal duration speed was set at 1s speed (1000 ms) changed it to .25 s speed (250 ms) to have it scroll faster*/
+        scrollInterval = setInterval(function(){
+        if ( window.scrollY != 0 ) {
+            return window.scrollBy( 0, scrollStep );
+        }
+		else clearInterval(scrollInterval); 
+    },15);
+};
 /*save calculation button and onclick function*/
 saveCalculation.onclick = function(){
 	clearPageAlerts();
 	if (calculationsList.length == 10) {
 		calculationDescriptionInput.classList.add("warning-border");
 		saveCalculation.classList.add("warning-border");
-		saveStatus.style.color = "red";
-		return saveStatus.innerHTML = "Can not save! Calculations List has exceeded it's data limit!";
-	}/*tested*/
+		return warningStatus.innerHTML = "Can not save! Calculations List has exceeded it's data limit!";
+	}
 
 	let savedCalc = new Object();
 		savedCalc.savedDescription = calculationDescriptionInput.value;
@@ -322,17 +352,16 @@ saveCalculation.onclick = function(){
 	}
 	calculationsList.push(savedCalc);
 	
-	displaySavedCalculations();
-	saveStatus.style.color = "green";
-
+	setTimeout(function(){
+		displaySavedCalculations(); 
+	}, 30);
 	return saveStatus.innerHTML = "Calculation data saved below!";
 }
 
-/*keyboard returns*/
 document.onkeypress = function(e) {
-	var key = e.key || e.shiftKey; 
-	console.log(key);
-	if (e.defaultPrevented || document.activeElement.nodeName == 'TEXTAREA') {
+	var key = e.key || e.shiftKey ; 
+
+	if (e.defaultPrevented || document.activeElement.tagName == 'TEXTAREA') {
 		return; // Do nothing if the event was already processed OR if the description input (node 'TEXTAREA') is Active;
 	}
 	switch (key) {
@@ -357,14 +386,14 @@ document.onkeypress = function(e) {
 		 case "c": case "C":
 		 clear.onclick();
 		  // Do something for "left arrow" key press.
-		 break;
+		 break
 		 case ".":
 		 numberBuilder(key);
 		 break;
 		 // IE/Edge specific value  
 		 case "1": case "2": case "3": case "4": case "5": 
 		 case "6": case "7": case "8": case "9": case "0": 
-		 numberBuilder(eval(key));
+		 numberBuilder(key);
 		   // IE/Edge specific value
 		 break;
 		 case "Enter": case "Return": case "=":

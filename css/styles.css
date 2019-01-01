@@ -114,7 +114,7 @@ main {
 	margin: 7px 2px 7px 11px;
 }
 
-.calculation-save-form, .alert, .saved-calculation {
+.calculation-save-form, .alert, .saved-calculation, .new-saved-calculation {
 	overflow: hidden;  
 }
 .calculation-save-form {
@@ -126,13 +126,35 @@ main {
 	margin: 5px 0px 5px 0px; 
 }
 
-.saved-calculation {
-  position: relative;
-  display: block;
-  padding: 10px 15px;
-  margin-bottom: -1px;
-  background-color: #fff;
-  border: 1px solid #ddd;
+.saved-calculation, .new-saved-calculation {
+	position: relative;
+	display: block;
+	padding: 10px 15px;
+	margin-bottom: -1px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+}
+
+@-webkit-keyframes green-to-white-fade {   
+	0% {background: green;}
+	100% {background: #fff;}
+ }
+ 
+ @keyframes green-to-white-fade {
+	0% {background: green;}
+	100% {background: #fff;}
+ }
+ 
+ .new-saved-calculation {
+	-webkit-animation: green-to-white-fade 1s ease-in 1;
+	animation: green-to-white-fade 1s ease-in 1;
+ }
+
+ .removing-list-item {
+	opacity: 0;
+	transition: opacity .25s ease-in;
+	-moz-transition: opacity .25s ease-in;
+	-webkit-transition: opacity .25s ease-in;
 }
 
 .warning-border {
@@ -142,9 +164,23 @@ main {
 .success-border {
 	border: 1px solid green !important;
 }
+.success-background{
+	background: green;
+}
+.warning-background {
+	background: red !important;
+}
+.warning-background {
+	background: red !important;
+}
+
 
 #save-status {
 	color: green;
+}
+
+#warning-status {
+	color: red;
 }
 
 #list-item-status {

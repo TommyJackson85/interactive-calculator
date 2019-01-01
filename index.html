@@ -11,7 +11,7 @@
     <!--<link href="css/bootstrap-theme.css.map" rel="stylesheet" media="screen">-->
     <link href="css/bootstrap.css" rel="stylesheet">
   </head>
-  <body class="home">
+  <body class="home" id="home">
     <header>
       <div class="container-fluid">
         <div class="col-xs-12 heading" >
@@ -23,7 +23,7 @@
       <div class="row">
         <!--Bootstrap HTML-->
         <section class="calculator-section section-1 col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            
+          <!--regular HTML--> 
           <h4>The Mega Calculator</h4>
           <div id="enlarged-display" class="enlarged-display">
               <!--Optional display for calculation which always shows the full length.
@@ -70,21 +70,19 @@
               </div>
             </div>
         </section>
+        <!--bootstrap HTML-->
         <aside id="calculation-backup" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 calculation-backup section-2">
             <div class="row">
               <div id="calculation-save-form" class="calculation-data-file">
                 <div class="form-group">
                   <h4>Calculation Saver and Saved Calculations List</h4>
-                  <!--<label for="exampleFormControlTextarea1">Add notes here</label>-->
                   <strong id="save-status"></strong>
                   <strong id="list-item-status"></strong>
+                  <strong id="warning-status"></strong>
                   <textarea class="form-control" id="calculation-description-input" rows="3"></textarea>
                   <button id="save-calc" class="save-calc btn btn-warning col-xs-6" value="1" href="#">Save Calculation</button>
                 </div>
               </div>
-              <div id="alert col-xs-12">
-              </div> 
-              
               <ul id="displayed-calculation-list" class="list-group col-xs-12">
                 <li class="list-group-item">
                   No calculations are saved.
