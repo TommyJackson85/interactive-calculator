@@ -26,6 +26,7 @@
     "jasmine": "^3.3.0"
   },
   "dependencies": {
-    "npm": "^6.4.1"
+    "npm": "^6.4.1",
+    "scroll": "^2.0.3"
   }
 }

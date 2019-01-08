@@ -244,9 +244,11 @@ try {
 
 var negative = document.getElementById("negative");
 negative.onclick = function () {
-	clearPageAlerts();
-
+	if (newNumber.length == 0) {
+		return;
+	}
 	if (newNumber[0].length >= 1) {
+		clearPageAlerts();
 		newNumber[0] = newNumber[0].charAt(0) === "-" ? newNumber[0].slice(1) : "-" + newNumber[0];
 		return displayedInput.innerHTML = newNumber.join("");
 	}
@@ -334,7 +336,7 @@ var displaySavedCalculations = function displaySavedCalculations() {
 		var inputType = savedCalculation[savedCalculation.length - 1] == "=" ? "answer / next input" : "next input";
 		/*HTML built for diplay*/
 		if (saveStatus.innerHTML == "Calculation data saved below!" && key == calculationsList.length - 1) {
-			calculationBriefs.push("<li id=\"saved-calculation" + key + "\"class=\"list-group-item new-saved-calculation\">\n\t\t\t\t<h6><strong> Description </strong> : <i>" + savedDescription + "</i> </h6>\n\t\t\t\t<h6><strong> Built calculation </strong> : " + savedCalculation.join(" ") + " </h6>\n\t\t\t\t<h6><strong> " + inputType + " </strong> : " + _displayedInput + " </h6>\n\t\t\t\t<button id=\"delete-calc" + key + "\" class=\"col-xs-3 btn btn-warning delete-calc\" value=\"" + key + "\" href=\"#\">delete</button>\n\t\t\t\t<button id=\"load-calc" + key + "\" class=\"col-xs-3 btn btn-warning load-calc\" value=\"" + key + "\" href=\"#\">load</button>\n\t\t\t\t</li>");
+			calculationBriefs.push("<li id=\"saved-calculation" + key + "\"class=\"list-group-item new-saved-calculation\">\n\t\t\t\t<p><strong> Description </strong> : <i>" + savedDescription + "</i> </p>\n\t\t\t\t<p><strong> Built calculation </strong> : " + savedCalculation.join(" ") + " </p>\n\t\t\t\t<p><strong> " + inputType + " </strong> : " + _displayedInput + " </p>\n\t\t\t\t<button id=\"delete-calc" + key + "\" class=\"col-xs-3 btn btn-warning delete-calc\" value=\"" + key + "\" href=\"#\">delete</button>\n\t\t\t\t<button id=\"load-calc" + key + "\" class=\"col-xs-3 btn btn-warning load-calc\" value=\"" + key + "\" href=\"#\">load</button>\n\t\t\t\t</li>");
 		} else {
 			calculationBriefs.push("<li id=\"saved-calculation" + key + "\"class=\"list-group-item saved-calculation\">\n\t\t\t\t\t<h6><strong> Description </strong> : <i>" + savedDescription + "</i> </h6>\n\t\t\t\t\t<h6><strong> Built calculation </strong> : " + savedCalculation.join(" ") + " </h6>\n\t\t\t\t\t<h6><strong> " + inputType + " </strong> : " + _displayedInput + " </h6>\n\t\t\t\t\t<button id=\"delete-calc" + key + "\" class=\"col-xs-3 btn btn-warning delete-calc\" value=\"" + key + "\" href=\"#\">delete</button>\n\t\t\t\t\t<button id=\"load-calc" + key + "\" class=\"col-xs-3 btn btn-warning load-calc\" value=\"" + key + "\" href=\"#\">load</button>\n\t\t\t\t</li>");
 		}
@@ -356,7 +358,7 @@ var displaySavedCalculations = function displaySavedCalculations() {
 		};
 
 		var loadCalc = document.getElementById("load-calc" + key);
-		loadCalc.onclick = function () {
+		loadCalc.onclick = function (e) {
 			console.log(window.scrollY);
 			clearPageAlerts();
 			loadCalc.classList.add("loaded-calc");
@@ -366,7 +368,7 @@ var displaySavedCalculations = function displaySavedCalculations() {
 			disableDec = calculationsList[this.value].savedDecimalStatus;
 			displayAll();
 			scrollToTop();
-			document.body.scrollTop = 0; // For Safari
+			/*document.body.scrollTop = 0; */ // For Safari
 			mainCalculator.classList.add("success-border");
 			display.classList.add("success-border");
 			return listItemStatus.innerHTML = "Calculation data loaded succesfully!";
@@ -377,16 +379,55 @@ var displaySavedCalculations = function displaySavedCalculations() {
 		_loop();
 	}
 };
+
 var scrollToTop = function scrollToTop() {
-	/*https://stackoverflow.com/questions/21474678/scrolltop-animation-without-jquery*/
-	var scrollStep = -window.scrollY / (250 / 15),
-	    /*Orginal duration speed was set at 1s speed (1000 ms) changed it to .25 s speed (250 ms) to have it scroll faster*/
-	scrollInterval = setInterval(function () {
-		if (window.scrollY != 0) {
-			return window.scrollBy(0, scrollStep);
-		} else clearInterval(scrollInterval);
-	}, 15);
+	/*https://stackoverflow.com/questions/10063380/smooth-scroll-without-the-use-of-jquery*/
+	var eID = document.getElementById("home");
+	function currentYPosition() {
+		// Gets current Y axis position
+		// Firefox, Chrome, Opera, Safari
+		if (self.pageYOffset) return self.pageYOffset;
+		// Internet Explorer 6 - standards mode
+		if (document.documentElement && document.documentElement.scrollTop) return document.documentElement.scrollTop;
+		// Internet Explorer 6, 7 and 8
+		if (document.body.scrollTop) return document.body.scrollTop;
+		return 0;
+	}
+	function elmYPosition(eID) {
+		var elm = eID;
+		var y = elm.offsetTop;
+		var node = elm;
+		while (node.offsetParent && node.offsetParent != document.body) {
+			node = node.offsetParent;
+			y += node.offsetTop;
+		}return y;
+	}
+	function smoothScroll(eID) {
+		var startY = currentYPosition();
+		var stopY = elmYPosition(eID);
+		var distance = stopY > startY ? stopY - startY : startY - stopY;
+		if (distance < 100) {
+			scrollTo(0, stopY);return;
+		}
+		var speed = Math.round(distance / 100);
+		if (speed >= 20) speed = 20;
+		var step = Math.round(distance / 25);
+		var leapY = stopY > startY ? startY + step : startY - step;
+		var timer = 0;
+		if (stopY > startY) {
+			for (var i = startY; i < stopY; i += step) {
+				setTimeout("window.scrollTo(0, " + leapY + ")", timer * speed);
+				leapY += step;if (leapY > stopY) leapY = stopY;timer++;
+			}return;
+		}
+		for (var i = startY; i > stopY; i -= step) {
+			setTimeout("window.scrollTo(0, " + leapY + ")", timer * speed);
+			leapY -= step;if (leapY < stopY) leapY = stopY;timer++;
+		}
+	}
+	return smoothScroll(eID);
 };
+
 /*save calculation button and onclick function*/
 saveCalculation.onclick = function () {
 	clearPageAlerts();

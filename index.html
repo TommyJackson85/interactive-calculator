@@ -7,15 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>-->
-    <link href="css/styles.css" rel="stylesheet" type="text/css">
-    <!--<link href="css/bootstrap-theme.css.map" rel="stylesheet" media="screen">-->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    
+    <!--<link href="css/bootstrap-theme.css.map" rel="stylesheet" media="screen">-->
   </head>
   <body class="home" id="home">
     <header>
       <div class="container-fluid">
         <div class="col-xs-12 heading" >
-          <h1 id=headingText>The LJN Interactive Mega-Calculator</h1>
+          <img class="logo" src="images/LJNlogo.png" alt="lgn-logo" />
+          <h1 id="heading" class="heading" >The LJN Interactive Mega-Calculator</h1>
         </div>
       </div>
     </header>
@@ -24,7 +26,7 @@
         <!--Bootstrap HTML-->
         <section class="calculator-section section-1 col-xs-12 col-sm-12 col-md-6 col-lg-6">
           <!--regular HTML--> 
-          <h4>The Mega Calculator</h4>
+          <h4 class="sub-heading">The Mega Calculator</h4>
           <div id="enlarged-display" class="enlarged-display">
               <!--Optional display for calculation which always shows the full length.
               It has the option to be hidden.-->
@@ -64,42 +66,43 @@
                 <button id="remove" class="remove" href="#"><-</button>
                 <button id="answer" class="opp answer" value="=" href="#">=</button>
               </div>
-              <div id="calculator-branding">
+             <!-- <div id="calculator-branding">
                 <img class="logo" src="images/LJNlogo.png" alt="lgn-logo" />
                 <strong class="calculator-header">Mega-Calculator &copy</strong>
-              </div>
+              </div> -->
             </div>
         </section>
         <!--bootstrap HTML-->
-        <aside id="calculation-backup" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 calculation-backup section-2">
+        <aside id="calculation-backup" class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-6 col-lg-6 calculation-backup section-2">
+          <h4 class="sub-heading">Calculation Saver and Saved Calculations List</h4>
+          <h5 id="save-status"></h5>
+          <h5 id="list-item-status"></h5>
+          <h5 id="warning-status"></h5>
+          <div class="main-calculation-backup">  
             <div class="row">
               <div id="calculation-save-form" class="calculation-data-file">
                 <div class="form-group">
-                  <h4>Calculation Saver and Saved Calculations List</h4>
-                  <strong id="save-status"></strong>
-                  <strong id="list-item-status"></strong>
-                  <strong id="warning-status"></strong>
-                  <textarea class="form-control" id="calculation-description-input" rows="3"></textarea>
+                  <textarea class="form-control" id="calculation-description-input" rows="3"  placeholder="describe your calculation values, i.e. 40 'apples' x 20 'baskets'"></textarea>
                   <button id="save-calc" class="save-calc btn btn-warning col-xs-6" value="1" href="#">Save Calculation</button>
                 </div>
               </div>
-              <ul id="displayed-calculation-list" class="list-group col-xs-12">
+              <ul id="displayed-calculation-list" class="list-group col-xs-12 displayed-calculation-list">
                 <li class="list-group-item">
                   No calculations are saved.
                 </li>
               </ul>
             </div>
+          </div>
         </aside>
       </div>
     </main>
-    <footer>
-      <div id="copywrite" class="col-xs-12 copywrite">
+    <footer id="copywrite" class="copywrite">
         <strong>Tommy Jackson &copy</strong>
-      </div>
     </footer>
     <!--<script src="scripts/main.js"></script>-->
     <script src="build/main.bundle.js"></script>
     <script src="scripts/jQuery.js"></script>
     <script src="scripts/bootstrap.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </body>
 </html>
