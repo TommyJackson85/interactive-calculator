@@ -32,8 +32,10 @@ describe("displayCalculation() outcomes", function() {
     it(`IF the string length is greater than 34 and displayCalculation() is called, displayed-calc should display "... " added to a shortened version of the calculation 
     (the calculation array joined together and shortened in length, from the end of the calculation and back 34 in length);
     However if displayFullCalc is turned to true from false, the full calculation is displayed from the #displayed-entire-calc DOM element in full length;
-    '#displayed-calc' displays "calculation displayed above" instead, to alert the user that the calculation is now displayed at '#displayed-entire-calc';
-    switchCalculationDisplay.onclick() switches displayFullCalc's value for 'false' to true, and visa versa, and calls the displayCalculation() function.
+    '#displayed-calc' displays "calculation displayed above" in green font instead due to the 'green-display-text' being added to its class list; 
+    This is to alert the user that the calculation is now displayed at '#displayed-entire-calc'; 
+    switchCalculationDisplay.onclick() switches displayFullCalc's value from false to true, and visa versa, and calls the displayCalculation() function.
+    Turning displayFullCalc's value from true to false also removes the 'green-display-text' class from #displayed-calc's class list, turning the text back to white.
     `, function(){
         displayFullCalc = false;
         calculation = ["5", "+", "5", "+", "666", "+", "3", "+", "3", "+", "3", "+", "3", "+", "3", "+", "3"];
@@ -54,13 +56,15 @@ describe("displayCalculation() outcomes", function() {
         expect(displayedCalc.innerHTML).toBe("calculation displayed above");
         expect(displayedCalc.innerHTML).not.toBe("... + 5 + 666 + 3 + 3 + 3 + 3 + 3 + 3");
         expect(displayedCalc.innerHTML).not.toBe("");
-        expect(displayedCalc.style.color).toBe('rgb(146, 238, 146)');/* light green */
+        expect(displayedCalc.classList.length).toBe(2);
+        expect(displayedCalc.classList[displayedCalc.classList.length - 1]).toBe('green-display-text');/* light green */
+
         expect(displayedCalc.style.color).not.toBe('rgb(236, 240, 241)');
-      
+        
         expect(switchCalculationDisplay.onclick()).toBe("Show Full Calculation"); /*reset for next test*/
         expect(displayFullCalc).toBe(false);
-
-        expect(displayedCalc.style.color).toBe('rgb(236, 240, 241)'); /* "#ecf0f1" / white */
+        expect(displayedCalc.classList.length).toBe(1);
+        expect(displayedCalc.classList[displayedCalc.classList.length - 1]).toBe('displayed-calc');/* light green */
     
     })
 }),
@@ -125,7 +129,7 @@ describe("clearAllAndDisplay() outcomes", function() {
 describe('clearPageAlerts() outcomes; clearPageAlerts() if called from all functions. It is designed clean all alerts or restart them.', function(){
     it(`Removes "success-border" class from #mainCalculator and #display DOM elements;
         Removes "warning-border" class from #saveCalculation and #calculationDescriptionInput DOM elements;
-        Empties listItemStatus.innerHTML, warningStatus.innerHTML and saveStatus.innerHTML;`, function(){
+        Empties loadStatus.innerHTML, warningStatus.innerHTML and saveStatus.innerHTML;`, function(){
         calculation = ["4"];
         newNumber = [];
         newOperator = ["+"];
@@ -143,15 +147,15 @@ describe('clearPageAlerts() outcomes; clearPageAlerts() if called from all funct
         expect(displaySavedCalculations()).toBe(undefined);
         let loadCalc = document.getElementById("load-calc" + 0);
 
-        expect(loadCalc.onclick()).toBe(listItemStatus.innerHTML = "Calculation data loaded succesfully!");
-        expect(listItemStatus.innerHTML).not.toBe("");
+        expect(loadCalc.onclick()).toBe(loadStatus.innerHTML = "Calculation data loaded succesfully!");
+        expect(loadStatus.innerHTML).not.toBe("");
         expect(mainCalculator.className.split(' ').includes("success-border")).toBe(true);
         expect(display.className.split(' ').includes("success-border")).toBe(true);
 
         expect(clearPageAlerts()).toBe(undefined); 
        
-        expect(listItemStatus.innerHTML).toBe("");
-        expect(listItemStatus.innerHTML).not.toBe("Calculation data loaded succesfully!")
+        expect(loadStatus.innerHTML).toBe("");
+        expect(loadStatus.innerHTML).not.toBe("Calculation data loaded succesfully!")
         expect(mainCalculator.className.split(' ').includes("success-border")).toBe(false);
         expect(display.className.split(' ').includes("success-border")).toBe(false);
 

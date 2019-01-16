@@ -1,0 +1,345 @@
+/*-----------------------------------------color variables*/
+$light-turquoise: #21A5A5;
+$turquoise: #007C7C;
+$dark-turquoise: #004A4A;
+$blue: #2E71C2; 
+$light-blue: #65BDDA;
+$extra-light-blue: #A7DFDF;
+
+$purple: #CB00B2;
+$dark-purple: #261843;
+
+$green: #1BC340;
+$light-green: #56D756;
+
+$red: #F04D1E;
+$orange: #FF8E00;
+$yellow: #E8EE00;
+$white: #EDEAEA;
+
+
+/*------------------------------------------parent div colors*/
+ /*they dont require borders*/
+.home {
+    background: $light-blue;
+    color:	$white;
+}
+header, footer, .main-calculation-backup, .main-calculator {
+    background: $turquoise;
+    color: $white;
+}
+
+/*-------------------------------------------------color mixins for child divs of calculator-section & calculation-backup-section*/
+@mixin feature-colors($background) {
+    background: $background;
+    border: 1px solid $dark-turquoise;
+    @if $background == $light-blue or $background == $extra-light-blue or $background == $yellow or $background == $light-turquoise {
+        color: $dark-purple;
+    }
+    @else {
+        color: $white;
+    }
+}
+
+.num, .delete-calc {
+    @include feature-colors($red); 
+}
+.opp {
+    @include feature-colors($blue); 
+}
+.answer, .switch-calculation-display, .save-calc, .load-calc {
+    @include feature-colors($green); 
+}
+.divide100, .negative {
+    @include feature-colors($orange);
+}
+.remove, .clear {
+    @include feature-colors($purple);
+}
+button:hover {
+    @include feature-colors($yellow);
+}
+.form-control {
+    @include feature-colors($extra-light-blue);
+}
+.text-input-background {
+    @include feature-colors($extra-light-blue);
+}
+.list-group-item, .saved-calculation {
+    @include feature-colors($light-turquoise);
+}
+.screen-display-background {
+    @include feature-colors($dark-purple);
+}
+
+/*--------------------------------------transitons of color and opacity*/
+/*new-saved-calculation color transistion*/
+@-webkit-keyframes green-to-blue-fade {   
+	0% {background: $green;}
+	100% {background: $light-turquoise;}
+ }
+ @keyframes green-to-blue-fade {
+	0% {background: $green;}
+	100% {background: $light-turquoise;}
+ }
+ .new-saved-calculation {
+	-webkit-animation: green-to-blue-fade 1s ease-in 1;
+	animation: green-to-blue-fade 1s ease-in 1;
+ }
+
+/*removing-list-item opacity transition*/
+ .removing-list-item {
+	opacity: 0;
+	transition: opacity .25s ease-in;
+	-moz-transition: opacity .25s ease-in;
+	-webkit-transition: opacity .25s ease-in;
+}
+
+/*------------------other color / type variations for fonts and borders*/
+/*font colors*/
+.sub-heading {
+	color: $dark-purple;
+}
+.green-display-text {
+	color: $green;
+}
+#save-status, #load-status {
+	color: green;
+}
+#warning-status {
+	color: red;
+}
+/*thick borders*/
+.warning-border {
+	border: 3px solid $red !important;
+}
+.success-border, .enlarged-display {
+	border: 3px solid $green !important;
+}
+/*border radius*/
+#num1 {
+	border-radius: 5px 0px 0px 0px;
+}
+#add {
+	border-radius: 0px 5px 0px 0px;
+}
+.clear{
+	border-radius: 0px 0px 0px 15px;
+}
+.answer{
+	border-radius: 0px 0px 15px 0px;
+}
+.switch-calculation-display, .save-calc, .load-calc, .delete-calc {
+	border-radius: 5px 5px 5px 5px;
+}
+.enlarged-display {
+	border-radius: 10px 10px 10px 10px;
+}
+
+/*----------------------------------------------------------------images*/
+.logo {
+	position: relative;
+	float: left;
+	width:60px;
+	margin: 6px 2px 0px 11px;
+}
+
+/*--------------------------------------------------font style, sizes and font margins*/
+.main-heading{
+	font-family: monospace;
+	font-size: 15px;
+	margin-top: 11px;
+	text-align:center;
+}
+button {
+    font: inherit 14px !important;
+}
+
+/*-------------------------------------------------------------------mixins for vertical margin and max-width*/
+@mixin max-width-margin($max-width, $top-bottom-margin) {
+	width: 100% !important;
+	max-width: $max-width !important;
+	min-width: 304px !important;
+	margin: $top-bottom-margin auto;   
+}
+/*-------------------------------------------------mixins for header and footer to cover over 'main' element*/
+@mixin height-cover-over($div-name,$height){
+	height: $height;
+	@if $div-name == 'footer' {
+		margin-top: -$height;
+	}
+	@else {
+		margin-bottom: -$height;
+	}
+}
+/*-----------------------------------------------------------------------heights, width, margins and padding*/
+/*parent divs*/
+.home, main {
+	height: 100vh;
+	padding: 0px 0px 0px 0px;
+}
+header {
+	@include height-cover-over('header', 60px);
+}
+footer {
+	clear: both;
+    position: relative;
+	bottom: 0;
+	width: 100%;
+	@include height-cover-over('footer', 50px);
+}
+/*calculation backup section and status alerts*/
+.calculation-backup-section{
+	padding: 70px 0px 30px 0px !important;
+	.main-calculation-backup, h4, #save-status, #warning-status {
+		@include max-width-margin(600px, 5px);
+	}
+	#save-status, #warning-status {
+		padding-left: 5px;
+	}
+}
+.main-calculation-backup {
+    border-radius: 5px;
+    .row {
+        padding-top: 5px;
+    	margin: 0 5px;
+    }
+    .calculation-save-form, .displayed-calculation-list {
+        padding: 0 0 0 0;
+    }
+    .calculation-save-form, .saved-calculation, .new-saved-calculation {
+        overflow: hidden;  
+    }
+    .calculation-save-form {
+        height: auto;
+        margin-bottom: 13px;
+    }
+    .save-calc {
+		width: 100%;
+		min-width: 152px;
+		max-width: 200px;
+		margin: 5px 0px;
+    }
+    .list-group-item {
+        word-break: break-all;
+    }
+    .saved-calculation, .new-saved-calculation {
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+        margin-bottom: -1px;
+    }
+}
+/*calculator section*/
+.calculator-section {
+    padding: 100px 0px 0px 0px !important;
+    h4, #load-status, .main-calculator, .keyboard-instructions {
+		@include max-width-margin(350px, 5px);
+    }
+}
+.main-calculator {
+	height: 340px;
+	margin: 0 0 0 0;
+	padding: 2.5px 0 0 0;
+    border-radius: 2px 2px 15px 15px;
+    .display{
+        position: relative;
+        width: auto;
+        height: 70px;
+        margin: 2px 2px 5px;   
+        border-radius: 3px 3px 3px 3px;
+        .displayed-calc, .displayed-input {
+            position: relative;
+            margin-left: 10px;
+        }
+	}
+}
+.enlarged-display {
+	height: auto;
+	padding: 10px 5px 5px 5px;
+	@include max-width-margin(450px, 1px);
+}
+
+/*calculator buttons*/
+.buttons {
+	width: auto;
+	padding: 0 0 0 0;
+	margin: 5px auto 0;
+	position: relative;
+    button {
+        position: relative;
+        display: block;
+        text-align: center;
+        height: 40px;
+    }
+    .switch-calculation-display {
+        width: 75%;
+        margin: 1px auto 1px;
+    }
+    .num, .opp, .divide100, .clear, .negative, .remove {
+        width: 23%;
+        float: left;
+    	margin: 1px 1% 1px 1%;
+    }
+}
+
+/*------------------------------------------------------copywrite*/
+.copywrite {
+	padding: 12px 5px 5px 10px;
+}
+
+/*--------------------------------------------------media queries*/
+@media only screen and (min-width: 375px) {
+	.main-calculator {
+		border-radius: 10px 5px 15px 15px;
+		.display {
+			margin: 5px 5px;   
+			border-radius: 10px 5px 5px 5px;
+		}
+	}
+}
+@media only screen and (min-width: 449px) {
+	header {
+		@include height-cover-over('header', 70px);
+	}
+	.main-heading {
+		font-size: 20px;
+	}
+	.logo {
+		width: 70px;
+		margin: 8px 2px 0px 11px;
+	}
+}
+@media only screen and (min-width: 564px) {
+	header {
+		@include height-cover-over('header', 77px);
+	}
+	.main-heading {
+		font-size: 24px;
+	}
+	.logo {
+		width: 77px;
+	}
+}
+@media only screen and (min-width: 670px) {
+	header {
+		@include height-cover-over('header', 85px);
+	}
+	.main-heading {
+		font-size: 26px;
+	}
+	.logo {
+		width: 85px;
+		margin: 15px 2px 0px 11px;
+	}
+}
+@media only screen and (min-width: 720px) {
+	.main-heading {
+		padding-top: 15px;
+	}
+}
+@media only screen and (min-width: 992px) {
+	.calculation-backup-section, .calculator-section {
+		padding: 100px 0px 70px 0px !important;
+	}
+}

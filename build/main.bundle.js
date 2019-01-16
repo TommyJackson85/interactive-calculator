@@ -9,7 +9,9 @@ var displayedCalc = document.getElementById("displayed-calc");
 var displayedInput = document.getElementById("displayed-input");
 
 /*full calculation display*/
-var displayedEntireCalc = document.getElementById("displayed-entire-calc");
+var enlargedDisplay = document.getElementById("enlarged-display");
+var displayedEntireCalc = document.getElementById("displayed-entire-calc"); /*child div of enlargedDisplay*/
+var displayFullCalc = false;
 
 /*Elements for: calculations list, description input and save calculation button*/
 var displayedCalculationList = document.getElementById("displayed-calculation-list");
@@ -18,7 +20,7 @@ var saveCalculation = document.getElementById("save-calc");
 
 /*page status alerts from calculations list section*/
 var saveStatus = document.getElementById("save-status");
-var listItemStatus = document.getElementById("list-item-status");
+var loadStatus = document.getElementById("load-status");
 var warningStatus = document.getElementById("warning-status");
 
 /*global arrays and boolean variables for main calculator*/
@@ -65,24 +67,6 @@ var pushToCalculation = function pushToCalculation(array) {
 	return array;
 };
 
-var displayFullCalc = false;
-var displayCalculation = function displayCalculation() {
-	if (displayFullCalc === true) {
-		displayedCalc.innerHTML = "calculation displayed above";
-		displayedCalc.style.color = "rgb(146, 238, 146)"; /*light green*/
-		return displayedEntireCalc.innerHTML = calculation.length == 0 ? "cleared" : calculation.join(" ");
-	} else {
-		displayedEntireCalc.innerHTML = "";
-		displayedCalc.style.color = "#ecf0f1";
-		if (calculation.join(" ").length > 34) {
-			return displayedCalc.innerHTML = "..." + calculation.join(" ").slice(calculation.join(" ").length - 34);
-			//keeps it to the length of 34 or less.
-		} else {
-			return displayedCalc.innerHTML = calculation.length == 0 ? "cleared" : calculation.join(" ");
-		}
-	}
-};
-
 var displayAll = function displayAll() {
 	displayCalculation(); /*called while the function returns the correct displayedInput*/
 	if (newOperator.length > 0) {
@@ -97,21 +81,38 @@ var displayAll = function displayAll() {
 };
 
 var clearPageAlerts = function clearPageAlerts() {
-
 	saveStatus.innerHTML = "";
-	listItemStatus.innerHTML = "";
+	loadStatus.innerHTML = "";
 	warningStatus.innerHTML = "";
-
 	mainCalculator.classList.remove("success-border");
 	display.classList.remove("success-border");
 	calculationDescriptionInput.classList.remove("warning-border");
 	saveCalculation.classList.remove("warning-border");
 };
 
-var enlargedDisplay = document.getElementById("enlarged-display");
-enlargedDisplay.style.display = "none";
+var displayCalculation = function displayCalculation() {
+	if (displayFullCalc === true) {
+		/*moves built calculation to enlarged display*/
+		displayedCalc.innerHTML = "calculation displayed above";
+		displayedCalc.classList.add('green-display-text');
+		return displayedEntireCalc.innerHTML = calculation.length == 0 ? "cleared" : calculation.join(" ");
+	} else {
+		/*moves built calculation to calculator display*/
+		displayedEntireCalc.innerHTML = "";
+		displayedCalc.classList.remove('green-display-text');
+		if (calculation.join(" ").length > 34) {
+			return displayedCalc.innerHTML = "..." + calculation.join(" ").slice(calculation.join(" ").length - 34);
+			//keeps it to the length of 34 or less.
+		} else {
+			return displayedCalc.innerHTML = calculation.length == 0 ? "cleared" : calculation.join(" ");
+		}
+	}
+};
+
+enlargedDisplay.style.display = "none"; /*not displayed on load*/
 var switchCalculationDisplay = document.getElementById("switch-calculation-display");
 switchCalculationDisplay.onclick = function () {
+	/*hides or shows enlarged display*/
 	if (displayFullCalc == true) {
 		displayFullCalc = false;
 		enlargedDisplay.style.display = "none";
@@ -119,18 +120,18 @@ switchCalculationDisplay.onclick = function () {
 		displayFullCalc = true;
 		enlargedDisplay.style.display = "block";
 	}
+	/*then re calls displayCalculation()*/
 	displayCalculation();
+	/*returns Button label*/
 	return switchCalculationDisplay.innerHTML = displayFullCalc == true ? "Hide Full Calculation" : "Show Full Calculation";
 };
 
 /*list of number buttons of calculator and each onclick function*/
-
 var numberBuilder = function numberBuilder(e) {
 	clearPageAlerts();
 	e.toString();
 	console.log(typeof e === "undefined" ? "undefined" : _typeof(e));
 	if (calculation.length == 0 || newOperator.length == 1 || ['=', '+', '-', 'x', '/'].includes(calculation[calculation.length - 1])) {
-
 		if (calculation[calculation.length - 1] == "=") {
 			clearAll();
 		}
@@ -146,7 +147,6 @@ var numberBuilder = function numberBuilder(e) {
 			newNumber.push(e);
 		}
 		displayCalculation();
-		console.log(newNumber);
 		return displayedInput.innerHTML = newNumber.length == 35 ? "exceeds limit>>" + newNumber.join("").slice(13) : newNumber.join("");
 	}
 };
@@ -227,6 +227,7 @@ try {
 	}
 
 	/*other calculator buttons*/
+	//changes input number (new number or answer) to a negative or reverts back to positive
 } catch (err) {
 	_didIteratorError2 = true;
 	_iteratorError2 = err;
@@ -254,34 +255,10 @@ negative.onclick = function () {
 	}
 };
 
-var clear = document.getElementById("clear");
-clear.onclick = function () {
-	return clearAllAndDisplay();
-};
-
-//changes input number (new number or answer) to a negative or reverts back to positive
-var remove = document.getElementById("remove");
-remove.onclick = function () {
-
-	clearPageAlerts();
-
-	if (newOperator.length > 0 || newNumber.length > 0) {
-		if (['=', '+', '-', 'x', '/'].includes(calculation[calculation.length - 1])) {
-			calculation.splice(-1, 1);
-		};
-		clearInputs();
-	} else {
-		calculation.splice(-2, 2);
-	}
-	displayCalculation();
-	return displayedInput.innerHTML = "removed";
-};
-
+//divides built number by 100
 var divide100 = document.getElementById("divide100");
 divide100.onclick = function () {
-
 	clearPageAlerts();
-
 	if (newNumber.length >= 1) {
 		var tempNum = (eval(newNumber.join("")) / 100 + "").split("");
 		empty(newNumber);
@@ -317,15 +294,34 @@ divide100.onclick = function () {
 		return displayedInput.innerHTML = newNumber.join("");
 	}
 };
+//calls clearAllAndDisplay
+var clear = document.getElementById("clear");
+clear.onclick = function () {
+	return clearAllAndDisplay();
+};
+
+/*removes previous displayedInput and/or the last 1 or 2 indexs of the calculation array, leaving a number as the last index*/
+var remove = document.getElementById("remove");
+remove.onclick = function () {
+	clearPageAlerts();
+	if (newOperator.length > 0 || newNumber.length > 0) {
+		if (['=', '+', '-', 'x', '/'].includes(calculation[calculation.length - 1])) {
+			calculation.splice(-1, 1);
+		};
+		clearInputs();
+	} else {
+		calculation.splice(-2, 2);
+	}
+	displayCalculation();
+	return displayedInput.innerHTML = "removed";
+};
 
 /*resuable functions called from saveCalc.onclick*/
 var displaySavedCalculations = function displaySavedCalculations() {
-
 	/*value to be returned if calculations list is empty*/
 	if (calculationsList.length == 0) {
-		return displayedCalculationList.innerHTML = "<li class=\"list-group-item\">\n\t\t\t\tNo Calculations are saved.\n\t\t\t</li>";
+		return displayedCalculationList.innerHTML = "<li class=\"saved-item-background list-group-item\">\n\t\t\t\tNo Calculations are saved.\n\t\t\t</li>";
 	}
-
 	var calculationBriefs = [];
 	/*adds all saved calculations to displayedCalcultionList*/
 	for (var key in calculationsList) {
@@ -336,16 +332,14 @@ var displaySavedCalculations = function displaySavedCalculations() {
 		var inputType = savedCalculation[savedCalculation.length - 1] == "=" ? "answer / next input" : "next input";
 		/*HTML built for diplay*/
 		if (saveStatus.innerHTML == "Calculation data saved below!" && key == calculationsList.length - 1) {
-			calculationBriefs.push("<li id=\"saved-calculation" + key + "\"class=\"list-group-item new-saved-calculation\">\n\t\t\t\t<p><strong> Description </strong> : <i>" + savedDescription + "</i> </p>\n\t\t\t\t<p><strong> Built calculation </strong> : " + savedCalculation.join(" ") + " </p>\n\t\t\t\t<p><strong> " + inputType + " </strong> : " + _displayedInput + " </p>\n\t\t\t\t<button id=\"delete-calc" + key + "\" class=\"col-xs-3 btn btn-warning delete-calc\" value=\"" + key + "\" href=\"#\">delete</button>\n\t\t\t\t<button id=\"load-calc" + key + "\" class=\"col-xs-3 btn btn-warning load-calc\" value=\"" + key + "\" href=\"#\">load</button>\n\t\t\t\t</li>");
+			calculationBriefs.push("<li id=\"saved-calculation" + key + "\"class=\"list-group-item new-saved-calculation\">\n\t\t\t\t\t<h6><strong> Description </strong> : <i>" + savedDescription + "</i> </h6>\n\t\t\t\t\t<h6><strong> Built calculation </strong> : " + savedCalculation.join(" ") + " </h6>\n\t\t\t\t\t<h6><strong> " + inputType + " </strong> : " + _displayedInput + " </h6>\n\t\t\t\t\t<button id=\"delete-calc" + key + "\" class=\"col-xs-3 btn red-button delete-calc\" value=\"" + key + "\" href=\"#\">delete</button>\n\t\t\t\t\t<button id=\"load-calc" + key + "\" class=\"col-xs-3 btn green-button load-calc\" value=\"" + key + "\" href=\"#\">load</button>\n\t\t\t\t</li>");
 		} else {
-			calculationBriefs.push("<li id=\"saved-calculation" + key + "\"class=\"list-group-item saved-calculation\">\n\t\t\t\t\t<h6><strong> Description </strong> : <i>" + savedDescription + "</i> </h6>\n\t\t\t\t\t<h6><strong> Built calculation </strong> : " + savedCalculation.join(" ") + " </h6>\n\t\t\t\t\t<h6><strong> " + inputType + " </strong> : " + _displayedInput + " </h6>\n\t\t\t\t\t<button id=\"delete-calc" + key + "\" class=\"col-xs-3 btn btn-warning delete-calc\" value=\"" + key + "\" href=\"#\">delete</button>\n\t\t\t\t\t<button id=\"load-calc" + key + "\" class=\"col-xs-3 btn btn-warning load-calc\" value=\"" + key + "\" href=\"#\">load</button>\n\t\t\t\t</li>");
+			calculationBriefs.push("<li id=\"saved-calculation" + key + "\"class=\"list-group-item saved-calculation\">\n\t\t\t\t\t<h6><strong> Description </strong> : <i>" + savedDescription + "</i> </h6>\n\t\t\t\t\t<h6><strong> Built calculation </strong> : " + savedCalculation.join(" ") + " </h6>\n\t\t\t\t\t<h6><strong> " + inputType + " </strong> : " + _displayedInput + " </h6>\n\t\t\t\t\t<button id=\"delete-calc" + key + "\" class=\"col-xs-3 btn red-button delete-calc\" value=\"" + key + "\" href=\"#\">delete</button>\n\t\t\t\t\t<button id=\"load-calc" + key + "\" class=\"col-xs-3 btn green-button load-calc\" value=\"" + key + "\" href=\"#\">load</button>\n\t\t\t\t</li>");
 		}
 		displayedCalculationList.innerHTML = calculationBriefs.slice().reverse().join(" ");
 	}
-
-	/* Gives the buttons of the displayed calculations their required functionality and return value*/
-
-	var _loop = function _loop() {
+	/*Gives the buttons of the displayed calculations their required functionality and return value*/
+	for (var key in calculationsList) {
 		var deleteCalc = document.getElementById("delete-calc" + key);
 		deleteCalc.onclick = function () {
 			clearPageAlerts();
@@ -356,27 +350,21 @@ var displaySavedCalculations = function displaySavedCalculations() {
 			}, 500);
 			return warningStatus.innerHTML = "Calculation data deleted!";
 		};
-
 		var loadCalc = document.getElementById("load-calc" + key);
 		loadCalc.onclick = function (e) {
 			console.log(window.scrollY);
 			clearPageAlerts();
-			loadCalc.classList.add("loaded-calc");
+			/*loadCalc.classList.add("loaded-calc");*/
 			calculation = calculationsList[this.value].savedCalculation.slice();
 			newOperator = calculationsList[this.value].savedOperator.slice();
 			newNumber = calculationsList[this.value].savedNumber.slice();
 			disableDec = calculationsList[this.value].savedDecimalStatus;
 			displayAll();
 			scrollToTop();
-			/*document.body.scrollTop = 0; */ // For Safari
 			mainCalculator.classList.add("success-border");
 			display.classList.add("success-border");
-			return listItemStatus.innerHTML = "Calculation data loaded succesfully!";
+			return loadStatus.innerHTML = "Calculation data loaded succesfully!";
 		};
-	};
-
-	for (var key in calculationsList) {
-		_loop();
 	}
 };
 
@@ -436,7 +424,6 @@ saveCalculation.onclick = function () {
 		saveCalculation.classList.add("warning-border");
 		return warningStatus.innerHTML = "Can not save! Calculations List has exceeded it's data limit!";
 	}
-
 	var savedCalc = new Object();
 	savedCalc.savedDescription = calculationDescriptionInput.value;
 	savedCalc.savedCalculation = calculation.slice(); /*must pass arrays by copy, not reference*/
@@ -444,7 +431,6 @@ saveCalculation.onclick = function () {
 	savedCalc.savedOperator = newOperator.slice();
 	savedCalc.savedDecimalStatus = disableDec;
 
-	/*savedCalc.displayedInput*/
 	if (savedCalc.savedNumber.length > 0) {
 		savedCalc.displayedInput = savedCalc.savedNumber.join("");
 	}
@@ -462,9 +448,9 @@ saveCalculation.onclick = function () {
 	return saveStatus.innerHTML = "Calculation data saved below!";
 };
 
+/*keyboard press responses*/
 document.onkeypress = function (e) {
 	var key = e.key || e.shiftKey;
-
 	if (e.defaultPrevented || document.activeElement.tagName == 'TEXTAREA') {
 		return; // Do nothing if the event was already processed OR if the description input (node 'TEXTAREA') is Active;
 	}

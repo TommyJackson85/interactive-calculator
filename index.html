@@ -9,15 +9,14 @@
     <!--<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>-->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet" type="text/css">
-    
     <!--<link href="css/bootstrap-theme.css.map" rel="stylesheet" media="screen">-->
   </head>
   <body class="home" id="home">
     <header>
       <div class="container-fluid">
-        <div class="col-xs-12 heading" >
+        <div class="col-xs-12 heading">
           <img class="logo" src="images/LJNlogo.png" alt="lgn-logo" />
-          <h1 id="heading" class="heading" >The LJN Interactive Mega-Calculator</h1>
+          <h1 id="main-heading" class="main-heading" >The LJN Interactive Mega Calculator</h1>
         </div>
       </div>
     </header>
@@ -27,67 +26,69 @@
         <section class="calculator-section section-1 col-xs-12 col-sm-12 col-md-6 col-lg-6">
           <!--regular HTML--> 
           <h4 class="sub-heading">The Mega Calculator</h4>
-          <div id="enlarged-display" class="enlarged-display">
-              <!--Optional display for calculation which always shows the full length.
-              It has the option to be hidden.-->
-              <!--This paragraph is manipulated by the DOM-->
-              <p id="displayed-entire-calc" class="displayed-entire-calc">
-              </p>
-            </div>
+          <h5 id="load-status"></h5>            
+          <div id="enlarged-display" class="screen-display-background enlarged-display">
+            <!--Optional display for calculation which always shows the full length.
+            It has the option to be hidden.-->
+            <!--This paragraph is manipulated by the DOM-->
+            <p id="displayed-entire-calc" class="displayed-entire-calc">
+            </p>
+          </div>
             <!--This button's innerHTML is manipulated by the DOM-->
-            <div id="main-calculator" class="main-calculator">
-              <!--<div class="row">-->
-                <!--main display for calculation, which only shows a set length from the end of the calculation-->
-              <div id="display" class="display">
-                <!--these paragraphs are manipulated by the DOM-->
-                <p id="displayed-calc" class="displayed-calc">Begin Calculation</p>
-                <p id="displayed-input" class="displayed-input">0</p>
-              </div>
-              <div id="buttons" class="buttons">
-                <button id="switch-calculation-display" class="switch-calculation-display" href="#">Show Full Calculation</button>
-                <button id="num1" class="num" value="1" href="#">1</button>          
-                <button id="num2" class="num" value="2" href="#">2</button>
-                <button id="num3" class="num" value="3" href="#">3</button>
-                <button id="add" class="opp" value="+" href="#">+</button>
-                <button id="num4" class="num" value="4" href="#">4</button>                
-                <button id="num5" class="num" value="5" href="#">5</button>
-                <button id="num6" class="num" value="6" href="#">6</button>
-                <button id="subtract" class="opp" value="-" href="#">-</button>                
-                <button id="num7" class="num" value="7" href="#">7</button>
-                <button id="num8" class="num" value="8" href="#">8</button>
-                <button id="num9" class="num" value="9" href="#">9</button>
-                <button id="multiply" class="opp" value="x" href="#">X</button>
-                <button id="divide100" class="divide100" href="#">%</button>                
-                <button id="num0" class="num" value="0" href="#">0</button>            
-                <button id="numDec" class="num numDec" value="." href="#">dec</button>
-                <button id="divide" class="opp" value="/" href="#">/</button>
-                <button id="clear" class="clear" href="#">C</button>                       
-                <button id="negative" class="num negative" href="#">neg</button>
-                <button id="remove" class="remove" href="#"><-</button>
-                <button id="answer" class="opp answer" value="=" href="#">=</button>
-              </div>
-             <!-- <div id="calculator-branding">
-                <img class="logo" src="images/LJNlogo.png" alt="lgn-logo" />
-                <strong class="calculator-header">Mega-Calculator &copy</strong>
-              </div> -->
+          <div id="main-calculator" class="secondary-background main-calculator">
+            <!--<div class="row">-->
+            <!--main display for calculation, which only shows a set length from the end of the calculation-->
+            <div id="display" class="screen-display-background display">
+              <!--these paragraphs are changed through the main.js file-->
+              <p id="displayed-calc" class="displayed-calc">Begin Calculation</p>
+              <p id="displayed-input" class="displayed-input">0</p>
             </div>
+            <div id="buttons" class="buttons">
+              <button id="switch-calculation-display" class="green-button switch-calculation-display" href="#">Show Full Calculation</button>
+              <button id="num1" class="num" value="1" href="#">1</button>          
+              <button id="num2" class=" num" value="2" href="#">2</button>                
+              <button id="num3" class="num" value="3" href="#">3</button>
+              <button id="add" class="opp" value="+" href="#">+</button>
+              <button id="num4" class="num" value="4" href="#">4</button>                
+              <button id="num5" class="num" value="5" href="#">5</button>
+              <button id="num6" class="num" value="6" href="#">6</button>
+              <button id="subtract" class="opp" value="-" href="#">-</button>                
+              <button id="num7" class="num" value="7" href="#">7</button>
+              <button id="num8" class="num" value="8" href="#">8</button>
+              <button id="num9" class="num" value="9" href="#">9</button>
+              <button id="multiply" class="opp" value="x" href="#">X</button>
+              <button id="divide100" class="divide100" href="#">%</button>                
+              <button id="num0" class="num" value="0" href="#">0</button>            
+              <button id="numDec" class="num numDec" value="." href="#">dec</button>
+              <button id="divide" class="opp" value="/" href="#">/</button>
+              <button id="clear" class="clear" href="#">C</button>                       
+              <button id="negative" class="negative" href="#">neg</button>
+              <button id="remove" class="remove" href="#"><-</button>
+              <button id="answer" class="opp answer" value="=" href="#">=</button>
+            </div>
+          </div>
+          <div class="keyboard-instructions">
+            <h6>Keyboard Input Buttons<i>(click the main page to allow use of Keyboard buttons):
+            </i></h6>
+            <h6><i>numbers: 0 - 9; decimal: '.'; add: '+'; subtract: '-'; multiply: 'x', '*'; divide: '/'; answer: '=', 'Return'; divide number by 100: '%'; switch number from positive to negative: 'n'; remove previous inputs: 'r'; clear entire calculation: 'c'; switch calculation displays: 'd'; save calculation: 's'.
+            </i></h6>
+          </div>
         </section>
         <!--bootstrap HTML-->
-        <aside id="calculation-backup" class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-6 col-lg-6 calculation-backup section-2">
-          <h4 class="sub-heading">Calculation Saver and Saved Calculations List</h4>
+        <aside id="calculation-backup-section" class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-6 col-lg-6 calculation-backup-section section-2">
+          <h4 class="sub-heading">Calculation Backup</h4>
           <h5 id="save-status"></h5>
-          <h5 id="list-item-status"></h5>
           <h5 id="warning-status"></h5>
           <div class="main-calculation-backup">  
             <div class="row">
-              <div id="calculation-save-form" class="calculation-data-file">
+              <div id="calculation-save-form" class="calculation-save-form">
                 <div class="form-group">
-                  <textarea class="form-control" id="calculation-description-input" rows="3"  placeholder="describe your calculation values, i.e. 40 'apples' x 20 'baskets'"></textarea>
-                  <button id="save-calc" class="save-calc btn btn-warning col-xs-6" value="1" href="#">Save Calculation</button>
+                  <textarea class="text-input-background form-control" id="calculation-description-input" rows="3"  placeholder="describe your calculation values, i.e. 40 'apples' x 20 'baskets'"></textarea>
+                  <button id="save-calc" class="save-calc btn col-xs-6" value="1" href="#">Save Calculation</button>
                 </div>
               </div>
               <ul id="displayed-calculation-list" class="list-group col-xs-12 displayed-calculation-list">
-                <li class="list-group-item">
+                <li class="list-group-item saved-item-background">
                   No calculations are saved.
                 </li>
               </ul>
@@ -96,7 +97,7 @@
         </aside>
       </div>
     </main>
-    <footer id="copywrite" class="copywrite">
+    <footer id="copywrite" class="secondary-background copywrite">
         <strong>Tommy Jackson &copy</strong>
     </footer>
     <!--<script src="scripts/main.js"></script>-->
