@@ -2,7 +2,7 @@
 /*------------------------------------------parent div colors*/
 /*they dont require borders*/
 .home {
-  background: #65BDDA;
+  background: #31656A;
   color: #EDEAEA;
 }
 
@@ -30,7 +30,7 @@ header, footer, .main-calculation-backup, .main-calculator {
   color: #EDEAEA;
 }
 
-.divide100, .negative {
+.divide100, .plus-minus {
   background: #FF8E00;
   border: 1px solid #004A4A;
   color: #EDEAEA;
@@ -54,19 +54,13 @@ button:hover {
   color: #261843;
 }
 
-.text-input-background {
-  background: #A7DFDF;
-  border: 1px solid #004A4A;
-  color: #261843;
-}
-
 .list-group-item, .saved-calculation {
   background: #21A5A5;
   border: 1px solid #004A4A;
   color: #261843;
 }
 
-.screen-display-background {
+.display, .enlarged-display {
   background: #261843;
   border: 1px solid #004A4A;
   color: #EDEAEA;
@@ -105,20 +99,12 @@ button:hover {
 
 /*------------------other color / type variations for fonts and borders*/
 /*font colors*/
-.sub-heading {
-  color: #261843;
-}
-
-.green-display-text {
+#save-status, #calculator-status, .green-display-text {
   color: #1BC340;
 }
 
-#save-status, #load-status {
-  color: green;
-}
-
 #warning-status {
-  color: red;
+  color: #F04D1E;
 }
 
 /*thick borders*/
@@ -155,6 +141,11 @@ button:hover {
   border-radius: 10px 10px 10px 10px;
 }
 
+/*-------------------------------------------------------------scroll bar*/
+.home {
+  overflow: auto;
+}
+
 /*----------------------------------------------------------------images*/
 .logo {
   position: relative;
@@ -175,8 +166,8 @@ button {
   font: inherit 14px !important;
 }
 
-/*-------------------------------------------------------------------mixins for vertical margin and max-width*/
-/*-------------------------------------------------mixins for header and footer to cover over 'main' element*/
+/*-------------------------------------------------------------------mixin for vertical margin and max-width*/
+/*-------------------------------------------------mixin for header and footer to cover over 'main' element*/
 /*-----------------------------------------------------------------------heights, width, margins and padding*/
 /*parent divs*/
 .home, main {
@@ -198,25 +189,38 @@ footer {
   margin-top: -50px;
 }
 
+.keyboard-instructions, .sub-heading {
+  padding: 0px 5px;
+}
+
 /*calculation backup section and status alerts*/
 .calculation-backup-section {
-  padding: 70px 0px 30px 0px !important;
+  padding: 20px 0px 30px 0px !important;
 }
-.calculation-backup-section .main-calculation-backup, .calculation-backup-section h4, .calculation-backup-section #save-status, .calculation-backup-section #warning-status {
+.calculation-backup-section .main-calculation-backup, .calculation-backup-section h4, .calculation-backup-section #save-status, .calculation-backup-section #warning-status, .calculation-backup-section .keyboard-instructions {
   width: 100% !important;
   max-width: 600px !important;
   min-width: 304px !important;
   margin: 5px auto;
 }
+.calculation-backup-section .section-description {
+  margin: 5px 0px 5px 5px;
+}
 .calculation-backup-section #save-status, .calculation-backup-section #warning-status {
   padding-left: 5px;
+}
+.calculation-backup-section .keyboard-instructions {
+  display: block;
 }
 
 .main-calculation-backup {
   border-radius: 5px;
 }
+.main-calculation-backup .section-description {
+  padding: 5px 0px 0px 5px;
+}
 .main-calculation-backup .row {
-  padding-top: 5px;
+  padding-top: 0px;
   margin: 0 5px;
 }
 .main-calculation-backup .calculation-save-form, .main-calculation-backup .displayed-calculation-list {
@@ -249,11 +253,14 @@ footer {
 .calculator-section {
   padding: 100px 0px 0px 0px !important;
 }
-.calculator-section h4, .calculator-section #load-status, .calculator-section .main-calculator, .calculator-section .keyboard-instructions {
+.calculator-section h4, .calculator-section #calculator-status, .calculator-section .main-calculator, .calculator-section .keyboard-instructions {
   width: 100% !important;
   max-width: 350px !important;
   min-width: 304px !important;
   margin: 5px auto;
+}
+.calculator-section .keyboard-instructions {
+  display: none;
 }
 
 .main-calculator {
@@ -278,7 +285,7 @@ footer {
   height: auto;
   padding: 10px 5px 5px 5px;
   width: 100% !important;
-  max-width: 450px !important;
+  max-width: 600px !important;
   min-width: 304px !important;
   margin: 1px auto;
 }
@@ -300,7 +307,7 @@ footer {
   width: 75%;
   margin: 1px auto 1px;
 }
-.buttons .num, .buttons .opp, .buttons .divide100, .buttons .clear, .buttons .negative, .buttons .remove {
+.buttons .num, .buttons .opp, .buttons .divide100, .buttons .clear, .buttons .plus-minus, .buttons .remove {
   width: 23%;
   float: left;
   margin: 1px 1% 1px 1%;
@@ -308,7 +315,7 @@ footer {
 
 /*------------------------------------------------------copywrite*/
 .copywrite {
-  padding: 12px 5px 5px 10px;
+  padding: 5px 5px 0px 10px;
 }
 
 /*--------------------------------------------------media queries*/
@@ -365,7 +372,7 @@ footer {
     margin: 15px 2px 0px 11px;
   }
 }
-@media only screen and (min-width: 712px) {
+@media only screen and (min-width: 720px) {
   .main-heading {
     padding-top: 15px;
   }
@@ -373,6 +380,18 @@ footer {
 @media only screen and (min-width: 992px) {
   .calculation-backup-section, .calculator-section {
     padding: 100px 0px 70px 0px !important;
+  }
+
+  .calculator-section .keyboard-instructions {
+    display: block;
+  }
+
+  .calculation-backup-section .keyboard-instructions {
+    display: none;
+  }
+
+  .save-status {
+    display: none;
   }
 }
 

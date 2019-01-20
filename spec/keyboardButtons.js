@@ -5,9 +5,9 @@ describe('document.onkeypress responses, while pressing the relevent keyboard bu
         'Enter' and 'Return' keyboard values also call utiliseOperator('=');
         Other keyboard buttons are used as short cuts: 
         'd' and 'D' call switchCalculationDisplay.onclick();
-        'n' and 'N' call negative.onclick();
+        '±' call plusMinus.onclick();
         's' and 'S' call saveCalculation.onclick();
-        'p', 'P', and '%' call divide100.onclick();
+        '%' call divide100.onclick();
         'r' and 'R' call remove.onclick();
         Other keys don't call anything back, i.e. 'v','j','g','l';
         A fake keyPress object and fake documentOnKeyPress function were used for this test, noth of which replicate the real document.onkeypress function (on main.js);
@@ -24,7 +24,7 @@ describe('document.onkeypress responses, while pressing the relevent keyboard bu
         }
         let documentOnKeyPress = function(e) {
           /* || e.shiftKey.toString();*/
-            let key = e.key || e.shiftKey ;
+            let key = e.key;
             if (e.defaultPrevented || document.activeElement.tagName == 'TEXTAREA') {
                 return; // Do nothing if the event was already processed OR if the description input (node 'TEXTAREA') is Active;
             }
@@ -36,12 +36,11 @@ describe('document.onkeypress responses, while pressing the relevent keyboard bu
                 case "s": case "S":
                  saveCalculation.onclick();
                  break;
-                 case "p": case "P":
                  case "%":
                  divide100.onclick();
                  break;
-                 case "n": case "N":
-                 negative.onclick();
+                 case "±":
+                 plusMinus.onclick();
                  break;
                  case "r": case "R":
                  remove.onclick();
@@ -157,13 +156,12 @@ describe('document.onkeypress responses, while pressing the relevent keyboard bu
         expect(newNumber).toEqual(['9', '8']);
         expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x', '.1', '/']);
 
-        keyPress.key = 'n';
+        keyPress.key = '±';
         expect(documentOnKeyPress(keyPress)).toBe(undefined);
         expect(newOperator).toEqual([]);
-        expect(newNumber[0]).toBe('-9'); 
+        expect(newNumber[0]).toBe('-9');
+        expect(newNumber).toEqual(['-9','8']);  
         expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x', '.1', '/']);
-
-        keyPress.key = 'N';
         expect(documentOnKeyPress(keyPress)).toBe(undefined);
         expect(newOperator).toEqual([]);
         expect(newNumber).toEqual(['9','8']); 
@@ -178,11 +176,9 @@ describe('document.onkeypress responses, while pressing the relevent keyboard bu
         expect(newNumber).toEqual(['9','8','0','0','0','0']); 
         expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x', '.1', '/']);
 
-        keyPress.key = 'p';
-        expect(documentOnKeyPress(keyPress)).toBe(undefined);
-        keyPress.key = 'P';
-        expect(documentOnKeyPress(keyPress)).toBe(undefined);
         keyPress.key = '%';
+        expect(documentOnKeyPress(keyPress)).toBe(undefined);
+        expect(documentOnKeyPress(keyPress)).toBe(undefined);
         expect(documentOnKeyPress(keyPress)).toBe(undefined);
         expect(newOperator).toEqual([]);
         expect(newNumber).toEqual(['0','.','9','8']); 

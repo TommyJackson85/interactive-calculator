@@ -1,6 +1,7 @@
 /*-----------------------------------------color variables*/
 $light-turquoise: #21A5A5;
 $turquoise: #007C7C;
+$slight-darker-turquoise: #31656A;
 $dark-turquoise: #004A4A;
 $blue: #2E71C2; 
 $light-blue: #65BDDA;
@@ -21,8 +22,8 @@ $white: #EDEAEA;
 /*------------------------------------------parent div colors*/
  /*they dont require borders*/
 .home {
-    background: $light-blue;
-    color:	$white;
+    background: $slight-darker-turquoise;
+    color: $white;
 }
 header, footer, .main-calculation-backup, .main-calculator {
     background: $turquoise;
@@ -50,7 +51,7 @@ header, footer, .main-calculation-backup, .main-calculator {
 .answer, .switch-calculation-display, .save-calc, .load-calc {
     @include feature-colors($green); 
 }
-.divide100, .negative {
+.divide100, .plus-minus {
     @include feature-colors($orange);
 }
 .remove, .clear {
@@ -62,13 +63,10 @@ button:hover {
 .form-control {
     @include feature-colors($extra-light-blue);
 }
-.text-input-background {
-    @include feature-colors($extra-light-blue);
-}
 .list-group-item, .saved-calculation {
     @include feature-colors($light-turquoise);
 }
-.screen-display-background {
+.display, .enlarged-display {
     @include feature-colors($dark-purple);
 }
 
@@ -97,17 +95,11 @@ button:hover {
 
 /*------------------other color / type variations for fonts and borders*/
 /*font colors*/
-.sub-heading {
-	color: $dark-purple;
-}
-.green-display-text {
+#save-status, #calculator-status, .green-display-text {
 	color: $green;
 }
-#save-status, #load-status {
-	color: green;
-}
 #warning-status {
-	color: red;
+	color: $red;
 }
 /*thick borders*/
 .warning-border {
@@ -136,6 +128,11 @@ button:hover {
 	border-radius: 10px 10px 10px 10px;
 }
 
+/*-------------------------------------------------------------scroll bar*/
+.home {
+	overflow: auto; //only adds scroll bar when it is needed
+}
+
 /*----------------------------------------------------------------images*/
 .logo {
 	position: relative;
@@ -155,14 +152,14 @@ button {
     font: inherit 14px !important;
 }
 
-/*-------------------------------------------------------------------mixins for vertical margin and max-width*/
+/*-------------------------------------------------------------------mixin for vertical margin and max-width*/
 @mixin max-width-margin($max-width, $top-bottom-margin) {
 	width: 100% !important;
 	max-width: $max-width !important;
 	min-width: 304px !important;
 	margin: $top-bottom-margin auto;   
 }
-/*-------------------------------------------------mixins for header and footer to cover over 'main' element*/
+/*-------------------------------------------------mixin for header and footer to cover over 'main' element*/
 @mixin height-cover-over($div-name,$height){
 	height: $height;
 	@if $div-name == 'footer' {
@@ -188,20 +185,33 @@ footer {
 	width: 100%;
 	@include height-cover-over('footer', 50px);
 }
+.keyboard-instructions, .sub-heading {
+	padding: 0px 5px;
+}
 /*calculation backup section and status alerts*/
 .calculation-backup-section{
-	padding: 70px 0px 30px 0px !important;
-	.main-calculation-backup, h4, #save-status, #warning-status {
+	padding: 20px 0px 30px 0px !important;
+	.main-calculation-backup, h4, #save-status, #warning-status, .keyboard-instructions {
 		@include max-width-margin(600px, 5px);
 	}
+	.section-description {
+		margin: 5px 0px 5px 5px;
+	}
+
 	#save-status, #warning-status {
 		padding-left: 5px;
 	}
+	.keyboard-instructions {
+		display: block;
+	}
 }
 .main-calculation-backup {
-    border-radius: 5px;
+	border-radius: 5px;
+	.section-description {
+		padding: 5px 0px 0px 5px;
+	}
     .row {
-        padding-top: 5px;
+        padding-top: 0px;
     	margin: 0 5px;
     }
     .calculation-save-form, .displayed-calculation-list {
@@ -233,9 +243,12 @@ footer {
 /*calculator section*/
 .calculator-section {
     padding: 100px 0px 0px 0px !important;
-    h4, #load-status, .main-calculator, .keyboard-instructions {
+    h4, #calculator-status, .main-calculator, .keyboard-instructions {
 		@include max-width-margin(350px, 5px);
-    }
+	}
+	.keyboard-instructions {
+		display: none;
+	}
 }
 .main-calculator {
 	height: 340px;
@@ -257,9 +270,8 @@ footer {
 .enlarged-display {
 	height: auto;
 	padding: 10px 5px 5px 5px;
-	@include max-width-margin(450px, 1px);
+	@include max-width-margin(600px, 1px);
 }
-
 /*calculator buttons*/
 .buttons {
 	width: auto;
@@ -276,7 +288,7 @@ footer {
         width: 75%;
         margin: 1px auto 1px;
     }
-    .num, .opp, .divide100, .clear, .negative, .remove {
+    .num, .opp, .divide100, .clear, .plus-minus, .remove {
         width: 23%;
         float: left;
     	margin: 1px 1% 1px 1%;
@@ -285,7 +297,7 @@ footer {
 
 /*------------------------------------------------------copywrite*/
 .copywrite {
-	padding: 12px 5px 5px 10px;
+	padding: 5px 5px 0px 10px;
 }
 
 /*--------------------------------------------------media queries*/
@@ -341,5 +353,18 @@ footer {
 @media only screen and (min-width: 992px) {
 	.calculation-backup-section, .calculator-section {
 		padding: 100px 0px 70px 0px !important;
+	}
+	.calculator-section {
+		.keyboard-instructions {
+			display: block;
+		}
+	}
+	.calculation-backup-section {
+		.keyboard-instructions{
+			display: none;
+		}
+	}
+	.save-status {
+		display: none;
 	}
 }

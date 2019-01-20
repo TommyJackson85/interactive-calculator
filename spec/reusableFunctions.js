@@ -147,40 +147,42 @@ describe('clearPageAlerts() outcomes; clearPageAlerts() if called from all funct
         expect(displaySavedCalculations()).toBe(undefined);
         let loadCalc = document.getElementById("load-calc" + 0);
 
-        expect(loadCalc.onclick()).toBe(loadStatus.innerHTML = "Calculation data loaded succesfully!");
-        expect(loadStatus.innerHTML).not.toBe("");
+        expect(loadCalc.onclick()).toBe(calculatorStatus.innerHTML = "Calculation data loaded succesfully!");
+        expect(calculatorStatus.innerHTML).not.toBe("");
         expect(mainCalculator.className.split(' ').includes("success-border")).toBe(true);
         expect(display.className.split(' ').includes("success-border")).toBe(true);
 
         expect(clearPageAlerts()).toBe(undefined); 
        
-        expect(loadStatus.innerHTML).toBe("");
-        expect(loadStatus.innerHTML).not.toBe("Calculation data loaded succesfully!")
+        expect(calculatorStatus.innerHTML).toBe("");
+        expect(calculatorStatus.innerHTML).not.toBe("Calculator data loaded succesfully!")
         expect(mainCalculator.className.split(' ').includes("success-border")).toBe(false);
         expect(display.className.split(' ').includes("success-border")).toBe(false);
 
-        expect(saveCalculation.onclick()).toBe(saveStatus.innerHTML = "Calculation data saved below!");
-        expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
-        expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
-        expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
-        expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
-        expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
-        expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
-        expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
-        expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
-        expect(saveCalculation.onclick()).toBe(saveStatus.innerHTML = `Can not save! Calculations List has exceeded it's data limit!`);
+        expect(saveCalculation.onclick()).toBe(calculatorStatus.innerHTML  = "Calculator data saved to Calculation Backup!");
+        expect(saveCalculation.onclick()).toBe('Calculator data saved to Calculation Backup!');
+        expect(saveCalculation.onclick()).toBe('Calculator data saved to Calculation Backup!');
+        expect(saveCalculation.onclick()).toBe('Calculator data saved to Calculation Backup!');
+        expect(saveCalculation.onclick()).toBe('Calculator data saved to Calculation Backup!');
+        expect(saveCalculation.onclick()).toBe('Calculator data saved to Calculation Backup!');
+        expect(saveCalculation.onclick()).toBe('Calculator data saved to Calculation Backup!');
+        expect(saveCalculation.onclick()).toBe('Calculator data saved to Calculation Backup!');
+        expect(saveCalculation.onclick()).toBe('Calculator data saved to Calculation Backup!');
+        expect(saveCalculation.onclick()).toBe(warningStatus.innerHTML = `Can not save! Calculations List has exceeded it's data limit!`);
         
-        expect(saveStatus.innerHTML).toBe(`Can not save! Calculations List has exceeded it's data limit!`);
+        expect(warningStatus.innerHTML).toBe(`Can not save! Calculations List has exceeded it's data limit!`);
         expect(saveStatus.innerHTML).not.toBe('Calculation data saved below!');
-        expect(saveStatus.innerHTML).not.toBe('');
+        expect(warningStatus.innerHTML).not.toBe('');
         expect(saveCalculation.className.split(' ').includes("warning-border")).toBe(true);
         expect(calculationDescriptionInput.className.split(' ').includes("warning-border")).toBe(true);
         
         expect(clearPageAlerts()).toBe(undefined); 
         
         expect(saveStatus.innerHTML).toBe("");
-        expect(saveStatus.innerHTML).not.toBe(`Can not save! Calculations List has exceeded it's data limit!`);
+        expect(warningStatus.innerHTML).not.toBe(`Can not save! Calculations List has exceeded it's data limit!`);
         expect(saveStatus.innerHTML).not.toBe('Calculation data saved below!');
+        expect(calculatorStatus.innerHTML).not.toBe('Calculator data saved to Calculation Backup!');
+        expect(calculatorStatus.innerHTML).not.toBe('Calculat data saved to Calculation Backup!');
         expect(saveCalculation.className.split(' ').includes("warning-border")).toBe(false);
         expect(calculationDescriptionInput.className.split(' ').includes("warning-border")).toBe(false);
     })

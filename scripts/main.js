@@ -16,7 +16,7 @@ const saveCalculation = document.getElementById("save-calc");
 
 /*page status alerts from calculations list section*/
 const saveStatus = document.getElementById("save-status");
-const loadStatus = document.getElementById("load-status");
+const calculatorStatus = document.getElementById("calculator-status");
 const warningStatus = document.getElementById("warning-status");
 
 /*global arrays and boolean variables for main calculator*/
@@ -28,7 +28,7 @@ let disableDec = false;
 /*calculations list for storing saved saved calculations*/
 let calculationsList = [];
 
-/*reusable functions called locally through out onclick functions*/
+/*reusable functions called locally through onclick functions*/
 const empty = function(array) { 
 	//empties one array
 	array.splice(0, array.length); 
@@ -38,19 +38,16 @@ const clearInputs = function(){
 	empty(newOperator);
 	return empty(newNumber); //clears input arrays
 }
-
 const clearAll = function() {
 	empty(calculation); 
 	clearInputs(); //clears all arrays
 	return disableDec = false;	
 }
-
 const clearAllAndDisplay = function(){
 	clearAll();
 	displayCalculation();
 	return displayedInput.innerHTML = "0";/*starts the input*/
 }
-
 const pushToCalculation = function(array){
 	let string =  array.join("");/*preparing for newNumber Array*/
 	if(array.length > 0) { 
@@ -62,7 +59,6 @@ const pushToCalculation = function(array){
 	}
 	return array;
 }
-
 const displayAll = function() {
 	displayCalculation(); /*called while the function returns the correct displayedInput*/
 	if (newOperator.length > 0) {
@@ -78,7 +74,7 @@ const displayAll = function() {
 
 const clearPageAlerts = function(){
 	saveStatus.innerHTML = "";
-	loadStatus.innerHTML = "";
+	calculatorStatus.innerHTML = "";
 	warningStatus.innerHTML = "";
 	mainCalculator.classList.remove("success-border");
 	display.classList.remove("success-border");
@@ -105,7 +101,7 @@ const displayCalculation = function(){
 	}
 }
 
-enlargedDisplay.style.display  = "none"; /*not displayed on load*/
+enlargedDisplay.style.display  = "none"; /*not displayed on page load*/
 const switchCalculationDisplay = document.getElementById("switch-calculation-display");
 switchCalculationDisplay.onclick = function(){
 	/*hides or shows enlarged display*/ 
@@ -122,7 +118,7 @@ switchCalculationDisplay.onclick = function(){
 	return switchCalculationDisplay.innerHTML = (displayFullCalc == true) ? "Hide Full Calculation" : "Show Full Calculation";
 }
 
-/*list of number buttons of calculator and each onclick function*/
+/*numberBuilder function which is called from number on click*/
 const numberBuilder = function(e){
 	clearPageAlerts();
 	e.toString();
@@ -145,6 +141,7 @@ const numberBuilder = function(e){
 	}
 }	
 
+/*list of number buttons of calculator and each onclick function*/
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "Dec"];
 for (var key of numbers){
 	let number = document.getElementById("num" + key);
@@ -153,7 +150,7 @@ for (var key of numbers){
 	}
 }
 
-/*list of operator buttons of calculator and each onclick function*/
+/*utiliseOperator fuction which is called from operator.onclick()*/
 const utiliseOperator = function(e){
 	if(newNumber.length >= 1 || newOperator.length == 1 || calculation.length > 0){
 		disableDec = false;
@@ -179,6 +176,7 @@ const utiliseOperator = function(e){
 	}
 }
 
+/*list of operator buttons of calculator and each onclick function*/
 const operatorIds = ["add", "subtract", "multiply", "divide", "answer"];
 for (var key of operatorIds) {
 	clearPageAlerts();
@@ -190,8 +188,8 @@ for (var key of operatorIds) {
 
 /*other calculator buttons*/
 //changes input number (new number or answer) to a negative or reverts back to positive
-const negative = document.getElementById("negative");
-negative.onclick = function(){
+const plusMinus = document.getElementById("plus-minus");
+plusMinus.onclick = function(){
 	if (newNumber.length == 0){
 		return;
 	}
@@ -219,9 +217,12 @@ divide100.onclick = function(){
 		return displayedInput.innerHTML = newNumber.join("");
 	}
 }
+
 //calls clearAllAndDisplay
 const clear = document.getElementById("clear");
-clear.onclick = function() { return clearAllAndDisplay(); }
+clear.onclick = function() { 
+	return clearAllAndDisplay(); 
+}
 
 /*removes previous displayedInput and/or the last 1 or 2 indexs of the calculation array, leaving a number as the last index*/
 const remove = document.getElementById("remove");
@@ -237,76 +238,6 @@ remove.onclick = function(){
 	return displayedInput.innerHTML = "removed";
 }
 
-/*resuable functions called from saveCalc.onclick*/
-const displaySavedCalculations = function(){
-	/*value to be returned if calculations list is empty*/
-	if(calculationsList.length == 0) {
-		return displayedCalculationList.innerHTML = 
-			`<li class="saved-item-background list-group-item">
-				No Calculations are saved.
-			</li>`;
-	}
-	let calculationBriefs = [];
-	/*adds all saved calculations to displayedCalcultionList*/
-	for (var key in calculationsList) {
-		/*local variables to keep it clean*/
-		let savedDescription = calculationsList[key].savedDescription;
-		let savedCalculation = calculationsList[key].savedCalculation;
-		let displayedInput = calculationsList[key].displayedInput;
-		let inputType = (savedCalculation[savedCalculation.length - 1] == "=") ?  "answer / next input" : "next input";
-		/*HTML built for diplay*/
-		if(saveStatus.innerHTML == "Calculation data saved below!" && key == calculationsList.length - 1){
-			calculationBriefs.push(
-				`<li id="saved-calculation${key}"class="list-group-item new-saved-calculation">
-					<h6><strong> Description </strong> : <i>${savedDescription}</i> </h6>
-					<h6><strong> Built calculation </strong> : ${savedCalculation.join(" ")} </h6>
-					<h6><strong> ${inputType} </strong> : ${displayedInput} </h6>
-					<button id="delete-calc${key}" class="col-xs-3 btn red-button delete-calc" value="${key}" href="#">delete</button>
-					<button id="load-calc${key}" class="col-xs-3 btn green-button load-calc" value="${key}" href="#">load</button>
-				</li>`
-			);
-		} else {
-			calculationBriefs.push(
-				`<li id="saved-calculation${key}"class="list-group-item saved-calculation">
-					<h6><strong> Description </strong> : <i>${savedDescription}</i> </h6>
-					<h6><strong> Built calculation </strong> : ${savedCalculation.join(" ")} </h6>
-					<h6><strong> ${inputType} </strong> : ${displayedInput} </h6>
-					<button id="delete-calc${key}" class="col-xs-3 btn red-button delete-calc" value="${key}" href="#">delete</button>
-					<button id="load-calc${key}" class="col-xs-3 btn green-button load-calc" value="${key}" href="#">load</button>
-				</li>`
-			);
-		}
-		displayedCalculationList.innerHTML =  calculationBriefs.slice().reverse().join(" ");
-	}
-	/*Gives the buttons of the displayed calculations their required functionality and return value*/
-	for (var key in calculationsList) { 
-		let deleteCalc = document.getElementById("delete-calc" + key);
-		deleteCalc.onclick = function() {
-			clearPageAlerts();
-			this.parentElement.classList.add("removing-list-item");
-			setTimeout(function(){
-				calculationsList.splice(this.value, 1);
-				displaySavedCalculations();
-			},500);
-			return warningStatus.innerHTML = "Calculation data deleted!";
-		}
-		let loadCalc = document.getElementById("load-calc" + key);
-		loadCalc.onclick = function(e) {
-			console.log(window.scrollY);
-			clearPageAlerts();
-			/*loadCalc.classList.add("loaded-calc");*/
-			calculation = calculationsList[this.value].savedCalculation.slice();
-			newOperator = calculationsList[this.value].savedOperator.slice();
-			newNumber = calculationsList[this.value].savedNumber.slice();
-			disableDec = calculationsList[this.value].savedDecimalStatus;
-			displayAll();
-			scrollToTop();
-			mainCalculator.classList.add("success-border");
-			display.classList.add("success-border");
-			return loadStatus.innerHTML = "Calculation data loaded succesfully!";
-		}
-	}
-};
 
 const scrollToTop = function(){
 	/*https://stackoverflow.com/questions/10063380/smooth-scroll-without-the-use-of-jquery*/
@@ -356,6 +287,80 @@ const scrollToTop = function(){
 	return smoothScroll(eID);
 }
 
+
+/*resuable function called from saveCalc.onclick*/
+const displaySavedCalculations = function(){
+	/*value to be returned if calculations list is empty*/
+	if(calculationsList.length == 0) {
+		return displayedCalculationList.innerHTML = 
+			`<li class="saved-item-background list-group-item">
+				No Calculations are saved.
+			</li>`;
+	}
+	let calculationBriefs = [];
+	/*adds all saved calculations to displayedCalcultionList*/
+	for (var key in calculationsList) {
+		/*local variables to keep it clean*/
+		let savedDescription = calculationsList[key].savedDescription;
+		let savedCalculation = calculationsList[key].savedCalculation;
+		let displayedInput = calculationsList[key].displayedInput;
+		let inputType = (savedCalculation[savedCalculation.length - 1] == "=") ?  "answer / next input" : "next input";
+		/*HTML built for diplay*/
+		if(calculatorStatus.innerHTML == "Calculator data saved to Calculation Backup!" && key == calculationsList.length - 1){
+			/*newest saved item, with an added CSS transition*/
+			calculationBriefs.push(
+				`<li id="saved-calculation${key}"class="list-group-item new-saved-calculation">
+					<h6><strong> Description </strong> : <i>${savedDescription}</i> </h6>
+					<h6><strong> Built calculation </strong> : ${savedCalculation.join(" ")} </h6>
+					<h6><strong> ${inputType} </strong> : ${displayedInput} </h6>
+					<button id="delete-calc${key}" class="col-xs-3 btn red-button delete-calc" value="${key}" href="#">delete</button>
+					<button id="load-calc${key}" class="col-xs-3 btn green-button load-calc" value="${key}" href="#">load</button>
+				</li>`
+			);
+		} else {
+			/*other saved items*/
+			calculationBriefs.push(
+				`<li id="saved-calculation${key}"class="list-group-item saved-calculation">
+					<h6><strong> Description </strong> : <i>${savedDescription}</i> </h6>
+					<h6><strong> Built calculation </strong> : ${savedCalculation.join(" ")} </h6>
+					<h6><strong> ${inputType} </strong> : ${displayedInput} </h6>
+					<button id="delete-calc${key}" class="col-xs-3 btn red-button delete-calc" value="${key}" href="#">delete</button>
+					<button id="load-calc${key}" class="col-xs-3 btn green-button load-calc" value="${key}" href="#">load</button>
+				</li>`
+			);
+		}
+		displayedCalculationList.innerHTML =  calculationBriefs.slice().reverse().join(" ");
+	}
+	/*Gives the buttons of the displayed calculations their required functionality and return value*/
+	for (var key in calculationsList) { 
+		let deleteCalc = document.getElementById("delete-calc" + key);
+		deleteCalc.onclick = function() {
+			clearPageAlerts();
+			this.parentElement.classList.add("removing-list-item");
+			setTimeout(function(){
+				calculationsList.splice(this.value, 1);
+				displaySavedCalculations();
+			},500);
+			return warningStatus.innerHTML = "Calculation data deleted!";
+		}
+		let loadCalc = document.getElementById("load-calc" + key);
+		loadCalc.onclick = function(e) {
+			console.log(window.scrollY);
+			clearPageAlerts();
+			/*loadCalc.classList.add("loaded-calc");*/
+			calculation = (calculationsList[this.value].savedCalculation[0] == "Calculation Empty") ? [] : calculationsList[this.value].savedCalculation.slice();
+			newOperator = calculationsList[this.value].savedOperator.slice();
+			newNumber = calculationsList[this.value].savedNumber.slice();
+			disableDec = calculationsList[this.value].savedDecimalStatus;
+			displayAll();
+			scrollToTop();
+			mainCalculator.classList.add("success-border");
+			display.classList.add("success-border");
+			return calculatorStatus.innerHTML = "Calculation data loaded succesfully!";
+		}
+	}
+};
+
 /*save calculation button and onclick function*/
 saveCalculation.onclick = function(){
 	clearPageAlerts();
@@ -365,11 +370,14 @@ saveCalculation.onclick = function(){
 		return warningStatus.innerHTML = "Can not save! Calculations List has exceeded it's data limit!";
 	}
 	let savedCalc = new Object();
-		savedCalc.savedDescription = calculationDescriptionInput.value;
-		savedCalc.savedCalculation = calculation.slice(); /*must pass arrays by copy, not reference*/
-		savedCalc.savedNumber = newNumber.slice();
-		savedCalc.savedOperator = newOperator.slice();
-		savedCalc.savedDecimalStatus = disableDec;
+	/*must pass arrays by copy, not reference*/
+	savedCalc.savedNumber = newNumber.slice();
+	savedCalc.savedOperator = newOperator.slice();
+	savedCalc.savedDecimalStatus = disableDec;
+	
+	savedCalc.savedDescription = (calculationDescriptionInput.value.length <= 0) ? "No Description Included" : calculationDescriptionInput.value;
+	savedCalc.savedCalculation = (calculation.slice().length <= 0) ? ["Calculation Empty"] : calculation.slice(); 
+	//"Calculation Empty" is only for display puroses in the list of saved calculations. This will not be loaded into the calculator when the load button is clicked
 
 	if(savedCalc.savedNumber.length > 0) {
 		savedCalc.displayedInput = savedCalc.savedNumber.join("");
@@ -385,12 +393,18 @@ saveCalculation.onclick = function(){
 	setTimeout(function(){
 		displaySavedCalculations(); 
 	}, 30);
-	return saveStatus.innerHTML = "Calculation data saved below!";
+	
+	mainCalculator.classList.add("success-border");
+	display.classList.add("success-border");
+
+	saveStatus.innerHTML = "Calculator data saved below!";
+	return calculatorStatus.innerHTML = "Calculator data saved to Calculation Backup!";
 }
 
 /*keyboard press responses*/
 document.onkeypress = function(e) {
-	var key = e.key || e.shiftKey; 
+	console.log(e)
+	var key = e.key; 
 	if (e.defaultPrevented || document.activeElement.tagName == 'TEXTAREA') {
 		return; // Do nothing if the event was already processed OR if the description input (node 'TEXTAREA') is Active;
 	}
@@ -402,20 +416,17 @@ document.onkeypress = function(e) {
 		case "s": case "S":
 		 saveCalculation.onclick();
 		 break;
-		 case "p": case "P":
 		 case "%":
 		 divide100.onclick();
 		 break;
-		 case "n": case "N":
-		 negative.onclick();
+		 case "±":
+		 plusMinus.onclick();
 		 break;
 		 case "r": case "R":
 		 remove.onclick();
-		  // Do something for "left arrow" key press.
 		 break;
 		 case "c": case "C":
 		 clear.onclick();
-		  // Do something for "left arrow" key press.
 		 break
 		 case ".":
 		 numberBuilder(key);

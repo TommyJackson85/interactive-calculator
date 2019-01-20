@@ -20,7 +20,7 @@ var saveCalculation = document.getElementById("save-calc");
 
 /*page status alerts from calculations list section*/
 var saveStatus = document.getElementById("save-status");
-var loadStatus = document.getElementById("load-status");
+var calculatorStatus = document.getElementById("calculator-status");
 var warningStatus = document.getElementById("warning-status");
 
 /*global arrays and boolean variables for main calculator*/
@@ -32,7 +32,7 @@ var disableDec = false;
 /*calculations list for storing saved saved calculations*/
 var calculationsList = [];
 
-/*reusable functions called locally through out onclick functions*/
+/*reusable functions called locally through onclick functions*/
 var empty = function empty(array) {
 	//empties one array
 	array.splice(0, array.length);
@@ -42,19 +42,16 @@ var clearInputs = function clearInputs() {
 	empty(newOperator);
 	return empty(newNumber); //clears input arrays
 };
-
 var clearAll = function clearAll() {
 	empty(calculation);
 	clearInputs(); //clears all arrays
 	return disableDec = false;
 };
-
 var clearAllAndDisplay = function clearAllAndDisplay() {
 	clearAll();
 	displayCalculation();
 	return displayedInput.innerHTML = "0"; /*starts the input*/
 };
-
 var pushToCalculation = function pushToCalculation(array) {
 	var string = array.join(""); /*preparing for newNumber Array*/
 	if (array.length > 0) {
@@ -66,7 +63,6 @@ var pushToCalculation = function pushToCalculation(array) {
 	}
 	return array;
 };
-
 var displayAll = function displayAll() {
 	displayCalculation(); /*called while the function returns the correct displayedInput*/
 	if (newOperator.length > 0) {
@@ -82,7 +78,7 @@ var displayAll = function displayAll() {
 
 var clearPageAlerts = function clearPageAlerts() {
 	saveStatus.innerHTML = "";
-	loadStatus.innerHTML = "";
+	calculatorStatus.innerHTML = "";
 	warningStatus.innerHTML = "";
 	mainCalculator.classList.remove("success-border");
 	display.classList.remove("success-border");
@@ -109,7 +105,7 @@ var displayCalculation = function displayCalculation() {
 	}
 };
 
-enlargedDisplay.style.display = "none"; /*not displayed on load*/
+enlargedDisplay.style.display = "none"; /*not displayed on page load*/
 var switchCalculationDisplay = document.getElementById("switch-calculation-display");
 switchCalculationDisplay.onclick = function () {
 	/*hides or shows enlarged display*/
@@ -126,7 +122,7 @@ switchCalculationDisplay.onclick = function () {
 	return switchCalculationDisplay.innerHTML = displayFullCalc == true ? "Hide Full Calculation" : "Show Full Calculation";
 };
 
-/*list of number buttons of calculator and each onclick function*/
+/*numberBuilder function which is called from number on click*/
 var numberBuilder = function numberBuilder(e) {
 	clearPageAlerts();
 	e.toString();
@@ -151,6 +147,7 @@ var numberBuilder = function numberBuilder(e) {
 	}
 };
 
+/*list of number buttons of calculator and each onclick function*/
 var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "Dec"];
 var _iteratorNormalCompletion = true;
 var _didIteratorError = false;
@@ -166,7 +163,7 @@ try {
 		};
 	}
 
-	/*list of operator buttons of calculator and each onclick function*/
+	/*utiliseOperator fuction which is called from operator.onclick()*/
 } catch (err) {
 	_didIteratorError = true;
 	_iteratorError = err;
@@ -210,6 +207,7 @@ var utiliseOperator = function utiliseOperator(e) {
 	}
 };
 
+/*list of operator buttons of calculator and each onclick function*/
 var operatorIds = ["add", "subtract", "multiply", "divide", "answer"];
 var _iteratorNormalCompletion2 = true;
 var _didIteratorError2 = false;
@@ -243,8 +241,8 @@ try {
 	}
 }
 
-var negative = document.getElementById("negative");
-negative.onclick = function () {
+var plusMinus = document.getElementById("plus-minus");
+plusMinus.onclick = function () {
 	if (newNumber.length == 0) {
 		return;
 	}
@@ -294,6 +292,7 @@ divide100.onclick = function () {
 		return displayedInput.innerHTML = newNumber.join("");
 	}
 };
+
 //calls clearAllAndDisplay
 var clear = document.getElementById("clear");
 clear.onclick = function () {
@@ -314,58 +313,6 @@ remove.onclick = function () {
 	}
 	displayCalculation();
 	return displayedInput.innerHTML = "removed";
-};
-
-/*resuable functions called from saveCalc.onclick*/
-var displaySavedCalculations = function displaySavedCalculations() {
-	/*value to be returned if calculations list is empty*/
-	if (calculationsList.length == 0) {
-		return displayedCalculationList.innerHTML = "<li class=\"saved-item-background list-group-item\">\n\t\t\t\tNo Calculations are saved.\n\t\t\t</li>";
-	}
-	var calculationBriefs = [];
-	/*adds all saved calculations to displayedCalcultionList*/
-	for (var key in calculationsList) {
-		/*local variables to keep it clean*/
-		var savedDescription = calculationsList[key].savedDescription;
-		var savedCalculation = calculationsList[key].savedCalculation;
-		var _displayedInput = calculationsList[key].displayedInput;
-		var inputType = savedCalculation[savedCalculation.length - 1] == "=" ? "answer / next input" : "next input";
-		/*HTML built for diplay*/
-		if (saveStatus.innerHTML == "Calculation data saved below!" && key == calculationsList.length - 1) {
-			calculationBriefs.push("<li id=\"saved-calculation" + key + "\"class=\"list-group-item new-saved-calculation\">\n\t\t\t\t\t<h6><strong> Description </strong> : <i>" + savedDescription + "</i> </h6>\n\t\t\t\t\t<h6><strong> Built calculation </strong> : " + savedCalculation.join(" ") + " </h6>\n\t\t\t\t\t<h6><strong> " + inputType + " </strong> : " + _displayedInput + " </h6>\n\t\t\t\t\t<button id=\"delete-calc" + key + "\" class=\"col-xs-3 btn red-button delete-calc\" value=\"" + key + "\" href=\"#\">delete</button>\n\t\t\t\t\t<button id=\"load-calc" + key + "\" class=\"col-xs-3 btn green-button load-calc\" value=\"" + key + "\" href=\"#\">load</button>\n\t\t\t\t</li>");
-		} else {
-			calculationBriefs.push("<li id=\"saved-calculation" + key + "\"class=\"list-group-item saved-calculation\">\n\t\t\t\t\t<h6><strong> Description </strong> : <i>" + savedDescription + "</i> </h6>\n\t\t\t\t\t<h6><strong> Built calculation </strong> : " + savedCalculation.join(" ") + " </h6>\n\t\t\t\t\t<h6><strong> " + inputType + " </strong> : " + _displayedInput + " </h6>\n\t\t\t\t\t<button id=\"delete-calc" + key + "\" class=\"col-xs-3 btn red-button delete-calc\" value=\"" + key + "\" href=\"#\">delete</button>\n\t\t\t\t\t<button id=\"load-calc" + key + "\" class=\"col-xs-3 btn green-button load-calc\" value=\"" + key + "\" href=\"#\">load</button>\n\t\t\t\t</li>");
-		}
-		displayedCalculationList.innerHTML = calculationBriefs.slice().reverse().join(" ");
-	}
-	/*Gives the buttons of the displayed calculations their required functionality and return value*/
-	for (var key in calculationsList) {
-		var deleteCalc = document.getElementById("delete-calc" + key);
-		deleteCalc.onclick = function () {
-			clearPageAlerts();
-			this.parentElement.classList.add("removing-list-item");
-			setTimeout(function () {
-				calculationsList.splice(this.value, 1);
-				displaySavedCalculations();
-			}, 500);
-			return warningStatus.innerHTML = "Calculation data deleted!";
-		};
-		var loadCalc = document.getElementById("load-calc" + key);
-		loadCalc.onclick = function (e) {
-			console.log(window.scrollY);
-			clearPageAlerts();
-			/*loadCalc.classList.add("loaded-calc");*/
-			calculation = calculationsList[this.value].savedCalculation.slice();
-			newOperator = calculationsList[this.value].savedOperator.slice();
-			newNumber = calculationsList[this.value].savedNumber.slice();
-			disableDec = calculationsList[this.value].savedDecimalStatus;
-			displayAll();
-			scrollToTop();
-			mainCalculator.classList.add("success-border");
-			display.classList.add("success-border");
-			return loadStatus.innerHTML = "Calculation data loaded succesfully!";
-		};
-	}
 };
 
 var scrollToTop = function scrollToTop() {
@@ -416,6 +363,60 @@ var scrollToTop = function scrollToTop() {
 	return smoothScroll(eID);
 };
 
+/*resuable function called from saveCalc.onclick*/
+var displaySavedCalculations = function displaySavedCalculations() {
+	/*value to be returned if calculations list is empty*/
+	if (calculationsList.length == 0) {
+		return displayedCalculationList.innerHTML = "<li class=\"saved-item-background list-group-item\">\n\t\t\t\tNo Calculations are saved.\n\t\t\t</li>";
+	}
+	var calculationBriefs = [];
+	/*adds all saved calculations to displayedCalcultionList*/
+	for (var key in calculationsList) {
+		/*local variables to keep it clean*/
+		var savedDescription = calculationsList[key].savedDescription;
+		var savedCalculation = calculationsList[key].savedCalculation;
+		var _displayedInput = calculationsList[key].displayedInput;
+		var inputType = savedCalculation[savedCalculation.length - 1] == "=" ? "answer / next input" : "next input";
+		/*HTML built for diplay*/
+		if (calculatorStatus.innerHTML == "Calculator data saved to Calculation Backup!" && key == calculationsList.length - 1) {
+			/*newest saved item, with an added CSS transition*/
+			calculationBriefs.push("<li id=\"saved-calculation" + key + "\"class=\"list-group-item new-saved-calculation\">\n\t\t\t\t\t<h6><strong> Description </strong> : <i>" + savedDescription + "</i> </h6>\n\t\t\t\t\t<h6><strong> Built calculation </strong> : " + savedCalculation.join(" ") + " </h6>\n\t\t\t\t\t<h6><strong> " + inputType + " </strong> : " + _displayedInput + " </h6>\n\t\t\t\t\t<button id=\"delete-calc" + key + "\" class=\"col-xs-3 btn red-button delete-calc\" value=\"" + key + "\" href=\"#\">delete</button>\n\t\t\t\t\t<button id=\"load-calc" + key + "\" class=\"col-xs-3 btn green-button load-calc\" value=\"" + key + "\" href=\"#\">load</button>\n\t\t\t\t</li>");
+		} else {
+			/*other saved items*/
+			calculationBriefs.push("<li id=\"saved-calculation" + key + "\"class=\"list-group-item saved-calculation\">\n\t\t\t\t\t<h6><strong> Description </strong> : <i>" + savedDescription + "</i> </h6>\n\t\t\t\t\t<h6><strong> Built calculation </strong> : " + savedCalculation.join(" ") + " </h6>\n\t\t\t\t\t<h6><strong> " + inputType + " </strong> : " + _displayedInput + " </h6>\n\t\t\t\t\t<button id=\"delete-calc" + key + "\" class=\"col-xs-3 btn red-button delete-calc\" value=\"" + key + "\" href=\"#\">delete</button>\n\t\t\t\t\t<button id=\"load-calc" + key + "\" class=\"col-xs-3 btn green-button load-calc\" value=\"" + key + "\" href=\"#\">load</button>\n\t\t\t\t</li>");
+		}
+		displayedCalculationList.innerHTML = calculationBriefs.slice().reverse().join(" ");
+	}
+	/*Gives the buttons of the displayed calculations their required functionality and return value*/
+	for (var key in calculationsList) {
+		var deleteCalc = document.getElementById("delete-calc" + key);
+		deleteCalc.onclick = function () {
+			clearPageAlerts();
+			this.parentElement.classList.add("removing-list-item");
+			setTimeout(function () {
+				calculationsList.splice(this.value, 1);
+				displaySavedCalculations();
+			}, 500);
+			return warningStatus.innerHTML = "Calculation data deleted!";
+		};
+		var loadCalc = document.getElementById("load-calc" + key);
+		loadCalc.onclick = function (e) {
+			console.log(window.scrollY);
+			clearPageAlerts();
+			/*loadCalc.classList.add("loaded-calc");*/
+			calculation = calculationsList[this.value].savedCalculation[0] == "Calculation Empty" ? [] : calculationsList[this.value].savedCalculation.slice();
+			newOperator = calculationsList[this.value].savedOperator.slice();
+			newNumber = calculationsList[this.value].savedNumber.slice();
+			disableDec = calculationsList[this.value].savedDecimalStatus;
+			displayAll();
+			scrollToTop();
+			mainCalculator.classList.add("success-border");
+			display.classList.add("success-border");
+			return calculatorStatus.innerHTML = "Calculation data loaded succesfully!";
+		};
+	}
+};
+
 /*save calculation button and onclick function*/
 saveCalculation.onclick = function () {
 	clearPageAlerts();
@@ -425,11 +426,14 @@ saveCalculation.onclick = function () {
 		return warningStatus.innerHTML = "Can not save! Calculations List has exceeded it's data limit!";
 	}
 	var savedCalc = new Object();
-	savedCalc.savedDescription = calculationDescriptionInput.value;
-	savedCalc.savedCalculation = calculation.slice(); /*must pass arrays by copy, not reference*/
+	/*must pass arrays by copy, not reference*/
 	savedCalc.savedNumber = newNumber.slice();
 	savedCalc.savedOperator = newOperator.slice();
 	savedCalc.savedDecimalStatus = disableDec;
+
+	savedCalc.savedDescription = calculationDescriptionInput.value.length <= 0 ? "No Description Included" : calculationDescriptionInput.value;
+	savedCalc.savedCalculation = calculation.slice().length <= 0 ? ["Calculation Empty"] : calculation.slice();
+	//"Calculation Empty" is only for display puroses in the list of saved calculations. This will not be loaded into the calculator when the load button is clicked
 
 	if (savedCalc.savedNumber.length > 0) {
 		savedCalc.displayedInput = savedCalc.savedNumber.join("");
@@ -445,12 +449,18 @@ saveCalculation.onclick = function () {
 	setTimeout(function () {
 		displaySavedCalculations();
 	}, 30);
-	return saveStatus.innerHTML = "Calculation data saved below!";
+
+	mainCalculator.classList.add("success-border");
+	display.classList.add("success-border");
+
+	saveStatus.innerHTML = "Calculator data saved below!";
+	return calculatorStatus.innerHTML = "Calculator data saved to Calculation Backup!";
 };
 
 /*keyboard press responses*/
 document.onkeypress = function (e) {
-	var key = e.key || e.shiftKey;
+	console.log(e);
+	var key = e.key;
 	if (e.defaultPrevented || document.activeElement.tagName == 'TEXTAREA') {
 		return; // Do nothing if the event was already processed OR if the description input (node 'TEXTAREA') is Active;
 	}
@@ -462,20 +472,17 @@ document.onkeypress = function (e) {
 		case "s":case "S":
 			saveCalculation.onclick();
 			break;
-		case "p":case "P":
 		case "%":
 			divide100.onclick();
 			break;
-		case "n":case "N":
-			negative.onclick();
+		case "±":
+			plusMinus.onclick();
 			break;
 		case "r":case "R":
 			remove.onclick();
-			// Do something for "left arrow" key press.
 			break;
 		case "c":case "C":
 			clear.onclick();
-			// Do something for "left arrow" key press.
 			break;
 		case ".":
 			numberBuilder(key);

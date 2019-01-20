@@ -46,29 +46,29 @@ describe("results of switchCalculationDisplay();", function(){
     })
 })
 
-describe("Results of negative button", function(){
+describe("Results of 'plus-minus' button", function(){
     it("if newNumber[0] is already a negative , it turns it negative", function(){ //will be removed, as it is just temporary
         newNumber = ["-5", "6"];
-        expect(negative.onclick()).toBe("56");
+        expect(plusMinus.onclick()).toBe("56");
         expect(newNumber).toEqual(["5", "6"]);
         expect(newNumber).not.toEqual(["-5", "6"]);
     }),
-    it("if newNumber[0] is NOT a negative, it turns it positive ; '-' is never pushed to the front it's just added to the first index/string of the array", function(){ //will be removed, as it is just temporary
+    it("if newNumber[0] is NOT a negative, it turns it positive; '-' is never pushed to the front it's just added to the first index/string of the array", function(){ //will be removed, as it is just temporary
         newNumber = ["5", "6"];
-        expect(negative.onclick()).toBe("-56");
+        expect(plusMinus.onclick()).toBe("-56");
         expect(newNumber[0]).toBe("-5");
         expect(newNumber[0]).not.toBe("-");
         expect(newNumber[0]).not.toBe("5");
         expect(newNumber).toEqual(["-5", "6"]);
         expect(newNumber).not.toEqual(["-", "5", "6"]);
     }),
-    it("the newNumber can be constantly change from negative to positive, when negative button is continuously pressed.", function(){ //will be removed, as it is just temporary
+    it("the newNumber can be constantly change from negative to positive, when plusMinus button is continuously pressed.", function(){ //will be removed, as it is just temporary
         newNumber = ["5", "6"];
-        expect(negative.onclick()).toBe("-56");
-        expect(negative.onclick()).toBe("56");
-        expect(negative.onclick()).toBe("-56");
-        expect(negative.onclick()).toBe("56");
-        expect(negative.onclick()).toBe("-56");
+        expect(plusMinus.onclick()).toBe("-56");
+        expect(plusMinus.onclick()).toBe("56");
+        expect(plusMinus.onclick()).toBe("-56");
+        expect(plusMinus.onclick()).toBe("56");
+        expect(plusMinus.onclick()).toBe("-56");
     })
 }),
 describe("Results of clear button", function(){

@@ -9,7 +9,9 @@ describe("displaySavedCalculations() outcomes", function(){
 			</li>`)
     }),
     it(`displayedSavedCalculations() returns undefined when calculationsList is not empty;
-        displayedSavedCalculations() doesn't return a value until a loadCalc or deleteCalc button, from each of the displayed saved calculation items, is clicked;`
+        When calculatorStatus.innerHTML is equal to  "Calculator data saved to Calculation Backup!" and displayedSavedCalculations() is called, 
+        the first displayed item's class list will have the class of 'new-saved-calculation';
+        `
         , function(){
         calculation = [];
         newNumber = [];
@@ -40,7 +42,7 @@ describe("displaySavedCalculations() outcomes", function(){
                 savedDecimalStatus: false 
             })
         ];
-        saveStatus.innerHTML = "Calculation data saved below!";
+        calculatorStatus.innerHTML = "Calculator data saved to Calculation Backup!";
         expect(displaySavedCalculations()).toBe(undefined);
         expect(displayedCalculationList.childNodes[0].classList[1]).toBe('new-saved-calculation');
         expect(displayedCalculationList.childNodes[0].classList[1]).not.toBe('saved-calculation');
@@ -54,12 +56,15 @@ describe("displaySavedCalculations() outcomes", function(){
     afterEach(function() {
         jasmine.clock().uninstall();
     }),
-    it(`When deleteCalc() is called on the 'second object' of the calculation list (calculationsList[1]), 
+    it(`
+    displayedSavedCalculations() doesn't return a value until a loadCalc or deleteCalc button, from each of the displayed saved calculation items, is clicked;
+        When deleteCalc() is called on the 'second object' of the calculation list (calculationsList[1]), 
         a class of "removing-list-item" is added to the appended #saved-calculation1 DOM element's class list;
         The "removing-list-item" class causes a fading out effect to the the DOM elements styling, fading from 1 to 0 in opacity. 
         Once this finishes, 'calculationsList.splice(this.value, 1)' and 'displaySavedCalculations()' are both called within a 'setTimeout()' function, 
-        Removing the saved calculation and re-displaying the calculation list,
-        the 'third object' is then placed at calculationsList[1];
+        Removing the saved calculation and re-displaying the calculation list, the 'third object' is then placed at calculationsList[1]; 
+        When calculatorStatus innerHTML equals "", and displaySavedCalculations() is called, the first saved displayed item
+        doesn't have the class of 'new-saved-calculation';
         deleteCalc() returns #warningStatus.innerHTML = "Calculation data deleted!";`, 
         function(){
         let deleteCalc = document.getElementById("delete-calc" + 1);   
@@ -73,31 +78,20 @@ describe("displaySavedCalculations() outcomes", function(){
         expect(calculationsList[1].savedDescription).toBe('third object');
         expect(calculationsList[1].savedDescription).not.toBe('second object - answer returned');
         expect(calculationsList[1].savedDescription).not.toBe('first object');
+        expect(calculatorStatus.innerHTML).toBe("");
         expect(displayedCalculationList.childNodes[0].classList[1]).toBe('saved-calculation');
         expect(displayedCalculationList.childNodes[0].classList[1]).not.toBe('new-saved-calculation');
-            
-        let loadCalc = document.getElementById("load-calc" + 1);
-        expect(loadCalc.onclick()).toBe(loadStatus.innerHTML = "Calculation data loaded succesfully!");
-        expect(loadCalc.onclick()).not.toBe(warningStatus.innerHTML = "Calculation data deleted!");
-        expect(calculation).toEqual([ '570' ]);
-        expect(calculation).not.toEqual([]);
-        expect(newNumber).toEqual([]);
-        expect(newOperator).toEqual([ '+' ]);
-        expect(newOperator).not.toEqual([]);
-
-        expect(mainCalculator.className.split(' ').includes("success-border")).toBe(true);
-        expect(display.className.split(' ').includes("success-border")).toBe(true);
     }),
     it(`Then, when loadCalc() is called on the 'third object', the global arrays copy the data from the loaded objects.
     i.e. The calculation Array is now a copy of the objects savedCalculation, the newOperator Array is now a copy of the savedOperator Array;
-    loadCalc() returns #loaded-status.innerHTML = "Calculation data loaded succesfully!";
+    loadCalc() returns #calculator-status.innerHTML = "Calculation data loaded succesfully!";
     loadCalc() also adds the 'success-border' class to the class lists of dom elements #main-calculator and #display;
     loadCalc() also calls the loadToTop() function, smoothly brings the user back to the top of the page;
     `, function(){
         let loadCalc = document.getElementById("load-calc" + 1);
-        expect(loadCalc.onclick()).toBe(loadStatus.innerHTML = "Calculation data loaded succesfully!");
-        expect(loadCalc.onclick()).not.toBe(loadStatus.innerHTML = "Calculation data deleted!");
-        expect(loadCalc.onclick()).not.toBe(loadStatus.innerHTML = "");
+        expect(loadCalc.onclick()).toBe(calculatorStatus.innerHTML = "Calculation data loaded succesfully!");
+        expect(loadCalc.onclick()).not.toBe(calculatorStatus.innerHTML = "Calculator data saved to Calculation Backup!");
+        expect(loadCalc.onclick()).not.toBe(calculatorStatus.innerHTML = "");
         expect(calculation).toEqual([ '570' ]);
         expect(calculation).not.toEqual([]);
         expect(newNumber).toEqual([]);

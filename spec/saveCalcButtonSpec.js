@@ -3,7 +3,10 @@ describe("results of saveCalculation button", function(){
     it(`saveCalculation.onclick() pushes object containing COPIES of the four main global variables (Copies of: calculation, newNumber, newOperator, disbaleDec), 
     and a stringed version of non empty input (Object.displayedInput either shows newNumber or newOperator); 
     The pushed Object data are strictly copies and are NOT references to global variables; 
-    saveCalculation.onclick() also returns #save-status.innerHTML as: 'Calculation data saved below!'`, function(){
+    If no text was inputed into #calculation-description-input, the object's savedDescription will equal 'No Description Included';
+    saveCalculation.onclick() also returns #calculator-status.innerHTML as: 'Calculator data saved to Calculator; 
+    #save-status.innerHTML is also set to equal 'Calculator data saved below!'
+    and the 'success-border' class is added to the class lists of the #main-calculator and its '.display'.`, function(){
 
         calculationsList = [];
         calculation = ["567", "+"];
@@ -11,12 +14,16 @@ describe("results of saveCalculation button", function(){
         newOperator = [];
         disableDec = false;
 
-        expect(saveCalculation.onclick()).toBe("Calculation data saved below!" || saveStatus);
+        expect(saveCalculation.onclick()).toBe("Calculator data saved to Calculation Backup!" || calculatorStatus);
+        expect(saveStatus.innerHTML).toBe("Calculator data saved below!");
+        expect(mainCalculator.className.split(' ').includes("success-border")).toBe(true);
+        expect(display.className.split(' ').includes("success-border")).toBe(true);
+
         expect(saveCalculation.className.split(' ').includes("warning-border")).toBe(false);
         expect(calculationDescriptionInput.className.split(' ').includes("warning-border")).toBe(false);
         expect(calculationsList).toEqual([
             Object({ 
-                savedDescription: '',
+                savedDescription: 'No Description Included',
                 savedCalculation: [ '567', '+' ], 
                 savedNumber: [ '5', '6', '7', '8', '8', '8' ], 
                 savedOperator: [  ], 
@@ -28,7 +35,9 @@ describe("results of saveCalculation button", function(){
     }),
     it(`saveCalculation.onclick(), cant push Object into calculationList more than 10 times; 
     After saveCalculation.onclick() is called an 11th time in a row, the 'warning-border' class is added to #save-calc button and #calculation-description-input input, creating a red border around both sections;
-    Then, #warning-status.innerHTML is returned instead of #saveStatus.innerHTML as: 'Can not save! Calculations List has exceeded it's data limit!'.`, function(){
+    Then, #warning-status.innerHTML is returned (instead of #calculatorStatus.innerHTML) as: 'Can not save! Calculations List has exceeded it's data limit!'.
+    #calculatorStatus.innerHTML and #saveStatus.innerHTML become equal to "", and the 'success-border' class is removed from the main calculator and its display if it hasnt been removed already. 
+    `, function(){
         calculationsList = [];
         calculation = ["567", "+"];
         newNumber = ["5","6","7","8","8","8"];
@@ -37,17 +46,27 @@ describe("results of saveCalculation button", function(){
         const saveStatus = document.getElementById("save-status");
         const calculationDescriptionInput = document.getElementById("calculation-description-input");
 
-        expect(saveCalculation.onclick()).toBe(saveStatus.innerHTML = "Calculation data saved below!");
-        expect(saveCalculation.onclick()).toBe("Calculation data saved below!");
-        expect(saveCalculation.onclick()).toBe("Calculation data saved below!");
-        expect(saveCalculation.onclick()).toBe("Calculation data saved below!");
-        expect(saveCalculation.onclick()).toBe("Calculation data saved below!");
-        expect(saveCalculation.onclick()).toBe("Calculation data saved below!");
-        expect(saveCalculation.onclick()).toBe("Calculation data saved below!");
-        expect(saveCalculation.onclick()).toBe("Calculation data saved below!");
-        expect(saveCalculation.onclick()).toBe("Calculation data saved below!");
-        expect(saveCalculation.onclick()).toBe("Calculation data saved below!");
+        expect(saveCalculation.onclick()).toBe(calculatorStatus.innerHTML = "Calculator data saved to Calculation Backup!");
+        expect(saveCalculation.onclick()).toBe("Calculator data saved to Calculation Backup!");
+        expect(saveCalculation.onclick()).toBe("Calculator data saved to Calculation Backup!");
+        expect(saveCalculation.onclick()).toBe("Calculator data saved to Calculation Backup!");
+        expect(saveCalculation.onclick()).toBe("Calculator data saved to Calculation Backup!");
+        expect(saveCalculation.onclick()).toBe("Calculator data saved to Calculation Backup!");
+        expect(saveCalculation.onclick()).toBe("Calculator data saved to Calculation Backup!");
+        expect(saveCalculation.onclick()).toBe("Calculator data saved to Calculation Backup!");
+        expect(saveCalculation.onclick()).toBe("Calculator data saved to Calculation Backup!");
+
+        expect(saveCalculation.onclick()).toBe("Calculator data saved to Calculation Backup!");
+        expect(saveStatus.innerHTML).toBe("Calculator data saved below!");
+        expect(mainCalculator.className.split(' ').includes("success-border")).toBe(true);
+        expect(display.className.split(' ').includes("success-border")).toBe(true);
+
         expect(saveCalculation.onclick()).toBe(warningStatus.innerHTML = "Can not save! Calculations List has exceeded it's data limit!");
+        expect(calculatorStatus.innerHTML).toBe("");
+        expect(saveStatus.innerHTML).toBe("");
+        expect(mainCalculator.className.split(' ').includes("success-border")).toBe(false);
+        expect(display.className.split(' ').includes("success-border")).toBe(false);
+
         expect(saveCalculation.onclick()).toBe("Can not save! Calculations List has exceeded it's data limit!");
 
         expect(saveCalculation.className.split(' ').includes("warning-border")).toBe(true);
@@ -59,7 +78,7 @@ describe("results of saveCalculation button", function(){
     it(`saveCalc.onclick(), when called twice, pushes the object into calculationList twice, i.e. it pushes it once per click; 
     The 2nd object pushed can be different to the first, when the global arrays (newOperator, newNumber, calculation) and variabled (disableDec) are changed after the first object is pushed; 
     The changes to the second object do not change the values to the first object because each object copies the values of the global arrays through the splice function and dont reference the original global variables;
-    saveCalc.onclick() returns #save-status.innerHTML as: 'Calculation data saved below!'`, function(){
+    saveCalc.onclick() returns #calculator-status.innerHTML as: 'Calculator data saved to Calculation Backup!'`, function(){
        
         let operator = document.getElementById("subtract");
         let number = document.getElementById("num7");
@@ -70,13 +89,13 @@ describe("results of saveCalculation button", function(){
         newOperator = [];
         disableDec = false;
 
-        expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
+        expect(saveCalculation.onclick()).toBe('Calculator data saved to Calculation Backup!');
         expect(number.onclick()).toBe(undefined);
         expect(operator.onclick()).toBe(undefined);
-        expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
+        expect(saveCalculation.onclick()).toBe('Calculator data saved to Calculation Backup!');
         expect(calculationsList).toEqual([
             Object({ 
-                savedDescription: '',
+                savedDescription: 'No Description Included',
                 savedCalculation: [ '567', '+' ], 
                 savedNumber: [ '5', '6', '7', '8', '8', '8' ], 
                 savedOperator: [  ], 
@@ -84,7 +103,7 @@ describe("results of saveCalculation button", function(){
                 savedDecimalStatus: false 
             }),
             Object({ 
-                savedDescription: '',
+                savedDescription: 'No Description Included',
                 savedCalculation: [ '567', '+', '5678887'], 
                 savedNumber: [ ], 
                 savedOperator: ['-'], 
@@ -94,7 +113,7 @@ describe("results of saveCalculation button", function(){
         ]);
         expect(calculationsList).not.toEqual([
             Object({ 
-                savedDescription: '',
+                savedDescription: 'No Description Included',
                 savedCalculation: [ '567', '+' ], 
                 savedNumber: [ '5', '6', '7', '8', '8', '8' ], 
                 savedOperator: [  ], 
@@ -102,7 +121,7 @@ describe("results of saveCalculation button", function(){
                 savedDecimalStatus: false 
             }),
             Object({ 
-                savedDescription: '',
+                savedDescription: 'No Description Included',
                 savedCalculation: [ '567', '+' ], 
                 savedNumber: [ '5', '6', '7', '8', '8', '8' ], 
                 savedOperator: [  ], 
@@ -110,7 +129,7 @@ describe("results of saveCalculation button", function(){
                 savedDecimalStatus: false 
             }),
             Object({ 
-                savedDescription: '',
+                savedDescription: 'No Description Included',
                 savedCalculation: [ '567', '+', '5678887'], 
                 savedNumber: [ ], 
                 savedOperator: ['-'], 
@@ -118,7 +137,7 @@ describe("results of saveCalculation button", function(){
                 savedDecimalStatus: false 
             }),
             Object({ 
-                savedDescription: '',
+                savedDescription: 'No Description Included',
                 savedCalculation: [ '567', '+', '5678887'], 
                 savedNumber: [ ], 
                 savedOperator: ['-'], 
@@ -128,7 +147,7 @@ describe("results of saveCalculation button", function(){
     ]);
         expect(calculationsList).not.toEqual([
             Object({ 
-                savedDescription: '',
+                savedDescription: 'No Description Included',
                 savedCalculation: [ '567', '+', '5678887'], 
                 savedNumber: [ ], 
                 savedOperator: ['-'], 
@@ -136,7 +155,7 @@ describe("results of saveCalculation button", function(){
                 savedDecimalStatus: false 
             }),
             Object({ 
-                savedDescription: '',
+                savedDescription: 'No Description Included',
                 savedCalculation: [ '567', '+', '5678887'], 
                 savedNumber: [ ], 
                 savedOperator: ['-'], 
@@ -146,7 +165,7 @@ describe("results of saveCalculation button", function(){
         ]);
         expect(calculationsList).not.toEqual([       
             Object({ 
-                savedDescription: '',
+                savedDescription: 'No Description Included',
                 savedCalculation: calculation, 
                 savedNumber: newNumber, 
                 savedOperator: newOperator, 
@@ -154,7 +173,7 @@ describe("results of saveCalculation button", function(){
                 savedDecimalStatus: false 
             }),
             Object({ 
-                savedDescription: '',
+                savedDescription: 'No Description Included',
                 savedCalculation: calculation, 
                 savedNumber: newNumber, 
                 savedOperator: newOperator, 
@@ -184,7 +203,7 @@ describe("results of saveCalculation button", function(){
         const calculationDescriptionInput = document.getElementById("calculation-description-input");
         calculationDescriptionInput.value = "answer delivered";
 
-        expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
+        expect(saveCalculation.onclick()).toBe('Calculator data saved to Calculation Backup!');
         expect(calculationsList).toEqual([
             Object({
                 savedDescription: 'answer not delivered',
@@ -213,7 +232,7 @@ describe("results of saveCalculation button", function(){
                 savedDecimalStatus: false 
             }),
             Object({
-                savedDescription: '',
+                savedDescription: 'No Description Included',
                 savedCalculation: ["567", "+", "567888", "="],
                 savedNumber: ["568455"], 
                 savedOperator: [  ], 
@@ -236,11 +255,11 @@ describe("results of saveCalculation button", function(){
         let number = document.getElementById("num5");
         const remove = document.getElementById("remove");
 
-        expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
+        expect(saveCalculation.onclick()).toBe('Calculator data saved to Calculation Backup!');
         expect(number.onclick()).toBe(undefined);
-        expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
+        expect(saveCalculation.onclick()).toBe('Calculator data saved to Calculation Backup!');
         expect(remove.onclick()).toBe('removed');
-        expect(saveCalculation.onclick()).toBe('Calculation data saved below!');
+        expect(saveCalculation.onclick()).toBe('Calculator data saved to Calculation Backup!');
         
         expect(newNumber).toEqual([]);
         expect(newOperator).toEqual([]);
@@ -256,5 +275,20 @@ describe("results of saveCalculation button", function(){
         expect(calculationsList[2].displayedInput).toBe("Input Empty");
         expect(calculationsList[2].displayedInput).not.toBe("5");
         expect(calculationsList[2].displayedInput).not.toBe("x"); 
+    }),
+    it(`When the calculation array is cleared, and the saveCalculation button is pressed, the new saved object's savedCalculation will equal an array containing only 'Calculation Empty'.
+    This is to indicate that no built calculation has been displayed.
+    `, function(){
+        calculationsList = [];
+        calculation = ["567", "+", "567888"];
+        newNumber = [];
+        newOperator = ["x"];
+        disableDec = false;
+        const clear = document.getElementById("clear");
+        expect(clear.onclick()).toBe('0');
+        expect(saveCalculation.onclick()).toBe('Calculator data saved to Calculation Backup!');
+        expect(calculationsList[0].savedCalculation).toEqual(['Calculation Empty']);
+        expect(calculationsList[0].savedCalculation).not.toEqual([]);
+        expect(calculationsList[0].savedCalculation).not.toEqual(["567", "+", "567888"]);
     })
 })
