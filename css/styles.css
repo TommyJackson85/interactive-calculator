@@ -117,24 +117,16 @@ button:hover {
 }
 
 /*border radius*/
-#num1 {
-  border-radius: 5px 0px 0px 0px;
-}
-
-#add {
-  border-radius: 0px 5px 0px 0px;
+button {
+  border-radius: 5px 5px 5px 5px;
 }
 
 .clear {
-  border-radius: 0px 0px 0px 15px;
+  border-radius: 5px 5px 5px 15px;
 }
 
 .answer {
-  border-radius: 0px 0px 15px 0px;
-}
-
-.switch-calculation-display, .save-calc, .load-calc, .delete-calc {
-  border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 15px 5px;
 }
 
 .enlarged-display {
@@ -193,21 +185,22 @@ footer {
   padding: 0px 5px;
 }
 
+#calculator-status, #save-status, #warning-status {
+  padding-left: 5px;
+}
+
 /*calculation backup section and status alerts*/
 .calculation-backup-section {
   padding: 20px 0px 30px 0px !important;
 }
 .calculation-backup-section .main-calculation-backup, .calculation-backup-section h4, .calculation-backup-section #save-status, .calculation-backup-section #warning-status, .calculation-backup-section .keyboard-instructions {
-  width: 100% !important;
+  width: 90% !important;
   max-width: 600px !important;
-  min-width: 304px !important;
-  margin: 5px auto;
+  min-width: 294px !important;
+  margin: 2px auto;
 }
 .calculation-backup-section .section-description {
   margin: 5px 0px 5px 5px;
-}
-.calculation-backup-section #save-status, .calculation-backup-section #warning-status {
-  padding-left: 5px;
 }
 .calculation-backup-section .keyboard-instructions {
   display: block;
@@ -234,10 +227,7 @@ footer {
   margin-bottom: 13px;
 }
 .main-calculation-backup .save-calc {
-  width: 100%;
-  min-width: 152px;
-  max-width: 200px;
-  margin: 5px 0px;
+  margin-top: 10px !important;
 }
 .main-calculation-backup .list-group-item {
   word-break: break-all;
@@ -245,8 +235,11 @@ footer {
 .main-calculation-backup .saved-calculation, .main-calculation-backup .new-saved-calculation {
   position: relative;
   display: block;
-  padding: 10px 15px;
+  padding: 10px 20px 20px;
   margin-bottom: -1px;
+}
+.main-calculation-backup .saved-calculation .load-calc, .main-calculation-backup .new-saved-calculation .load-calc {
+  margin-left: 10px !important;
 }
 
 /*calculator section*/
@@ -254,10 +247,10 @@ footer {
   padding: 100px 0px 0px 0px !important;
 }
 .calculator-section h4, .calculator-section #calculator-status, .calculator-section .main-calculator, .calculator-section .keyboard-instructions {
-  width: 100% !important;
-  max-width: 350px !important;
-  min-width: 304px !important;
-  margin: 5px auto;
+  width: 90% !important;
+  max-width: 320px !important;
+  min-width: 294px !important;
+  margin: 3px auto;
 }
 .calculator-section .keyboard-instructions {
   display: none;
@@ -284,9 +277,9 @@ footer {
 .enlarged-display {
   height: auto;
   padding: 10px 5px 5px 5px;
-  width: 100% !important;
+  width: 90% !important;
   max-width: 600px !important;
-  min-width: 304px !important;
+  min-width: 294px !important;
   margin: 1px auto;
 }
 
@@ -301,16 +294,16 @@ footer {
   position: relative;
   display: block;
   text-align: center;
-  height: 40px;
+  height: 38px;
 }
 .buttons .switch-calculation-display {
   width: 75%;
-  margin: 1px auto 1px;
+  margin: 2.5px auto 2.5px;
 }
 .buttons .num, .buttons .opp, .buttons .divide100, .buttons .clear, .buttons .plus-minus, .buttons .remove {
   width: 23%;
   float: left;
-  margin: 1px 1% 1px 1%;
+  margin: 2.5px 1% 2.5px 1%;
 }
 
 /*------------------------------------------------------copywrite*/
@@ -322,6 +315,7 @@ footer {
 @media only screen and (min-width: 375px) {
   .main-calculator {
     border-radius: 10px 5px 15px 15px;
+    height: 343px;
   }
   .main-calculator .display {
     margin: 5px 5px;

@@ -1,17 +1,17 @@
-describe('document.onkeypress responses, while pressing the relevent keyboard buttons', function(){
-    it(`Numbers 0 to 9 and '.' operate the numberButton(e) function with the keyboard 'key' or 'shiftKey' value being used as the 'e' value;
-        Operator keyboard buttons '-', '+', '/', '=', and letter button 'x' (used for multiplying) all call utiliseOperator(e), with with each keyboard key value being used as the 'e' value; 
-        Each of keyboard button value matches the calculator button value. A capital 'X' and operator '*' buttons also call utiliseOperator('x'), as an alternative for multiplying;
-        'Enter' and 'Return' keyboard values also call utiliseOperator('=');
+describe(`document.onkeypress responses, while pressing the relevent keyboard buttons;
+        A fake keyPress object and fake documentOnKeyPress function were used for this test, 
+        which replicate the real document.onkeypress function (on main.js);`, function(){
+    it(`Numbers 0 to 9 and '.' operate the numberButton(e) function with the keyboard 'key' value being used as the 'e' value;
+        Operator keyboard buttons '-', '+', '/', '=', and letter button 'x' (used for multiplying) all call 'utiliseOperator(e)', with with each keyboard key value being used as the 'e' value; 
+        Each keyboard button value matches the calculator button value. A capital 'X' and operator '*' buttons also call utiliseOperator('x'), as an alternative for multiplying;
+        'Enter' and 'Return' keyboard values also call 'utiliseOperator('=')';
         Other keyboard buttons are used as short cuts: 
-        'd' and 'D' call switchCalculationDisplay.onclick();
-        '±' call plusMinus.onclick();
-        's' and 'S' call saveCalculation.onclick();
-        '%' call divide100.onclick();
-        'r' and 'R' call remove.onclick();
-        Other keys don't call anything back, i.e. 'v','j','g','l';
-        A fake keyPress object and fake documentOnKeyPress function were used for this test, noth of which replicate the real document.onkeypress function (on main.js);
-    `, function(){
+        'd' and 'D' calls 'switchCalculationDisplay.onclick()';
+        '±' calls 'plusMinus.onclick()';
+        's' and 'S' calls 'saveCalculation.onclick()';
+        '%' calls 'divide100.onclick()';
+        'r' and 'R' calls 'remove.onclick()';
+        Other keys don't call anything back, i.e. 'v','j','g','l';`, function(){
 
         calculation = [];
         newNumber = [];

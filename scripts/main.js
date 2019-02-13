@@ -122,7 +122,6 @@ switchCalculationDisplay.onclick = function(){
 const numberBuilder = function(e){
 	clearPageAlerts();
 	e.toString();
-	console.log(typeof e);
 	if(calculation.length == 0 || newOperator.length == 1
 	|| ['=', '+', '-', 'x', '/'].includes(calculation[calculation.length-1])){
 		if(calculation[calculation.length-1] == "=") { clearAll(); }
@@ -337,17 +336,16 @@ const displaySavedCalculations = function(){
 		deleteCalc.onclick = function() {
 			clearPageAlerts();
 			this.parentElement.classList.add("removing-list-item");
+			let v = this.value;
 			setTimeout(function(){
-				calculationsList.splice(this.value, 1);
+				calculationsList.splice(v, 1);
 				displaySavedCalculations();
 			},500);
 			return warningStatus.innerHTML = "Calculation data deleted!";
 		}
 		let loadCalc = document.getElementById("load-calc" + key);
 		loadCalc.onclick = function(e) {
-			console.log(window.scrollY);
 			clearPageAlerts();
-			/*loadCalc.classList.add("loaded-calc");*/
 			calculation = (calculationsList[this.value].savedCalculation[0] == "Calculation Empty") ? [] : calculationsList[this.value].savedCalculation.slice();
 			newOperator = calculationsList[this.value].savedOperator.slice();
 			newNumber = calculationsList[this.value].savedNumber.slice();
@@ -403,7 +401,6 @@ saveCalculation.onclick = function(){
 
 /*keyboard press responses*/
 document.onkeypress = function(e) {
-	console.log(e)
 	var key = e.key; 
 	if (e.defaultPrevented || document.activeElement.tagName == 'TEXTAREA') {
 		return; // Do nothing if the event was already processed OR if the description input (node 'TEXTAREA') is Active;

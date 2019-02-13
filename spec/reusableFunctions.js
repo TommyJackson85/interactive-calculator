@@ -1,4 +1,4 @@
-describe("pushToCalculation() outcomes", function(){
+describe("'pushToCalculation' function outcomes", function(){
     it("results", function(){
         calculation = ["3", "x", "6", "+"];
         newNumber = ["18"];
@@ -7,7 +7,7 @@ describe("pushToCalculation() outcomes", function(){
         expect(calculation).toEqual(["3", "x", "6", "+", "18"]);
     })
 }),
-describe("empty() outcomes", function(){
+describe("'empty' function outcomes", function(){
     it("results", function(){
         calculation = ["3", "x", "6", "+"];
         newNumber = ["5"];
@@ -17,25 +17,22 @@ describe("empty() outcomes", function(){
         expect(empty(calculation)).toEqual([]);
     })
 }),
-describe("displayCalculation() outcomes", function() {
-    it("IF the string length is 0, displayedCalc.innerHTML should display 'cleared'. ", function(){
+describe("'displayCalculation' function calling outcomes", function() {
+    it("if the string length is 0, displayed calculation should display 'cleared'. ", function(){
         calculation = [];
         expect(displayCalculation()).toBe("cleared");
         expect(displayCalculation()).not.toBe("");
         expect(displayCalculation()).not.toBe("... ");
     }),
-    it("displayCalcuclation() should display calculation array elements joined as a string, while calculation array shouldn't change afterwards", function(){
+    it("displayed calculation should display calculation array indexes joined together", function(){
         calculation = ["3", "+", "4."];
         expect(displayCalculation()).toBe("3 + 4.");
         expect(displayCalculation()).not.toBe(["3", "+", "4."]);
     }),
-    it(`IF the string length is greater than 34 and displayCalculation() is called, displayed-calc should display "... " added to a shortened version of the calculation 
-    (the calculation array joined together and shortened in length, from the end of the calculation and back 34 in length);
-    However if displayFullCalc is turned to true from false, the full calculation is displayed from the #displayed-entire-calc DOM element in full length;
-    '#displayed-calc' displays "calculation displayed above" in green font instead due to the 'green-display-text' being added to its class list; 
-    This is to alert the user that the calculation is now displayed at '#displayed-entire-calc'; 
-    switchCalculationDisplay.onclick() switches displayFullCalc's value from false to true, and visa versa, and calls the displayCalculation() function.
-    Turning displayFullCalc's value from true to false also removes the 'green-display-text' class from #displayed-calc's class list, turning the text back to white.
+    it(`If the built calculation length (in its string form) is greater than 34 in length, the displayed calculation should display "... " added at the start of a sliced 
+    version of the calculation in which shows the last inputed data 34 in length;
+    If the enlarged display is switched on from the 'switchCalculationDisplay' button, the full calculation is displayed at the enlarged screen, 
+    and "calculation displayed above" (in green text) is displayed on the calculator screen. 
     `, function(){
         displayFullCalc = false;
         calculation = ["5", "+", "5", "+", "666", "+", "3", "+", "3", "+", "3", "+", "3", "+", "3", "+", "3"];
@@ -68,7 +65,7 @@ describe("displayCalculation() outcomes", function() {
     
     })
 }),
-describe("clearInputs() outcomes", function(){
+describe("clearInputs function outcomes", function(){
     it("Should clear input arrays only. The calculation array does not change. Returns the newNumber array", function(){
         calculation = ["3", "+", "4", "+"]
         newNumber = ["2"];
@@ -86,7 +83,7 @@ describe("clearInputs() outcomes", function(){
         expect(calculation).not.toEqual([]);
     })
 }),
-describe("clearAll() outcomes", function(){
+describe("clearAll function outcomes", function(){
     it("should clear calculation and input arrays and return disableDec as false.", function(){
         calculation = ["3", "+", "4."]
         newNumber = [];
@@ -105,8 +102,8 @@ describe("clearAll() outcomes", function(){
         expect(disableDec).not.toBe(true);
     })
 }),
-describe("clearAllAndDisplay() outcomes", function() {
-    it("clearAllAndDisplay() should activate clearAll(), display 'cleared' in displayedCalc HTML and display '0' in displayedInput HTML.", function(){
+describe("clearAllAndDisplay function outcomes", function() {
+    it("should display 'cleared' at the displayed calculation and display '0' at the displayed input.", function(){
         calculation = ["3", "+", "4"];
         newNumber = [];
         newOperator = ["*"];
@@ -126,10 +123,10 @@ describe("clearAllAndDisplay() outcomes", function() {
         expect(displayedInput.innerHTML).not.toBe("*");
     })
 }),
-describe('clearPageAlerts() outcomes; clearPageAlerts() if called from all functions. It is designed clean all alerts or restart them.', function(){
-    it(`Removes "success-border" class from #mainCalculator and #display DOM elements;
-        Removes "warning-border" class from #saveCalculation and #calculationDescriptionInput DOM elements;
-        Empties loadStatus.innerHTML, warningStatus.innerHTML and saveStatus.innerHTML;`, function(){
+describe('"clearPageAlerts" function outcomes. clearPageAlerts is called from all functions. It is designed to remove all alerts or restart them.', function(){
+    it(`Removes green border (class: "success-border") from the main calculator and its inherit display;
+        Removes red border (class: "warning-border") from the save button and calculation description input;
+        Sets headings 'load-status', 'warning-status' and 'save-status' to being empty.`, function(){
         calculation = ["4"];
         newNumber = [];
         newOperator = ["+"];

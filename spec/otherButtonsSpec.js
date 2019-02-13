@@ -1,12 +1,8 @@
 describe("results of switchCalculationDisplay();", function(){
     
-    it(`switchCalculationDisplay switches the display of the full calculation, from #displayed-calc to #displayed-entire-calc dom elements, or visa versa;
-    It does this through the boolean variable displayFullCalc, switching it between true and false and then calls displayCalculation() which decides where the calculation is shown.
-    If displayFullCalc is turned to true, the built calculation is moved to #displayed-full-calc, and if it is turned to false, it is moved to #displayed-calc;
-    switchCalculationDisplay() also changes the style of displayed-full-calc
-    switchCalculationDisplay() alse changes #displayed-full-calc's parent div '#enlarged-display' display styling, from 'none' (when displayFullCalc is false) to 'block' (when displayFullCalc is true) and visa versa;
-    This is in order to hide or show the full calculation when it is needed;
-    switchCalculationDisplay() finally returns the switchCalculationDisplay.innerHTML to "Hide Full Calculation" (when displayFullCalc is true) OR "Show Full Calculation" (when displayFullCalc is false);
+    it(`switches the display of the full calculation, from the calculator's 'displayed calculation' to the enlarged display, and visa versa; 
+    When the enlarged display is not in use, it is hidden from the page;
+    The 'Switch Calculation Display' button's text is returned as "Hide Full Calculation" when the enlarged display is shown and returned as "Show Full Calculation" when the enlarged display is off;
     `, function(){
         calculation = ["5", "+", "6"];
         const displayedCalc = document.getElementById('displayed-calc');

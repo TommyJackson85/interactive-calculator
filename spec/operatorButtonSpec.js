@@ -1,10 +1,8 @@
-describe("What an operator button calls", function(){
-    it(`operator button calls the utiliseOperator(this.value) function, in which carry's the operator button's 'value' as the utiliseOperator()'s main argument, 
-    i.e the 'multiply' operator will call utiliseOperator('x'); The example tested shows a calculation chain being built: 
-    when operator.onclick() is called, it pushes 'x' into the newOperator array (through the untiliseOperator function);
-     This 'x' is then pushed into the calculation array when a number button is pressed; 
-     Then ultiseOperator(operator.value) is called, carrying the same previously pushed operator value, pushing a second 'x' into the newOperator array; 
-     Both number.onclick() and utiliseOperator(operator.value) cause the same effect;'`, function(){
+describe("What an operator button and utileseOperator function calls", function(){
+    it(`calls the utiliseOperator function, in which carry's the operator button's 'value' as the main argument;   
+        when 'multiply' is called, it pushes 'x' into the 'newOperator' array (through the untiliseOperator function);
+        This 'x' is then pushed into the calculation array when a number button is pressed; 
+        Then when utiliseOperator(operator.value) is called, it pushes the newNumber array value into the calculator value, and pushes the operator value into the newOperator array;'`, function(){
         calculation = [];
         newNumber = ["2"];
         newOperator = [];
@@ -27,7 +25,7 @@ describe("What an operator button calls", function(){
     })
 })
 describe("The Answer button responses", function(){
-    it("answer returns the evaluation of the calculation Array and pushes it into newNumber Array", function(){
+    it("returns the evaluation of the calculation Array and pushes it into newNumber Array", function(){
         calculation = [];
         newNumber = ["3"];
         newOperator = [];
@@ -47,7 +45,7 @@ describe("The Answer button responses", function(){
         expect(newNumber[newNumber.length - 1]).not.toBe(undefined);
         expect(newNumber.length).not.toBe(2);
     }),
-    it("displayCalculation() is called after pressing '=' ", function(){
+    it("The displayCalculation function is called after pressing '=' ", function(){
         calculation = ["3", "x"];
         newNumber = ["6"];
         /*let realCalculation = calculation.join(" ").replace(/x/g , "*");*/
@@ -61,21 +59,6 @@ describe("The Answer button responses", function(){
         expect(newNumber[newNumber.length - 1]).not.toBe(undefined);
 
         expect(newNumber.length).not.toBe(2);
-    }),
-    it("displayCalculation() is called after pressing '-' ", function(){
-        calculation = ["3", "x"];
-        newNumber = ["6"];
-        /*let realCalculation = calculation.join(" ").replace(/x/g , "*");*/
-        let key = "subtract";
-        let operator = document.getElementById(key);
-        expect(operator.onclick()).toBe(undefined);
-       /*empied after pushToCalculation()*/
-        expect(calculation[calculation.length - 1]).toBe("6");
-        expect(calculation).toEqual(["3", "x", "6"]);
-         expect(displayedCalc.innerHTML).toEqual("3 x 6");
-        expect(newNumber[newNumber.length - 1]).toBe(undefined);
-
-        expect(newNumber.length).toBe(0);
     }),
     it("pushes previous newNumber('6') into calculation array BEFORE evaluating the calculation", function(){
         calculation = ["3", "x"];
@@ -97,7 +80,7 @@ describe("The Answer button responses", function(){
         expect(calculation[calculation.length - 1]).toBe("=");
         expect(calculation[calculation.length - 1]).not.toBe("6");
     }),
-    it("Answer button won't change any global values if '=' is already at the end of the Calculation", function(){
+    it("won't change any global values if '=' is already at the end of the Calculation", function(){
         calculation = ["3", "x", "6", "="];
         newNumber = ["18"];
         /*let realCalculation = calculation.join(" ").replace(/x/g , "*");*/
@@ -114,7 +97,21 @@ describe("The Answer button responses", function(){
     })
 }),
 describe("Other operator ('x', '-', '+', '/') buttons'responses", function(){
-    it("onclick willl clear the calculation array if the array contains an '=' at the end, and the newNumber (previous answer) will be pushed to the Calculation array", function(){
+    it("The 'displayCalculation' function is called after pressing 'substract' ", function(){
+        calculation = ["3", "x"];
+        newNumber = ["6"];
+        /*let realCalculation = calculation.join(" ").replace(/x/g , "*");*/
+        let key = "subtract";
+        let operator = document.getElementById(key);
+        expect(operator.onclick()).toBe(undefined);
+       /*empied after pushToCalculation()*/
+        expect(calculation[calculation.length - 1]).toBe("6");
+        expect(calculation).toEqual(["3", "x", "6"]);
+         expect(displayedCalc.innerHTML).toEqual("3 x 6");
+        expect(newNumber[newNumber.length - 1]).toBe(undefined);
+        expect(newNumber.length).toBe(0);
+    }),
+    it("clears the calculation array if the array contains an '=' at the end, and the newNumber array (previous answer) will be pushed to the Calculation array", function(){
         calculation = ["3", "x", "6", "="];
         newNumber = ["18"];
         newOperator = [];
@@ -128,7 +125,7 @@ describe("Other operator ('x', '-', '+', '/') buttons'responses", function(){
         expect(calculation).not.toEqual(["3", "x", "6", "=", "18"]);
         expect(calculation).not.toEqual([]);
     }),
-    it("onclick replace's newOperator content with pressed operator button value. The newOperator array never increases more than 1 in length", function(){
+    it("replace's newOperator content with pressed operator button value. The newOperator array never increases more than 1 in length", function(){
         calculation = ["3", "x", "6", "-"];
         newNumber = ["2"];
         newOperator = ["-"];
@@ -142,7 +139,7 @@ describe("Other operator ('x', '-', '+', '/') buttons'responses", function(){
         expect(newOperator).not.toEqual(["-", "x", "+"]);
         expect(newOperator).not.toEqual([]);
     }),
-    it("onclick pushes newNumber content to calculation array, after second click it doesn't push empty strings or push another operator or number", function(){
+    it("pushes newNumber content to calculation array, after second click it doesn't push empty strings or push another operator or number", function(){
         calculation = ["3", "x", "6", "-"];
         newNumber = ["2"];
         newOperator = ["-"];  

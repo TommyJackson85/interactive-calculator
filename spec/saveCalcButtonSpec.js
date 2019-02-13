@@ -1,12 +1,11 @@
 
 describe("results of saveCalculation button", function(){
-    it(`saveCalculation.onclick() pushes object containing COPIES of the four main global variables (Copies of: calculation, newNumber, newOperator, disbaleDec), 
-    and a stringed version of non empty input (Object.displayedInput either shows newNumber or newOperator); 
-    The pushed Object data are strictly copies and are NOT references to global variables; 
-    If no text was inputed into #calculation-description-input, the object's savedDescription will equal 'No Description Included';
-    saveCalculation.onclick() also returns #calculator-status.innerHTML as: 'Calculator data saved to Calculator; 
-    #save-status.innerHTML is also set to equal 'Calculator data saved below!'
-    and the 'success-border' class is added to the class lists of the #main-calculator and its '.display'.`, function(){
+    it(`saves object containing COPIES of the four main global variables (Copies of: calculation, newNumber, newOperator, disbaleDec), 
+    and a stringed version of non empty input (Object.displayedInput either shows newNumber or newOperator);
+    If no text was inputed into calculation-description-input, the object's savedDescription will equal 'No Description Included';
+    'calculator-status' heading returned as 'Calculator data saved to Calculator!'; 
+    'save-status' heading returned as 'Calculator data saved below!';
+    'success-border' class is added to the class lists of the 'main-calculator' and its 'display';`, function(){
 
         calculationsList = [];
         calculation = ["567", "+"];
@@ -33,10 +32,10 @@ describe("results of saveCalculation button", function(){
         ]);
         expect(calculationsList).not.toEqual([ ]);
     }),
-    it(`saveCalculation.onclick(), cant push Object into calculationList more than 10 times; 
-    After saveCalculation.onclick() is called an 11th time in a row, the 'warning-border' class is added to #save-calc button and #calculation-description-input input, creating a red border around both sections;
-    Then, #warning-status.innerHTML is returned (instead of #calculatorStatus.innerHTML) as: 'Can not save! Calculations List has exceeded it's data limit!'.
-    #calculatorStatus.innerHTML and #saveStatus.innerHTML become equal to "", and the 'success-border' class is removed from the main calculator and its display if it hasnt been removed already. 
+    it(`cant push Object into calculations list if list has 10 items; 
+    A red border (through 'warning-border' class) is added to the save button and calculation description input;
+    'warning-status' heading is returned as 'Can not save! Calculations List has exceeded it's data limit!';
+    'calculator-status' and 'saveStatus' become equal to ""; green border ('success-border' class) is removed from the main calculator and its display if it exists;
     `, function(){
         calculationsList = [];
         calculation = ["567", "+"];
@@ -75,10 +74,9 @@ describe("results of saveCalculation button", function(){
         expect(calculationsList.length).not.toBe(12);
         expect(calculationsList.length).not.toBe(11);
     }),
-    it(`saveCalc.onclick(), when called twice, pushes the object into calculationList twice, i.e. it pushes it once per click; 
-    The 2nd object pushed can be different to the first, when the global arrays (newOperator, newNumber, calculation) and variabled (disableDec) are changed after the first object is pushed; 
-    The changes to the second object do not change the values to the first object because each object copies the values of the global arrays through the splice function and dont reference the original global variables;
-    saveCalc.onclick() returns #calculator-status.innerHTML as: 'Calculator data saved to Calculation Backup!'`, function(){
+    it(`when called twice, it pushes two objects into calculationList twice;
+    The 2nd object is different to the first when the global arrays (newOperator, newNumber, calculation) are changed after the first object is pushed;
+    `, function(){
        
         let operator = document.getElementById("subtract");
         let number = document.getElementById("num7");
@@ -182,9 +180,8 @@ describe("results of saveCalculation button", function(){
             })
         ]);
     }),
-    it(`saveCalculation.onclick() can add the 'value' of #calculation-description-input to the savedCalc's object savedDescription value, before pushing the object; 
-    The value is built from the user writing into the input; 
-    In this case, the description "answer delivered" is written into the input, after the calculation has been evaluated; `, function(){
+    it(`The inputed value of the calculation description input, if it is not empty, is saved to 'savedDescription' value of the Obect; 
+     `, function(){
         calculationsList = [
             Object({ 
                 savedDescription: 'answer not delivered',
@@ -241,11 +238,9 @@ describe("results of saveCalculation button", function(){
             })
         ]);
     }),
-    it(`when each savedCalc object is pushed into calculationsList array from calling saveCalculation.onclick(), its displayedInput data depends on the previously pushed input;
-         When newOperator array contains an opertator ("x"), the operator is displayed in displayedInput;
-         When a number ("5") is pushed into the newNumber array and then saveCalculation.onclick is called, "5" is displayed in the new pushed object's displayedInput (as newOperator has been emptied);
-         When both inputs are emptied from pressing remove button, and then saveCalculation.onclick() is called, the third pushed savedCalc's displayedInput will contain a string called "Input Empty";   
-         `, function(){
+    it(`When newOperator array contains an opertator ("x"), the new saved Object's 'displayedInput' will contain the the operator value;
+        When newNumber array contains a number ("5"), the new saved Object's 'displayedInput' will contain the number value;
+        When both input arrays are empty, the new saved Object's 'displayedInput' will contain a string called "Input Empty";`, function(){
         calculationsList = [];
         calculation = ["567", "+", "567888"];
         newNumber = [];
@@ -276,9 +271,7 @@ describe("results of saveCalculation button", function(){
         expect(calculationsList[2].displayedInput).not.toBe("5");
         expect(calculationsList[2].displayedInput).not.toBe("x"); 
     }),
-    it(`When the calculation array is cleared, and the saveCalculation button is pressed, the new saved object's savedCalculation will equal an array containing only 'Calculation Empty'.
-    This is to indicate that no built calculation has been displayed.
-    `, function(){
+    it(`When the calculation array is cleared, the new saved object's savedCalculation will equal an array containing only 'Calculation Empty'.`, function(){
         calculationsList = [];
         calculation = ["567", "+", "567888"];
         newNumber = [];

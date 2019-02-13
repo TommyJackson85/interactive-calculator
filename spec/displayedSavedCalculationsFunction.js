@@ -1,5 +1,5 @@
-describe("displaySavedCalculations() outcomes", function(){
-   it(`If there are no saved calculations it returns one list item in #displayed-calculations-list saying 'No Calculations are saved.'`, function(){
+describe("'displaySavedCalculations' function outcomes", function(){
+   it(`If there are no saved calculations it returns one list item in displayed calculations list saying 'No Calculations are saved.'`, function(){
         calculationsList = [];
         let displayedCalculationList = document.getElementById('displayed-calculation-list');
         expect(displaySavedCalculations()).toBe(        
@@ -8,11 +8,8 @@ describe("displaySavedCalculations() outcomes", function(){
 				No Calculations are saved.
 			</li>`)
     }),
-    it(`displayedSavedCalculations() returns undefined when calculationsList is not empty;
-        When calculatorStatus.innerHTML is equal to  "Calculator data saved to Calculation Backup!" and displayedSavedCalculations() is called, 
-        the first displayed item's class list will have the class of 'new-saved-calculation';
-        `
-        , function(){
+    it(`When the calculator status heading is equal to "Calculator data saved to Calculation Backup!", the newest saved item will fade from green to blue because it inherets the 'new-saved-calculation' class;`
+    , function(){
         calculation = [];
         newNumber = [];
         newOperator = [];
@@ -50,31 +47,26 @@ describe("displaySavedCalculations() outcomes", function(){
     /*set up for the delete calc test as it requires the use of jasmine.createSpy() and jasmine.clock, due to the the deleteCalc function calling a setTimeout() function*/
     /*for the timerCallBack() function used this source: https://makandracards.com/makandra/32477-testing-settimeout-and-setinterval-with-jasmine*/
     beforeEach(function() {
-        timerCallback = jasmine.createSpy("displaySavedCalculations");
+       // timerCallback = jasmine.createSpy("calculationsList.splice(this.value, 1)");
+        timerCallback1 = jasmine.createSpy("ddisplaySavedCalculations");
         jasmine.clock().install();
     }),
     afterEach(function() {
         jasmine.clock().uninstall();
     }),
-    it(`
-    displayedSavedCalculations() doesn't return a value until a loadCalc or deleteCalc button, from each of the displayed saved calculation items, is clicked;
-        When deleteCalc() is called on the 'second object' of the calculation list (calculationsList[1]), 
-        a class of "removing-list-item" is added to the appended #saved-calculation1 DOM element's class list;
-        The "removing-list-item" class causes a fading out effect to the the DOM elements styling, fading from 1 to 0 in opacity. 
-        Once this finishes, 'calculationsList.splice(this.value, 1)' and 'displaySavedCalculations()' are both called within a 'setTimeout()' function, 
-        Removing the saved calculation and re-displaying the calculation list, the 'third object' is then placed at calculationsList[1]; 
-        When calculatorStatus innerHTML equals "", and displaySavedCalculations() is called, the first saved displayed item
-        doesn't have the class of 'new-saved-calculation';
-        deleteCalc() returns #warningStatus.innerHTML = "Calculation data deleted!";`, 
-        function(){
+    it(`wont return a value until a load or delete button from each of the displayed saved calculation items is clicked;
+        When the 'delete' button on the 'second object' of the calculation list (calculationsList[1]) is clicked, 
+        a class of "removing-list-item" is added to it, causing it to fade out;
+        'calculationsList.splice(this.value, 1)' and 'displaySavedCalculations()' are both called within a 'setTimeout()' function, 
+        Removing the saved calculation and re-displaying the calculation list, leaving 'third object' as the new second object; 
+        The 'Warning Status' heading is returned as "Calculation data deleted!";`, function(){
         let deleteCalc = document.getElementById("delete-calc" + 1);   
         expect(deleteCalc.onclick()).toBe(warningStatus.innerHTML = "Calculation data deleted!");
-       
         setTimeout(function() {
-            timerCallback();
+            timerCallback1();
         }, 500);
         jasmine.clock().tick(501);
-
+        expect(timerCallback1).toHaveBeenCalled();
         expect(calculationsList[1].savedDescription).toBe('third object');
         expect(calculationsList[1].savedDescription).not.toBe('second object - answer returned');
         expect(calculationsList[1].savedDescription).not.toBe('first object');
@@ -82,12 +74,11 @@ describe("displaySavedCalculations() outcomes", function(){
         expect(displayedCalculationList.childNodes[0].classList[1]).toBe('saved-calculation');
         expect(displayedCalculationList.childNodes[0].classList[1]).not.toBe('new-saved-calculation');
     }),
-    it(`Then, when loadCalc() is called on the 'third object', the global arrays copy the data from the loaded objects.
-    i.e. The calculation Array is now a copy of the objects savedCalculation, the newOperator Array is now a copy of the savedOperator Array;
-    loadCalc() returns #calculator-status.innerHTML = "Calculation data loaded succesfully!";
-    loadCalc() also adds the 'success-border' class to the class lists of dom elements #main-calculator and #display;
-    loadCalc() also calls the loadToTop() function, smoothly brings the user back to the top of the page;
-    `, function(){
+    it(`When the 'load' button on the 'third object' is clicked, the global arrays copy the data from the loaded object.
+    i.e. The calculation Array is now a copy of the objects savedCalculation and the newOperator Array is now a copy of the savedOperator Array;
+    The 'calculator-status' heading is returned "Calculation data loaded succesfully!";
+    A green border is added to  the main calculator and its inherit display;
+    The 'loadToTop' function is called, in which smoothly brings the user back to the top of the page to display the calculator;`, function(){
         let loadCalc = document.getElementById("load-calc" + 1);
         expect(loadCalc.onclick()).toBe(calculatorStatus.innerHTML = "Calculation data loaded succesfully!");
         expect(loadCalc.onclick()).not.toBe(calculatorStatus.innerHTML = "Calculator data saved to Calculation Backup!");
