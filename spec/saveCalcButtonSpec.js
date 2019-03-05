@@ -5,7 +5,7 @@ describe("results of saveCalculation button", function(){
     If no text was inputed into calculation-description-input, the object's savedDescription will equal 'No Description Included';
     'calculator-status' heading returned as 'Calculator data saved to Calculator!'; 
     'save-status' heading returned as 'Calculator data saved below!';
-    'success-border' class is added to the class lists of the 'main-calculator' and its 'display';`, function(){
+    'success-border' class is added to the class list of the displayed calculation list;`, function(){
 
         calculationsList = [];
         calculation = ["567", "+"];
@@ -15,8 +15,8 @@ describe("results of saveCalculation button", function(){
 
         expect(saveCalculation.onclick()).toBe("Calculator data saved to Calculation Backup!" || calculatorStatus);
         expect(saveStatus.innerHTML).toBe("Calculator data saved below!");
-        expect(mainCalculator.className.split(' ').includes("success-border")).toBe(true);
-        expect(display.className.split(' ').includes("success-border")).toBe(true);
+        expect(displayedCalculationList.className.split(' ').includes("success-border")).toBe(true);
+        //expect(display.className.split(' ').includes("success-border")).toBe(true);
 
         expect(saveCalculation.className.split(' ').includes("warning-border")).toBe(false);
         expect(calculationDescriptionInput.className.split(' ').includes("warning-border")).toBe(false);
@@ -35,7 +35,7 @@ describe("results of saveCalculation button", function(){
     it(`cant push Object into calculations list if list has 10 items; 
     A red border (through 'warning-border' class) is added to the save button and calculation description input;
     'warning-status' heading is returned as 'Can not save! Calculations List has exceeded it's data limit!';
-    'calculator-status' and 'saveStatus' become equal to ""; green border ('success-border' class) is removed from the main calculator and its display if it exists;
+    'calculator-status' and 'save-status' become equal to ""; green border ('success-border' class) is removed from the displayed calculation list if it exists;
     `, function(){
         calculationsList = [];
         calculation = ["567", "+"];
@@ -57,14 +57,14 @@ describe("results of saveCalculation button", function(){
 
         expect(saveCalculation.onclick()).toBe("Calculator data saved to Calculation Backup!");
         expect(saveStatus.innerHTML).toBe("Calculator data saved below!");
-        expect(mainCalculator.className.split(' ').includes("success-border")).toBe(true);
-        expect(display.className.split(' ').includes("success-border")).toBe(true);
+        expect(displayedCalculationList.className.split(' ').includes("success-border")).toBe(true);
+       // expect(display.className.split(' ').includes("success-border")).toBe(true);
 
         expect(saveCalculation.onclick()).toBe(warningStatus.innerHTML = "Can not save! Calculations List has exceeded it's data limit!");
         expect(calculatorStatus.innerHTML).toBe("");
         expect(saveStatus.innerHTML).toBe("");
-        expect(mainCalculator.className.split(' ').includes("success-border")).toBe(false);
-        expect(display.className.split(' ').includes("success-border")).toBe(false);
+        expect(displayedCalculationList.className.split(' ').includes("success-border")).toBe(false);
+        //expect(display.className.split(' ').includes("success-border")).toBe(false);
 
         expect(saveCalculation.onclick()).toBe("Can not save! Calculations List has exceeded it's data limit!");
 

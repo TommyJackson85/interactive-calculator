@@ -69,6 +69,7 @@ Both the calculation-backup-section and calculator-section are generally the sam
 Through a SASS mixin called 'max-width-margin', I kept some child divs centered at their max width for keeping consistant equal spacing, as it provided a better user experience.
 
 ### header and footer content
+
 The header displays the web page heading and logo, and the footer to display the copywrite informations.
 
 ### Keyboard Instructions (from both the Calculator section and Calculations Display section)
@@ -110,7 +111,7 @@ The calculator's screen - Close to the width of the calculator, and has a dark p
 
 - The description input - allows options description for next saved data.
 
-- The save calcultion button - allows the user to save multiple calculation progess. Saves the main calculator settings,  reates an item/box for display. Item is added to list, in which each shows the description, next input / answer, and built calculation values. The newest saved item fades from blue to green high lighting its added to the list. Eash has a 'load' and 'delete' button. Returns the 'save-status' heading as "Calculation data saved below!" and 'calculator-status' heading as "Calculator data saved to Calculator Backup!". Green border is added to the calculator and its display. Only 10 items can be save. If it has exceeded its limit, the 'warning-status' heading is returned as "Can not save! Calculations List has exceeded it's data limit!" and a red border is added to both the calculation description input and 'save calculation' button.
+- The save calcultion button - allows the user to save multiple calculation progess. Saves the main calculator settings,  reates an item/box for display. Item is added to list, in which each shows the description, next input / answer, and built calculation values. The newest saved item fades from blue to green high lighting its added to the list. Eash has a 'load' and 'delete' button. Returns the 'save-status' heading as "Calculation data saved below!" and 'calculator-status' heading as "Calculator data saved to Calculator Backup!". Green border is added to the displayed calculation list. Only 10 items can be save. If it has exceeded its limit, the 'warning-status' heading is returned as "Can not save! Calculations List has exceeded it's data limit!" and a red border is added to both the calculation description input and 'save calculation' button.
 
 - delete button on each item - Removes item from the saved calculations list, fading it out and then redisplaying the list after showing its removal. Returns the 'Warning-Status' as "Calculation data deleted!". 
 

@@ -78,6 +78,7 @@ const clearPageAlerts = function(){
 	warningStatus.innerHTML = "";
 	mainCalculator.classList.remove("success-border");
 	display.classList.remove("success-border");
+	displayedCalculationList.classList.remove("success-border");
 	calculationDescriptionInput.classList.remove("warning-border");
 	saveCalculation.classList.remove("warning-border");
 }
@@ -392,8 +393,9 @@ saveCalculation.onclick = function(){
 		displaySavedCalculations(); 
 	}, 30);
 	
-	mainCalculator.classList.add("success-border");
-	display.classList.add("success-border");
+	displayedCalculationList.classList.add("success-border");
+	/*mainCalculator.classList.add("success-border");
+	display.classList.add("success-border");*/
 
 	saveStatus.innerHTML = "Calculator data saved below!";
 	return calculatorStatus.innerHTML = "Calculator data saved to Calculation Backup!";
