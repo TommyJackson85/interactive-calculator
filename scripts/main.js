@@ -396,7 +396,7 @@ const displaySavedCalculations = function(){
 					<h6><strong> Description </strong> : <i>${savedDescription}</i> </h6>
 					<h6><strong> Built calculation </strong> : ${savedCalculation.join(" ")} </h6>
 					<h6><strong> ${inputType} </strong> : ${displayedInput} </h6>
-					<button id="delete-calc${c}" class="red-button delete-calc" value="${c}">delete</button>
+					<button id="delete-calc${c}" class="btn red-button delete-calc" value="${c}">delete</button>
 					<button id="load-calc${c}" class="btn green-button load-calc" value="${c}">load</button>
 				</li>`
 			);
