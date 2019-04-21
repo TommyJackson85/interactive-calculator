@@ -1,6 +1,13 @@
 ## Testing Documentation
 
-This documenatation covers the testing of the Jasmine tests, Manual tests and User Stories based tests.
+This documenatation covers the testing of the jshint, Jasmine tests, Manual tests and User Stories based tests.
+
+- jshint testing -  I used the [jshint website](https://jshint.com/) To test my JavaScript syntax for any harmful or potentially harmful code. Here is some examples of responses to the bundle/main.bundle.js file (the compiled JavaScript through Babel).
+    - For In Loop - I found an warning on using the For In loop. On searching the error, I found other users recommended not using it for arrays. So I decided to use the usual 'i++' over array length loop. I changed multiple for loops as a result.
+    - eval function - I received a warning that this can be harmful. However, many developers have told me that this issue is more to do with username and password configuration. I have been careful with my use of this function. I only used it for evaluating stringed numbers to receive an answer, and for dividing a number by 100.
+    - Functions declared in loops - this warning was in relation to functions referencing outer variables, in which could cause confusion semantics. However, my project is very much related to changing global variables through various functions. Any function call backs or changes to global variables were carfully decided and any potential confusion was tested through Jasmine and Manual testing.
+- HTML tested with [w3 validator](https://validator.w3.org/nu/#textarea).
+- CSS tested with [w3 jigsaw](https://jigsaw.w3.org/css-validator/validator).
 
 - Jasmine testing - The All tests can be read at the [tests.html file](https://tommyjackson85.github.io/interactive-calculator/spec/tests.html?random=false). The spec files test the (1) Number Buttons; (2) Operator Buttons; (3) Keyboard Buttons; (4) Save Calculation Button; (5) Other Buttons; (6) Display Saved Calculations Function; and (7) Reusable Functions.
     - tests html file - main html file for testing, includes the html from 'index.html' file (wrapped in a div called 'hidden', in which has display styling set to 'none'). Only Jasmines testing html appears.

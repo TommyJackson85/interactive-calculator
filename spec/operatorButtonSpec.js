@@ -1,23 +1,74 @@
 describe("What an operator button and utileseOperator function calls", function(){
-    it(`calls the utiliseOperator function, in which carry's the operator button's 'value' as the main argument;   
+    it(`multiply operator is not utilised on click because number wasn't formed. 
+    You can't build a number starting with '0'`, function(){
+        disableDec = false;
+        newNumber = [];
+        newOperator = ["+"];
+        calculation = ["45", "-", "4"];
+        let number = document.getElementById("num" + 0);
+        let operator = document.getElementById("multiply");
+
+        expect(number.onclick()).toBe(undefined);
+        
+        expect(operator.onclick()).toBe(undefined);
+
+        expect(newNumber).toEqual([]);
+        expect(newOperator).toEqual([]);
+        expect(calculation).toEqual(["45", "-", "4", "+"]);
+        expect(displayedInput.innerHTML).toBe("0");
+    }),
+    it(`operator won't be called if number is only '0.' or '-0.'. 
+    Both inputs are empitied, disableDec and divide100Activated are turned to false.`, function(){
+        disableDec = false;
+        divide100Activated = false;
+        newNumber = [];
+        newOperator = ["+"];
+        calculation = ["45", "-", "4"];
+        displayedInput.innerHTML = "0";
+
+        number = document.getElementById("numDec");
+        expect(number.value).toBe('.');
+        expect(number.onclick()).toBe(undefined);
+        
+        let operator = document.getElementById("multiply");
+        expect(operator.value).toBe("x");
+        expect(operator.onclick()).toBe(undefined);
+
+        let plusMinus = document.getElementById("plus-minus");
+        expect(plusMinus.onclick()).toBe(undefined);
+
+        expect(operator.onclick()).toBe(undefined);
+
+        expect(newNumber).toEqual([]);
+        expect(newOperator).toEqual([]);
+        expect(calculation).toEqual(["45", "-", "4", "+"]);
+    });
+    it(`calls the utiliseOperator function, in which carry's the operator button's 'value' as the main argument; 
+        Begins with the number 2 after being pushes and displayed in the displayed input;  
         when 'multiply' is called, it pushes 'x' into the 'newOperator' array (through the untiliseOperator function);
         This 'x' is then pushed into the calculation array when a number button is pressed; 
-        Then when utiliseOperator(operator.value) is called, it pushes the newNumber array value into the calculator value, and pushes the operator value into the newOperator array;'`, function(){
+        Then when utiliseOperator(operator.value) is called, it pushes the newNumber array value into the calculator value, and pushes the operator value into the newOperator array, in which is also displayed in the input display;`, function(){
+        displayedInput.innerHTML = "2"; 
+        divide100Activated = false;
+        disableDec = false;
         calculation = [];
         newNumber = ["2"];
         newOperator = [];
-        let operator = document.getElementById('multiply');
-        let number = document.getElementById('num5');
+        
+        operator = document.getElementById('multiply');
+        number = document.getElementById('num5');
+
         expect(operator.onclick()).toBe(undefined);
         expect(number.onclick()).toBe(undefined);
         expect(utiliseOperator(operator.value)).toBe("x");
 
-        expect(calculation).toEqual(["2","x","5"]);
+        expect(calculation).toEqual(["2", "x", "5"]);
         expect(calculation).not.toEqual(["2","x"]);
         expect(calculation).not.toEqual(["2"]);
 
         expect(newOperator).toEqual(["x"]);
         expect(newOperator).not.toEqual([]);
+        expect(displayedInput.innerHTML).toBe("x"); 
 
         expect(newNumber).toEqual([]);
         expect(newNumber).not.toEqual(["5"]);
@@ -25,7 +76,7 @@ describe("What an operator button and utileseOperator function calls", function(
     })
 })
 describe("The Answer button responses", function(){
-    it("returns the evaluation of the calculation Array and pushes it into newNumber Array", function(){
+    it("returns the evaluation of the calculation Array and pushes it into newNumber Array, and has it split", function(){
         calculation = [];
         newNumber = ["3"];
         newOperator = [];
@@ -35,15 +86,16 @@ describe("The Answer button responses", function(){
         expect(numberBuilder("6")).toBe("6");
         operator = document.getElementById("answer");
         expect(operator.onclick()).toBe(undefined);
-        expect(newNumber).toEqual(["18"]);
+        expect(newNumber).toEqual(["1","8"]);
         expect(newNumber).not.toEqual([]);
-        expect(newNumber).not.toEqual(["1","8"]);
+        expect(newNumber).not.toEqual(["18"]);
         expect(calculation).toEqual(["3","x","6","="]);
         expect(calculation).not.toEqual(["3","x","6"]);
-        expect(newNumber[newNumber.length - 1]).toBe("18");
+        expect(newNumber[newNumber.length - 1]).toBe("8");
         expect(newNumber[newNumber.length - 1]).not.toBe("6");
         expect(newNumber[newNumber.length - 1]).not.toBe(undefined);
-        expect(newNumber.length).not.toBe(2);
+        expect(newNumber.length).toBe(2);
+        expect(newNumber.length).not.toBe(1);
     }),
     it("The displayCalculation function is called after pressing '=' ", function(){
         calculation = ["3", "x"];
@@ -57,8 +109,7 @@ describe("The Answer button responses", function(){
         expect(calculation).toEqual(["3", "x", "6", "="]);
          expect(displayedCalc.innerHTML).toEqual("3 x 6 =");
         expect(newNumber[newNumber.length - 1]).not.toBe(undefined);
-
-        expect(newNumber.length).not.toBe(2);
+        expect(newNumber.length).not.toBe(1);
     }),
     it("pushes previous newNumber('6') into calculation array BEFORE evaluating the calculation", function(){
         calculation = ["3", "x"];

@@ -1,14 +1,39 @@
 describe("Results of pressing number buttons", function(){
     /*number is NOT restarted from each test*/
     /*number is continuously being built*/
-    it("key 'Dec' reflects button value '.' ", function(){ //will be removed, as it is just temporary
+    it("key 0 can't be pressed when newNumber array is empty. Numbers being built can not start with a zero", function(){
+        newNumber = [];
+        calculation = ["45", "-", "5", "+"];
+        let number = document.getElementById("num" + 0);
+        expect(number.onclick()).toBe(undefined);
+        expect(number.onclick()).toBe(undefined);
+        expect(newNumber).toEqual([]);
+        expect(newNumber).not.toEqual(["0"]);
+    });
+    it(`key 'Dec' reflects button value '.', a decimal. 
+    If new number array is empty, the Dec button pushes '0' and '.' 
+    into the Array.`, function(){ //will be removed, as it is just temporary
         /*Dec is short for decimal (i.e ".")*/
-        let key = 'Dec';
-        let number = document.getElementById("num" + key);
+        disableDec = false;
+        newNumber = [];
+        calculation = [];
+        let number = document.getElementById("numDec");
         expect(number.value).toBe(".");
-        expect(number.value).not.toBe("5");
+        expect(number.onclick()).toBe(undefined);
+        expect(newNumber).toEqual(['0','.']);
+        expect(disableDec).toBe(true);
+    });
+    it(`If the new number array has a number in it, the Dec button will push '.' into the array.`, function(){
+        disableDec = false;
+        newNumber = ["5"];
+        calculation = [];
+        number = document.getElementById("numDec");
+        expect(number.onclick()).toBe(undefined);
+        expect(newNumber).toEqual(["5", "."]);
+        expect(disableDec).toBe(true);
     });
     it("key 4 reflects button value '4' ", function(){
+        disableDec = false;
         key = 4;
         number = document.getElementById("num" + key);
         expect(number.value).toBe("4");
@@ -16,6 +41,7 @@ describe("Results of pressing number buttons", function(){
     });
     it(`returns undefined but calls the numberBuilder(this.value) function, in which this.value is equal to the specific number buttons 'value', that is clicked;   
         newNumber length should not exceed 35 and calculator should message user when it has exceeded it's limit`, function(){
+        calculation = [];
         newNumber = ["5", "5", "3", "4", "1", "5", "5", "4", "1", "5", "5", "3", "4", "1", "5", "5", "3", "4", "1", "5", "5", "3", "4", "1", "5", "5", "3", "4", ".", "5", "5", "3"]; 
         disableDec = true;/*array contains decimal*/
         key = 4;
@@ -27,9 +53,10 @@ describe("Results of pressing number buttons", function(){
 
         expect(numberBuilder("4")).toBe(
             "exceeds limit>>" + newNumber.join("").slice(13) 
-            && "exceeds limit>>155341553415534.553444");
+            && "exceeds limit&gt;&gt;5341553415534.553444");
+            //&gt;&gt are displayed as '>>' on the calculator screen.
         expect(numberBuilder("4")).not.toBe(
-            "exceeds limit>>155341553415534.5534444");
+            "exceeds limit&gt;&gt;155341553415534.5534444");
         expect(numberBuilder("4")).not.toBe(
             "5534155341553415534.55344444");
     });

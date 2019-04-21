@@ -12,6 +12,7 @@ describe("results of saveCalculation button", function(){
         newNumber = ["5","6","7","8","8","8"];
         newOperator = [];
         disableDec = false;
+        divide100Activated= false;
 
         expect(saveCalculation.onclick()).toBe("Calculator data saved to Calculation Backup!" || calculatorStatus);
         expect(saveStatus.innerHTML).toBe("Calculator data saved below!");
@@ -27,7 +28,8 @@ describe("results of saveCalculation button", function(){
                 savedNumber: [ '5', '6', '7', '8', '8', '8' ], 
                 savedOperator: [  ], 
                 displayedInput: '567888', 
-                savedDecimalStatus: false 
+                savedDecimalStatus: false,
+                savedDivide100Status: false
             })
         ]);
         expect(calculationsList).not.toEqual([ ]);
@@ -42,6 +44,7 @@ describe("results of saveCalculation button", function(){
         newNumber = ["5","6","7","8","8","8"];
         newOperator = [];
         disableDec = false;
+        divide100Activated = false;
         const saveStatus = document.getElementById("save-status");
         const calculationDescriptionInput = document.getElementById("calculation-description-input");
 
@@ -86,7 +89,8 @@ describe("results of saveCalculation button", function(){
         newNumber = ["5","6","7","8","8","8"];
         newOperator = [];
         disableDec = false;
-
+        divide100Activated = false;
+        
         expect(saveCalculation.onclick()).toBe('Calculator data saved to Calculation Backup!');
         expect(number.onclick()).toBe(undefined);
         expect(operator.onclick()).toBe(undefined);
@@ -98,7 +102,8 @@ describe("results of saveCalculation button", function(){
                 savedNumber: [ '5', '6', '7', '8', '8', '8' ], 
                 savedOperator: [  ], 
                 displayedInput: '567888', 
-                savedDecimalStatus: false 
+                savedDecimalStatus: false,
+                savedDivide100Status: false
             }),
             Object({ 
                 savedDescription: 'No Description Included',
@@ -106,7 +111,8 @@ describe("results of saveCalculation button", function(){
                 savedNumber: [ ], 
                 savedOperator: ['-'], 
                 displayedInput: '-', 
-                savedDecimalStatus: false 
+                savedDecimalStatus: false,
+                savedDivide100Status: false
               })
         ]);
         expect(calculationsList).not.toEqual([
@@ -116,7 +122,8 @@ describe("results of saveCalculation button", function(){
                 savedNumber: [ '5', '6', '7', '8', '8', '8' ], 
                 savedOperator: [  ], 
                 displayedInput: '567888', 
-                savedDecimalStatus: false 
+                savedDecimalStatus: false,
+                savedDivide100Status: false
             }),
             Object({ 
                 savedDescription: 'No Description Included',
@@ -124,7 +131,8 @@ describe("results of saveCalculation button", function(){
                 savedNumber: [ '5', '6', '7', '8', '8', '8' ], 
                 savedOperator: [  ], 
                 displayedInput: '567888', 
-                savedDecimalStatus: false 
+                savedDecimalStatus: false,
+                savedDivide100Status: false
             }),
             Object({ 
                 savedDescription: 'No Description Included',
@@ -132,7 +140,8 @@ describe("results of saveCalculation button", function(){
                 savedNumber: [ ], 
                 savedOperator: ['-'], 
                 displayedInput: '-', 
-                savedDecimalStatus: false 
+                savedDecimalStatus: false,
+                savedDivide100Status: false 
             }),
             Object({ 
                 savedDescription: 'No Description Included',
@@ -140,7 +149,8 @@ describe("results of saveCalculation button", function(){
                 savedNumber: [ ], 
                 savedOperator: ['-'], 
                 displayedInput: '-', 
-                savedDecimalStatus: false 
+                savedDecimalStatus: false,
+                savedDivide100Status: false 
             })
     ]);
         expect(calculationsList).not.toEqual([
@@ -150,7 +160,8 @@ describe("results of saveCalculation button", function(){
                 savedNumber: [ ], 
                 savedOperator: ['-'], 
                 displayedInput: '-', 
-                savedDecimalStatus: false 
+                savedDecimalStatus: false,
+                savedDivide100Status: false
             }),
             Object({ 
                 savedDescription: 'No Description Included',
@@ -158,7 +169,8 @@ describe("results of saveCalculation button", function(){
                 savedNumber: [ ], 
                 savedOperator: ['-'], 
                 displayedInput: '-', 
-                savedDecimalStatus: false 
+                savedDecimalStatus: false,
+                savedDivide100Status: false 
             })
         ]);
         expect(calculationsList).not.toEqual([       
@@ -168,7 +180,8 @@ describe("results of saveCalculation button", function(){
                 savedNumber: newNumber, 
                 savedOperator: newOperator, 
                 displayedInput: '-', 
-                savedDecimalStatus: false 
+                savedDecimalStatus: false,
+                savedDivide100Status: false
             }),
             Object({ 
                 savedDescription: 'No Description Included',
@@ -176,7 +189,8 @@ describe("results of saveCalculation button", function(){
                 savedNumber: newNumber, 
                 savedOperator: newOperator, 
                 displayedInput: '-', 
-                savedDecimalStatus: false 
+                savedDecimalStatus: false,
+                savedDivide100Status: false
             })
         ]);
     }),
@@ -189,13 +203,15 @@ describe("results of saveCalculation button", function(){
                 savedNumber: [ '5', '6', '7', '8', '8', '8' ], 
                 savedOperator: [  ], 
                 displayedInput: '567888', 
-                savedDecimalStatus: false 
+                savedDecimalStatus: false,
+                savedDivide100Status: false
             })
         ];
         calculation = ["567", "+", "567888", "="];
         newNumber = ["568455"];
         newOperator = [];
         disableDec = false;
+        divide100Activated = false;
 
         const calculationDescriptionInput = document.getElementById("calculation-description-input");
         calculationDescriptionInput.value = "answer delivered";
@@ -208,7 +224,8 @@ describe("results of saveCalculation button", function(){
                 savedNumber: [ '5', '6', '7', '8', '8', '8' ], 
                 savedOperator: [  ], 
                 displayedInput: '567888', 
-                savedDecimalStatus: false 
+                savedDecimalStatus: false,
+                savedDivide100Status: false
             }),
             Object({
                 savedDescription: 'answer delivered',
@@ -216,7 +233,8 @@ describe("results of saveCalculation button", function(){
                 savedNumber: ["568455"], 
                 savedOperator: [  ], 
                 displayedInput: "568455", 
-                savedDecimalStatus: false 
+                savedDecimalStatus: false,
+                savedDivide100Status: false 
             })
         ]);
         expect(calculationsList).not.toEqual([
@@ -226,7 +244,8 @@ describe("results of saveCalculation button", function(){
                 savedNumber: [ ' 5', '6', '7', '8', '8', '8' ], 
                 savedOperator: [  ], 
                 displayedInput: '567888', 
-                savedDecimalStatus: false 
+                savedDecimalStatus: false,
+                savedDivide100Status: false
             }),
             Object({
                 savedDescription: 'No Description Included',
@@ -234,7 +253,8 @@ describe("results of saveCalculation button", function(){
                 savedNumber: ["568455"], 
                 savedOperator: [  ], 
                 displayedInput: "568455", 
-                savedDecimalStatus: false 
+                savedDecimalStatus: false,
+                savedDivide100Status: false
             })
         ]);
     }),
@@ -246,6 +266,7 @@ describe("results of saveCalculation button", function(){
         newNumber = [];
         newOperator = ["x"];
         disableDec = false;
+        divide100Activated = false;
 
         let number = document.getElementById("num5");
         const remove = document.getElementById("remove");
@@ -277,6 +298,7 @@ describe("results of saveCalculation button", function(){
         newNumber = [];
         newOperator = ["x"];
         disableDec = false;
+        divide100Activated = false;
         const clear = document.getElementById("clear");
         expect(clear.onclick()).toBe('0');
         expect(saveCalculation.onclick()).toBe('Calculator data saved to Calculation Backup!');

@@ -129,43 +129,43 @@ describe(`document.onkeypress responses, while pressing the relevent keyboard bu
         keyPress.key = '.';
         expect(documentOnKeyPress(keyPress)).toBe(undefined);
         expect(newOperator).toEqual([]);
-        expect(newNumber).toEqual(['.']);
+        expect(newNumber).toEqual(['0','.']);
         expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x']);
 
         keyPress.key = '1';
         expect(documentOnKeyPress(keyPress)).toBe(undefined);
         expect(newOperator).toEqual([]);
-        expect(newNumber).toEqual(['.', '1']);
+        expect(newNumber).toEqual(['0', '.', '1']);
         expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x']);
 
         keyPress.key = '/';
         expect(documentOnKeyPress(keyPress)).toBe(undefined);
         expect(newOperator).toEqual(['/']);
         expect(newNumber).toEqual([]);
-        expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x', '.1']);
+        expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x', '0.1']);
 
         keyPress.key = '9';
         expect(documentOnKeyPress(keyPress)).toBe(undefined);
         expect(newOperator).toEqual([]);
         expect(newNumber).toEqual(['9']);
-        expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x', '.1', '/']);
+        expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x', '0.1', '/']);
 
         keyPress.key = '8';
         expect(documentOnKeyPress(keyPress)).toBe(undefined);
         expect(newOperator).toEqual([]);
         expect(newNumber).toEqual(['9', '8']);
-        expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x', '.1', '/']);
+        expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x', '0.1', '/']);
 
         keyPress.key = '±';
         expect(documentOnKeyPress(keyPress)).toBe(undefined);
         expect(newOperator).toEqual([]);
         expect(newNumber[0]).toBe('-9');
         expect(newNumber).toEqual(['-9','8']);  
-        expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x', '.1', '/']);
+        expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x', '0.1', '/']);
         expect(documentOnKeyPress(keyPress)).toBe(undefined);
         expect(newOperator).toEqual([]);
         expect(newNumber).toEqual(['9','8']); 
-        expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x', '.1', '/']);
+        expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x', '0.1', '/']);
 
         keyPress.key = '0';
         expect(documentOnKeyPress(keyPress)).toBe(undefined);
@@ -174,7 +174,7 @@ describe(`document.onkeypress responses, while pressing the relevent keyboard bu
         expect(documentOnKeyPress(keyPress)).toBe(undefined);
         expect(newOperator).toEqual([]);
         expect(newNumber).toEqual(['9','8','0','0','0','0']); 
-        expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x', '.1', '/']);
+        expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x', '0.1', '/']);
 
         keyPress.key = '%';
         expect(documentOnKeyPress(keyPress)).toBe(undefined);
@@ -182,7 +182,7 @@ describe(`document.onkeypress responses, while pressing the relevent keyboard bu
         expect(documentOnKeyPress(keyPress)).toBe(undefined);
         expect(newOperator).toEqual([]);
         expect(newNumber).toEqual(['0','.','9','8']); 
-        expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x', '.1', '/']);
+        expect(calculation).toEqual(['44', '-', '3', 'x', '5', 'x', '0.1', '/']);
 
         keyPress.key = 'r';
         expect(documentOnKeyPress(keyPress)).toBe(undefined);
@@ -222,7 +222,6 @@ describe(`document.onkeypress responses, while pressing the relevent keyboard bu
         keyPress.key = '=';
         expect(documentOnKeyPress(keyPress)).toBe(undefined);
         expect(displayedInput.innerHTML).toBe('39');
-
         keyPress.key = 's';
         expect(documentOnKeyPress(keyPress)).toBe(undefined);
         expect(calculationsList.length).toBe(1);

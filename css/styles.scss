@@ -144,7 +144,7 @@ button {
 	text-align:center;
 }
 button {
-    font: inherit 14px !important;
+    font: 14px !important;
 }
 
 /*-------------------------------------------------------------------mixin for vertical margin and max-width*/
@@ -231,6 +231,9 @@ footer {
 		margin-bottom: -1px;
 		.load-calc {
 			margin-left: 10px !important;
+		}
+		.load-calc, .delete-calc {
+			min-width: 20%;	
 		}
     }
 }

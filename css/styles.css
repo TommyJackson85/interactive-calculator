@@ -155,7 +155,7 @@ button {
 }
 
 button {
-  font: inherit 14px !important;
+  font: 14px !important;
 }
 
 /*-------------------------------------------------------------------mixin for vertical margin and max-width*/
@@ -240,6 +240,9 @@ footer {
 }
 .main-calculation-backup .saved-calculation .load-calc, .main-calculation-backup .new-saved-calculation .load-calc {
   margin-left: 10px !important;
+}
+.main-calculation-backup .saved-calculation .load-calc, .main-calculation-backup .saved-calculation .delete-calc, .main-calculation-backup .new-saved-calculation .load-calc, .main-calculation-backup .new-saved-calculation .delete-calc {
+  min-width: 20%;
 }
 
 /*calculator section*/

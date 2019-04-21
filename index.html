@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Calculator</title>
+    <link rel="shortcut icon" href=""><!--removes 404 falvicon error-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.3.0/jasmine.css" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,26 +45,26 @@
             <div id="buttons" class="buttons">
               <!--this Button's innerHTML is manipulated through the main javascript file-->
               <button id="switch-calculation-display" class="green-button switch-calculation-display" href="#">Show Full Calculation</button>
-              <button id="num1" class="num" value="1" href="#">1</button>          
-              <button id="num2" class="num" value="2" href="#">2</button>                
-              <button id="num3" class="num" value="3" href="#">3</button>
-              <button id="add" class="opp" value="+" href="#">+</button>
-              <button id="num4" class="num" value="4" href="#">4</button>                
-              <button id="num5" class="num" value="5" href="#">5</button>
-              <button id="num6" class="num" value="6" href="#">6</button>
-              <button id="subtract" class="opp" value="-" href="#">-</button>                
-              <button id="num7" class="num" value="7" href="#">7</button>
-              <button id="num8" class="num" value="8" href="#">8</button>
-              <button id="num9" class="num" value="9" href="#">9</button>
-              <button id="multiply" class="opp" value="x" href="#">X</button>
-              <button id="divide100" class="divide100" href="#">%</button>                
-              <button id="num0" class="num" value="0" href="#">0</button>            
-              <button id="numDec" class="num numDec" value="." href="#"><strong>.</strong></button>
-              <button id="divide" class="opp" value="/" href="#">/</button>
-              <button id="clear" class="clear" href="#">C</button>                       
-              <button id="plus-minus" class="plus-minus" href="#">±</button>
-              <button id="remove" class="remove" href="#"><-</button>
-              <button id="answer" class="opp answer" value="=" href="#">=</button>
+              <button id="num1" class="num" value="1">1</button>          
+              <button id="num2" class="num" value="2">2</button>                
+              <button id="num3" class="num" value="3">3</button>
+              <button id="add" class="opp" value="+">+</button>
+              <button id="num4" class="num" value="4">4</button>                
+              <button id="num5" class="num" value="5">5</button>
+              <button id="num6" class="num" value="6">6</button>
+              <button id="subtract" class="opp" value="-">-</button>                
+              <button id="num7" class="num" value="7">7</button>
+              <button id="num8" class="num" value="8">8</button>
+              <button id="num9" class="num" value="9">9</button>
+              <button id="multiply" class="opp" value="x">X</button>
+              <button id="divide100" class="divide100">%</button>                
+              <button id="num0" class="num" value="0">0</button>            
+              <button id="numDec" class="num numDec" value="."><strong>.</strong></button>
+              <button id="divide" class="opp" value="/">/</button>
+              <button id="clear" class="clear">C</button>                       
+              <button id="plus-minus" class="plus-minus">±</button>
+              <button id="remove" class="remove"><-</button>
+              <button id="answer" class="opp answer" value="=">=</button>
             </div>
           </div>
            <!--This div is hidden at smaller screen sizes from the CSS file-->
@@ -86,7 +87,7 @@
               <div id="calculation-save-form" class="calculation-save-form">
                 <div class="form-group">
                   <textarea class="text-input-background form-control" id="calculation-description-input" rows="3"  placeholder="Write an OPTIONAL description of your Calculator data, prior to saving it (i.e. '40 apples x 20 baskets')"></textarea>
-                  <button id="save-calc" class="col-xs-offset-3 col-xs-6 save-calc btn" value="1" href="#">Save Calculation</button>
+                  <button id="save-calc" class="col-xs-offset-3 col-xs-6 save-calc btn" value="1">Save Calculation</button>
                 </div>
               </div>
               <!--This List is manipulated through the main javascript file-->

@@ -34,7 +34,7 @@ As a user, I want to be able to ..
 - turn a positive built number into its negative equivilent, and visa versa.
 - divide a built number by 100 continuously.
 - save my calculation progress, and add an optional description to each saved calculation prior to saving.
--  re-load each saved progress to the calculator, to continue building the calculation or delete them instantly.
+- re-load each saved progress to the calculator, to continue building the calculation or delete them instantly.
 
 I want to be clearly alerted when saving, loading and deleting calculation progres, and when there is an error.
 
@@ -86,20 +86,19 @@ The calculator's screen - Close to the width of the calculator, and has a dark p
 
 - The Switch Calculation Display button - switches between the enlarged display and calculator's screen, for displaying the built calculation. It's inner text toggles between two values on click reading "Hide Full Calculation" when activating the enlarged display, and reads "Show Full Calculation" when deactivated. When the enlarged display is activated, the calculator's display will say "calculation displayed above" in green text, matching it with enlarged display's border color and to detract attention from the calculator display.
 
-- Number buttons - builds a number as long as the width of the screen, concating number digits together from newNumber array's inputed values. The decimal button (".") is included in this but can only be used once while building the number.
+- Number buttons - builds a number as long as the width of the screen, concating number digits together from newNumber array's inputed values. The decimal button (".") is included in this but can only be used once while building the number. The zero button can not be used at the start of a number. All other numbers can be used to start building a number. If a decimal is used at the start it will add a '0' first to prevent syntax errors when evaluating.
 
-- divide100 (%) button and functionality - This allows the user to divide their built number by 100. Sometimes adds a decimal into the new Number, disabling the decimal button.
+- divide100 (%) button and functionality - This allows the user to divide their built number by 100 continuously. Sometimes adds a decimal into the new Number, disabling the decimal button. Once it is used, the user can't add any number digets at the end of the number.
 
 - plus-minus (±) button and functionilty - turns positive number into its negative equivilent and visa versa.
 
-- operator buttons and the utilize operator function - utilizes an operator as next input. Operators are 'add' ("+"), 'subtract' ('-'), 'multiply' ('x'), 'divide' ('/') or 'answer' ('='). Answer button instantly evaluates calcualtion, showing answer at input, and equals sign '=' at the end of calculation. Other operators are not used instantly, and can be changed before being added to calculator.
+- operator buttons and the utilize operator function - utilizes an operator as next input. Operators are 'add' ("+"), 'subtract' ('-'), 'multiply' ('x'), 'divide' ('/') or 'answer' ('='). Answer button instantly evaluates calculations, showing answer at input, and equals sign '=' at the end of calculation. Other operators are not used instantly, and can be changed before being added to calculator.
 
-- Switching between number buttons amd operator buttons - Switching between both is what builds the calculation. A number must be used first. When switching to an operator, the previous number is pushed and visa versa. After a user has evaluated a full calculation, the new answer can be used as the first number of his next calculaton when pressing an operator button or the calculation is restarted from pressing a number.
+- Switching between number buttons amd operator buttons - Switching between both is what builds the calculation. A number must be used first. When switching to an operator, the previous number is pushed and visa versa. After a user has evaluated a full calculation, the new answer can be used as the first number of his next calculaton when pressing an operator button or the calculation is restarted from pressing a number. However, a zero valued number (i.e. '0', '-0' or '0.0000'), can't be pushed to the built calculation.
 
 - 'remove' button - When first clicking, it empties the input. If it's a number displayed in the input and the last index of the calculation is an operator, it removes the operator at the end of the calculation aswell. When its continuously clicked it removes the last two inputs of the calculation. It will always display "removed" on the calculator screened input section and displays "cleared" to the user when its empty.
 
 - 'clear' button - this button clears both the input and calculation, displays 'cleared' in the calculation display and '0' in the input display.
-
 
 ### The Calculation Backup
 

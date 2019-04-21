@@ -41,13 +41,21 @@ describe("results of switchCalculationDisplay();", function(){
         
     })
 })
-
 describe("Results of 'plus-minus' button", function(){
     it("if newNumber[0] is already a negative , it turns it negative", function(){ //will be removed, as it is just temporary
         newNumber = ["-5", "6"];
         expect(plusMinus.onclick()).toBe("56");
         expect(newNumber).toEqual(["5", "6"]);
         expect(newNumber).not.toEqual(["-5", "6"]);
+    }),
+    it(`if newNumber[0] is only a '-' , it is removed fromt the array. 
+    When plusMinus is pressed a second time, it adds the '-' to the first index`, function(){ //will be removed, as it is just temporary
+        newNumber = ["-", "5", "6"];
+        expect(plusMinus.onclick()).toBe("56");
+        expect(plusMinus.onclick()).toBe("-56");
+        expect(newNumber).toEqual(["-5", "6"]);
+        expect(newNumber).not.toEqual(["5", "6"]);
+        expect(newNumber).not.toEqual(["-", "5", "6"]);
     }),
     it("if newNumber[0] is NOT a negative, it turns it positive; '-' is never pushed to the front it's just added to the first index/string of the array", function(){ //will be removed, as it is just temporary
         newNumber = ["5", "6"];
@@ -92,7 +100,6 @@ describe("Results of remove button", function(){
         newOperator = ["+"];
         expect(remove.onclick()).toBe("removed");
         expect(calculation.length).toEqual(3);
-
         expect(calculation).toEqual(["3", "+", "4"]);
         expect(calculation).not.toEqual(["3", "+"]);
         expect(calculation).not.toEqual(["3"]);
@@ -124,12 +131,50 @@ describe("Results of remove button", function(){
         expect(calculation).not.toEqual(["3"]);
     })
 }),
-describe("results of divide100 button", function(){
-    it("divides newNumber by 100 through a complex set of functionalities ( divides evaluated version of newNumber.join(''), by 100, turns it back into a string, and splits it into an new Array called tempNum, empties newNumber array, and pushes tempNum array content back into newNumber array) ; returns newNumber.joined('') afterwards", function(){
+describe("results of divide100 button - this button evaluates a copy of a built number and divides it by 100. There is further different outcomes to do with different scenarios:", function(){
+    it("returns newNumber empty, with the displayed input as '0' when initial new number is '-0.'. ",function(){
+        newNumber = ["-0."];
+        expect(divide100.onclick()).toBe("0");
+        expect(newNumber).toEqual([]);
+        expect(displayedInput.innerHTML).toBe("0");
+    }),
+    it("returns newNumber empty, with the displayed input as '0' when initial new number is '0.000'.",function(){
+        newNumber = ["0.", "0", "0", "0"];
+        expect(divide100.onclick()).toBe("0");
+        expect(newNumber).toEqual([]);
+        expect(displayedInput.innerHTML).toBe("0");
+    }),
+    it(`upon clicking twice, it divides the number twice, 
+    and sets divide100Activated to be true. (continued)`, function(){
         newNumber = ["5", "6","7","8","0","0"];
         expect(divide100.onclick()).toBe("5678");
-        expect(newNumber).toEqual(["5","6","7","8"]);
+        expect(divide100.onclick()).toBe("56.78");
+        expect(newNumber).toEqual(["5","6",".","7","8"]);
         expect(newNumber).not.toEqual([]);
+        expect(divide100Activated).toBe(true);
+    }),
+    it(`..because divide100Activated is set to true, the new number array is emptied
+    when the user starts to build a number, in which as sets divide100Activated to false.`,function(){
+        number = document.getElementById("num" + "Dec");
+        expect(number.onclick()).toBe(undefined);
+        number = document.getElementById("num" + 5);
+        expect(number.onclick()).toBe(undefined);
+        expect(newNumber).toEqual(["0",".","5"]);
+        expect(divide100Activated).toBe(false);
+    }),
+    it(`after clicking divide100, an operator button when clicked sends the divided number to the calculator 
+    and divide100Activated is set to false`,function(){
+        newNumber = ["5", "6","7","8","0","0"];
+        calculation = [];
+        newOperator = [];
+        expect(divide100.onclick()).toBe("5678");
+        expect(divide100.onclick()).toBe("56.78");
+        let operator = document.getElementById("multiply");
+        expect(operator.onclick()).toBe(undefined);
+        expect(newOperator).toEqual(["x"]);
+        expect(calculation).toEqual(["56.78"]);
+        expect(newNumber).toEqual([]);
+        expect(divide100Activated).toBe(false);
     }),
     it("the number isn't rounded to the nearest decimal; It can leave a decimal in the number, in which sets disableDec to true", function(){
         newNumber = ["5","6","7","8","8","8"];

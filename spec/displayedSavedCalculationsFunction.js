@@ -61,7 +61,7 @@ describe("'displaySavedCalculations' function outcomes", function(){
         Removing the saved calculation and re-displaying the calculation list, leaving 'third object' as the new second object; 
         The 'Warning Status' heading is returned as "Calculation data deleted!";`, function(){
         let deleteCalc = document.getElementById("delete-calc" + 1);   
-        expect(deleteCalc.onclick()).toBe(warningStatus.innerHTML = "Calculation data deleted!");
+        expect(deleteCalc.onclick()).toBe("Calculation data deleted!");
         setTimeout(function() {
             timerCallback1();
         }, 500);
